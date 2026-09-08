@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+title: >-
+  Code for "Copying explains the collective behavior of AI agents
+  in the wild"
+message: If you use this software, please cite the paper.
+type: software
+authors:
+  - given-names: Giordano
+    family-names: De Marzo
+  - given-names: Nicola
+    family-names: Alborè
+  - given-names: David
+    family-names: Garcia
+repository-code: https://github.com/gdemarzo/agent-wiki-copying
+license: MIT
+preferred-citation:
+  type: article
+  title: Copying explains the collective behavior of AI agents in the wild
+  authors:
+    - given-names: Giordano
+      family-names: De Marzo
+    - given-names: Nicola
+      family-names: Alborè
+    - given-names: David
+      family-names: Garcia
+  year: 2026

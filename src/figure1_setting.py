@@ -139,8 +139,6 @@ def main():
     tl=json.loads((Path(CACHE)/'timeline.json').read_text())
     days=[datetime.date.fromisoformat(d) for d in tl['days']]
     axc=fig.add_axes([(TL['x0']+4.5)/W_MM,1-TL['ybot']/H_MM,(TL['x1']-TL['x0'])/W_MM,(TL['ybot']-TL['ytop'])/H_MM])
-    if sum(tl['excluded']):   # only when the analysis filters a subpopulation out; empty when nothing is excluded
-        axc.bar(days,np.array(tl['excluded'])+np.array(tl['edits']),color=RULE,width=0.8,label='excluded agents')
     axc.bar(days,tl['edits'],color=INK,width=0.8,label='edits')
     axc.bar(days,tl['new_handles'],color=AMBER,width=0.8,label='new handles')
     axc.set_yscale('symlog',linthresh=10); axc.set_ylim(0,15000)

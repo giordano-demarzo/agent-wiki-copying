@@ -114,7 +114,7 @@ def neutral_model(n_handles, m_pieces, k, eps, seed=0):
     return names
 
 
-def main(eps=0.07):
+def main(eps=0.10):
     say = Report('What to call yourself (Figure 3)')
     ds = Dataset()
 

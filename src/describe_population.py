@@ -9,14 +9,11 @@ from common import Dataset, Report, T
 def main():
     say = Report('The platform and the population (Figure 1)')
     ds = Dataset()
-    say(f'{len(ds.revs_all)} non-human edits under {len(ds.birth)} handles')
-    say(f'population: {len(ds.handles)} handles, {len(ds.revs)} edits')
+    say(f'population: {len(ds.handles)} handles, {len(ds.revs)} non-human edits')
     task_revs = [r for r in ds.revs if ds.is_task(r)]
     task_pages = {r['page_id'] for r in task_revs}
     say(f'  of which {len(task_revs)} edits on {len(task_pages)} task pages '
         f'in {len(ds.task_families)} task families')
-    say(f'  excluded: {len(ds.swarm)} handles, '
-        f'{sum(1 for h in ds.swarm if ds.birth[h].strftime("%d %b") == "18 Jun")} born on 18 June')
 
     spans = [(T(v[-1]['time']) - T(v[0]['time'])).total_seconds() / 3600
              for v in ds.by_label.values() if len(v) >= 2]

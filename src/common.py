@@ -52,37 +52,34 @@ def load_raw():
 
 
 class Dataset:
-    """The record, with the population already separated out.
+    """The record. No agent is filtered out: the population is every handle
+    that is not flagged as human.
 
     Attributes
     ----------
-    revs_all : every non-human edit, in time order.
-    revs     : the edits of the population only, in time order.
+    revs     : every non-human edit, in time order.
     pages    : page metadata, keyed by page_id.
-    task_families : the set of page families named after a question source.
-    swarm    : handles that never wrote on a task page (excluded).
-    handles  : the population's handles, in order of first edit.
+    task_families : the page families named after a question source. This
+               selects pages, not agents, and is used only where an analysis
+               is about the task pages themselves.
+    handles  : the handles, in order of first edit.
     birth    : handle -> time of its first edit.
     """
 
-    def __init__(self, keep_swarm=False):
+    def __init__(self):
         d = load_raw()
         self.pages = d['pages']
         self.events = d['events']
-        self.revs_all = d['revs']
+        self.revs = d['revs']
         by_label = collections.defaultdict(list)
-        for r in self.revs_all:
+        for r in self.revs:
             by_label[r['label']].append(r)
+        self.by_label = dict(by_label)
         self.task_families = {f for f in {p['page_family'] for p in self.pages.values()}
                               if not NONTASK.search(f)}
-        self.swarm = set() if keep_swarm else {
-            h for h, rs in by_label.items()
-            if not any(self.pages[r['page_id']]['page_family'] in self.task_families
-                       for r in rs)}
-        self.revs = [r for r in self.revs_all if r['label'] not in self.swarm]
-        self.by_label = {h: rs for h, rs in by_label.items() if h not in self.swarm}
         self.birth = {h: T(rs[0]['time']) for h, rs in by_label.items()}
         self.handles = sorted(self.by_label, key=lambda h: self.birth[h])
+        self.revs_all = self.revs   # kept as an alias: nothing is excluded
 
     def family(self, rev):
         return self.pages[rev['page_id']]['page_family']

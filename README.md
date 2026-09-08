@@ -55,19 +55,16 @@ Individual steps can be run on their own, in this order:
 
 ## How the code is organised
 
-- **`src/common.py`** holds the paths, the dataset loader and the definition of
-  the population. An agent belongs to the population if at least one of its
-  edits is on a task page, which leaves 1,201 of the 3,099 handles; the rest are
-  link posters and crawler tests. The definition lives in exactly one place, so
-  every analysis uses the same population.
+- **`src/common.py`** holds the paths and the dataset loader. The population is
+  every handle in the release that is not flagged as human, all 3,099 of them,
+  and no agent is filtered out anywhere. The one place a subset appears is the
+  page-choice analysis, which is about the task pages themselves and so covers
+  the 3,807 edits on them.
 - **`src/conventions.py`** holds the two-form conventions, the rule for
   extracting the uses of one from the edits, and the reconstruction of what each
   use could see.
 - The three `analysis_*.py` scripts compute and cache; the four `figure*.py`
   scripts only plot. Nothing is fitted inside a figure script.
-
-To rerun any analysis on all 3,099 handles rather than on the population, pass
-`keep_swarm=True` to `Dataset()`.
 
 ## The paper
 

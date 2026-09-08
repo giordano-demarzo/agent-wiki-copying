@@ -1,17 +1,15 @@
 
 === The platform and the population (Figure 1) ===
-13661 non-human edits under 3099 handles
-population: 1201 handles, 5929 edits
+population: 3099 handles, 13661 non-human edits
   of which 3807 edits on 679 task pages in 41 task families
-  excluded: 1898 handles, 753 born on 18 June
-handle activity span (n=827 with at least two edits): median 2.02 h
-edits per handle: mean 4.94
-page write span (n=696): median 1.12 h
-pages touched by the population: 1710
+handle activity span (n=1768 with at least two edits): median 1.32 h
+edits per handle: mean 4.41
+page write span (n=1336): median 1.10 h
+pages touched by the population: 4024
 
 === The record (Figure 1c) ===
-population: 5929 edits, 1201 handles; excluded: 7732 edits by 1898 handles
-  excluded handles by day of birth: [('18 Jun', 753), ('22 Jun', 243), ('16 Jun', 199), ('26 May', 166)]
+13661 edits by 3099 handles over 41 days
+  busiest days: [('2026-06-18', 5948), ('2026-06-16', 2585), ('2026-06-17', 1281), ('2026-06-22', 904)]
 
 === Where to write (Figure 2) ===
 decisions on a page new to the writer: 2612 (0.26 creations)
@@ -26,72 +24,73 @@ control (each curve normalised to its first bin):
   handles already there: [1.0, 2.31, 2.47, 2.73, 2.97, 1.73] at [1.6, 3.8, 8.0, 16.3, 30.4, 49.5]
 
 === What to call yourself (Figure 3) ===
-1201 handles, 4128 name pieces (3.44 per name), 256 distinct
-  most used: [('Open', 432), ('AI', 409), ('Agent', 295), ('Research', 272), ('Helper', 168), ('Scout', 138), ('OAI', 121), ('Sep', 96)]
-  share of pieces that had never appeared in an earlier name: 0.062
-  top-5 pieces per day: [('16 Jun', ['Open', 'Agent', 'AI', 'Research', 'Helper']), ('17 Jun', ['Open', 'AI', 'Research', 'Watcher', 'Agent']), ('18 Jun', ['Open', 'AI', 'Agent', 'Research', 'Feb']), ('19 Jun', ['Open', 'AI', 'Research', 'Agent', 'Jan']), ('20 Jun', ['OECD', 'Scout', 'Agent', 'Equity', 'Open']), ('21 Jun', ['Open', 'Scout', 'AI', 'Research', 'FP'])]
-  new entries in the daily top five: [1, 1, 1, 3, 3], mean 1.80
-joint fit, how far back: last 30 names 0.83+-0.03, the 30 before those 0.19+-0.03 (n=9584)
-joint fit, which source: feed 0.37+-0.04, page's authors 0.64+-0.03 (n=3848)
-neutral model, eps=0.07: distinct pieces 252 (observed 256), most used piece 477 (observed 432)
-  P(a piece is used by >= (2, 5, 20, 100) handles): observed [0.535, 0.297, 0.141, 0.027], model [0.606, 0.327, 0.124, 0.032]
+3099 handles, 9655 name pieces (3.12 per name), 776 distinct
+  most used: [('Agent', 1085), ('Research', 783), ('Helper', 641), ('Open', 606), ('AI', 548), ('Researcher', 195), ('Data', 194), ('Scout', 153)]
+  share of pieces that had never appeared in an earlier name: 0.080
+  top-5 pieces per day: [('01 Jun', ['Helper', 'Agent', 'Clark', 'Econ', 'Research']), ('11 Jun', ['Agent', 'Helper', 'Research', 'Archive', 'Root']), ('16 Jun', ['Agent', 'Open', 'AI', 'Research', 'Helper']), ('17 Jun', ['Research', 'Open', 'AI', 'Agent', 'Helper']), ('18 Jun', ['Agent', 'Research', 'Helper', 'Mass', 'Open']), ('19 Jun', ['Open', 'AI', 'Research', 'Agent', 'Helper']), ('20 Jun', ['OECD', 'Scout', 'Open', 'Agent', 'Equity']), ('21 Jun', ['Open', 'AI', 'Scout', 'Research', 'CVD']), ('22 Jun', ['Research', 'Agent', 'Helper', 'Cook', 'Data']), ('26 May', ['Research', 'Helper', 'Data', 'Agent', 'Researcher']), ('28 May', ['Helper', 'Archive', 'Agent', 'Ref', 'ZZ'])]
+  new entries in the daily top five: [2, 2, 0, 1, 1, 3, 3, 4, 1, 3], mean 2.00
+joint fit, how far back: last 30 names 0.74+-0.02, the 30 before those 0.21+-0.02 (n=24472)
+joint fit, which source: feed 0.45+-0.02, page's authors 0.53+-0.02 (n=9232)
+neutral model, eps=0.07: distinct pieces 651 (observed 776), most used piece 620 (observed 1085)
+  P(a piece is used by >= (2, 5, 20, 100) handles): observed [0.509, 0.254, 0.09, 0.018], model [0.606, 0.332, 0.128, 0.03]
 
 === How to write (Figure 4) ===
-17 conventions kept of 29 with enough uses:
-  Rn / #n                    coined    uses  2878 mu_A 0.048 mu_B 0.000 pages 166
-  task clock / scaffold      coined    uses  1214 mu_A 0.089 mu_B 0.036 pages  67
-  termination / teardown     semantic  uses   568 mu_A 0.131 mu_B 0.022 pages  23
-  relay / bridge             semantic  uses  1568 mu_A 0.036 mu_B 0.025 pages  72
-  deadline / horizon         semantic  uses  1395 mu_A 0.000 mu_B 0.014 pages  70
-  signal / ping              semantic  uses   592 mu_A 0.191 mu_B 0.041 pages  23
-  answer / value             semantic  uses  1002 mu_A 0.229 mu_B 0.200 pages  51
-  update / edit              semantic  uses   431 mu_A 0.599 mu_B 0.109 pages  14
-  seconds / sec              semantic  uses   793 mu_A 0.013 mu_B 0.028 pages  23
-  CONFIRMED / confirmed      habit     uses  1084 mu_A 0.140 mu_B 0.211 pages  57
-  LIVE / live                habit     uses   687 mu_A 0.237 mu_B 0.097 pages  26
-  BEFORE / before            habit     uses   592 mu_A 0.051 mu_B 0.278 pages  20
-  task-clock / task clock    habit     uses   892 mu_A 0.099 mu_B 0.179 pages  51
-  1,234 / 1234               habit     uses  1043 mu_A 0.083 mu_B 0.068 pages  44
-  HH:MM:SS / HH:MM           habit     uses   649 mu_A 0.057 mu_B 0.310 pages  25
-  we / I                     habit     uses  1042 mu_A 0.223 mu_B 0.063 pages  65
-  bold ** / '''              habit     uses   274 mu_A 0.089 mu_B 0.051 pages  11
-coined   : response slope 0.94, intercept 0.05 (n=698); mean mu_A + mu_B 0.09
-semantic : response slope 0.79, intercept 0.19 (n=1005); mean mu_A + mu_B 0.23
-habit    : response slope 0.86, intercept 0.10 (n=1049); mean mu_A + mu_B 0.28
-coined   : page against feed, n=  84 follow the page 0.79 [0.69, 0.86]
-semantic : page against feed, n=  69 follow the page 0.67 [0.55, 0.77]
-habit    : page against feed, n= 195 follow the page 0.72 [0.65, 0.78]
-pooled   : page against feed, n=348 follow the page 0.72 [0.67, 0.77]
-coined   : page against the handle's own past, n=  87 follow the page 0.55 [0.45, 0.65]
-semantic : page against the handle's own past, n= 101 follow the page 0.77 [0.68, 0.84]
-habit    : page against the handle's own past, n= 172 follow the page 0.53 [0.46, 0.61]
-  Rn / #n                    same page 0.975 / 0.992   different pages 0.852 / 0.921
-  task clock / scaffold      same page 0.704 / 0.826   different pages 0.580 / 0.594
-  termination / teardown     same page 0.920 / 0.901   different pages 0.900 / 0.778
-  relay / bridge             same page 0.992 / 0.917   different pages 0.776 / 0.560
-  deadline / horizon         same page 0.949 / 0.981   different pages 0.863 / 0.747
-  signal / ping              same page 0.940 / 0.815   different pages 0.740 / 0.704
-  answer / value             same page 0.668 / 0.586   different pages 0.505 / 0.505
-  update / edit              same page 0.846 / 0.747   different pages 0.752 / 0.739
-  seconds / sec              same page 0.998 / 0.942   different pages 0.476 / 0.604
-  CONFIRMED / confirmed      same page 0.645 / 0.618   different pages 0.510 / 0.517
-  LIVE / live                same page 0.727 / 0.673   different pages 0.505 / 0.575
-  BEFORE / before            same page 0.794 / 0.802   different pages 0.660 / 0.737
-  task-clock / task clock    same page 0.655 / 0.671   different pages 0.533 / 0.533
-  1,234 / 1234               same page 0.921 / 0.729   different pages 0.533 / 0.503
-  HH:MM:SS / HH:MM           same page 0.822 / 0.793   different pages 0.705 / 0.735
-  we / I                     same page 0.832 / 0.754   different pages 0.683 / 0.664
-  bold ** / '''              same page 0.884 / 0.746   different pages 0.542 / 0.516
-same page: correlation 0.81, mean absolute error 0.069
-different pages: correlation 0.81, mean absolute error 0.057
-gap between the two: observed 0.186, model 0.151
+17 conventions kept of 31 with enough uses:
+  Rn / #n                    coined    uses  3006 mu_A 0.048 mu_B 0.000 pages 172
+  task clock / scaffold      coined    uses  1247 mu_A 0.096 mu_B 0.036 pages  68
+  termination / teardown     semantic  uses   581 mu_A 0.106 mu_B 0.022 pages  24
+  relay / bridge             semantic  uses  2160 mu_A 0.008 mu_B 0.025 pages  81
+  deadline / horizon         semantic  uses  1419 mu_A 0.000 mu_B 0.014 pages  71
+  signal / ping              semantic  uses   601 mu_A 0.192 mu_B 0.041 pages  23
+  answer / value             semantic  uses  1122 mu_A 0.152 mu_B 0.178 pages  53
+  update / edit              semantic  uses   546 mu_A 0.628 mu_B 0.113 pages  16
+  seconds / sec              semantic  uses  2601 mu_A 0.005 mu_B 0.027 pages  54
+  CONFIRMED / confirmed      habit     uses  1108 mu_A 0.139 mu_B 0.221 pages  58
+  LIVE / live                habit     uses   712 mu_A 0.240 mu_B 0.108 pages  27
+  BEFORE / before            habit     uses   615 mu_A 0.048 mu_B 0.293 pages  20
+  task-clock / task clock    habit     uses   903 mu_A 0.096 mu_B 0.182 pages  51
+  1,234 / 1234               habit     uses  2327 mu_A 0.008 mu_B 0.067 pages  75
+  HH:MM:SS / HH:MM           habit     uses   667 mu_A 0.058 mu_B 0.319 pages  27
+  we / I                     habit     uses  1068 mu_A 0.243 mu_B 0.062 pages  66
+  bold ** / '''              habit     uses   284 mu_A 0.120 mu_B 0.056 pages  11
+coined   : response slope 0.93, intercept 0.06 (n=718); mean mu_A + mu_B 0.09
+semantic : response slope 0.95, intercept 0.04 (n=1312); mean mu_A + mu_B 0.22
+habit    : response slope 0.91, intercept 0.06 (n=1257); mean mu_A + mu_B 0.28
+coined   : page against feed, n=  86 follow the page 0.79 [0.69, 0.86]
+semantic : page against feed, n=  95 follow the page 0.75 [0.65, 0.82]
+habit    : page against feed, n= 187 follow the page 0.71 [0.64, 0.77]
+pooled   : page against feed, n=368 follow the page 0.74 [0.69, 0.78]
+coined   : page against the handle's own past, n=  88 follow the page 0.56 [0.45, 0.66]
+semantic : page against the handle's own past, n= 106 follow the page 0.77 [0.69, 0.84]
+habit    : page against the handle's own past, n= 179 follow the page 0.55 [0.48, 0.62]
+  Rn / #n                    same page 0.977 / 0.992   different pages 0.857 / 0.921
+  task clock / scaffold      same page 0.704 / 0.824   different pages 0.572 / 0.597
+  termination / teardown     same page 0.922 / 0.888   different pages 0.893 / 0.716
+  relay / bridge             same page 0.981 / 0.951   different pages 0.543 / 0.619
+  deadline / horizon         same page 0.947 / 0.981   different pages 0.857 / 0.747
+  signal / ping              same page 0.941 / 0.816   different pages 0.743 / 0.705
+  answer / value             same page 0.707 / 0.612   different pages 0.499 / 0.501
+  update / edit              same page 0.838 / 0.747   different pages 0.752 / 0.740
+  seconds / sec              same page 1.000 / 0.971   different pages 0.621 / 0.747
+  CONFIRMED / confirmed      same page 0.643 / 0.617   different pages 0.511 / 0.519
+  LIVE / live                same page 0.726 / 0.659   different pages 0.506 / 0.560
+  BEFORE / before            same page 0.800 / 0.819   different pages 0.665 / 0.758
+  task-clock / task clock    same page 0.656 / 0.674   different pages 0.535 / 0.543
+  1,234 / 1234               same page 0.998 / 0.925   different pages 0.569 / 0.763
+  HH:MM:SS / HH:MM           same page 0.819 / 0.788   different pages 0.708 / 0.736
+  we / I                     same page 0.824 / 0.761   different pages 0.682 / 0.680
+  bold ** / '''              same page 0.884 / 0.756   different pages 0.532 / 0.569
+same page: correlation 0.87, mean absolute error 0.059
+different pages: correlation 0.77, mean absolute error 0.062
+gap between the two: observed 0.195, model 0.139
 
-=== The platform and the population (Figure 1) ===
-13661 non-human edits under 3099 handles
-population: 1201 handles, 5929 edits
-  of which 3807 edits on 679 task pages in 41 task families
-  excluded: 1898 handles, 753 born on 18 June
-handle activity span (n=827 with at least two edits): median 2.02 h
-edits per handle: mean 4.94
-page write span (n=696): median 1.12 h
-pages touched by the population: 1710
+=== What to call yourself (Figure 3) ===
+3099 handles, 9655 name pieces (3.12 per name), 776 distinct
+  most used: [('Agent', 1085), ('Research', 783), ('Helper', 641), ('Open', 606), ('AI', 548), ('Researcher', 195), ('Data', 194), ('Scout', 153)]
+  share of pieces that had never appeared in an earlier name: 0.080
+  top-5 pieces per day: [('01 Jun', ['Helper', 'Agent', 'Clark', 'Econ', 'Research']), ('11 Jun', ['Agent', 'Helper', 'Research', 'Archive', 'Root']), ('16 Jun', ['Agent', 'Open', 'AI', 'Research', 'Helper']), ('17 Jun', ['Research', 'Open', 'AI', 'Agent', 'Helper']), ('18 Jun', ['Agent', 'Research', 'Helper', 'Mass', 'Open']), ('19 Jun', ['Open', 'AI', 'Research', 'Agent', 'Helper']), ('20 Jun', ['OECD', 'Scout', 'Open', 'Agent', 'Equity']), ('21 Jun', ['Open', 'AI', 'Scout', 'Research', 'CVD']), ('22 Jun', ['Research', 'Agent', 'Helper', 'Cook', 'Data']), ('26 May', ['Research', 'Helper', 'Data', 'Agent', 'Researcher']), ('28 May', ['Helper', 'Archive', 'Agent', 'Ref', 'ZZ'])]
+  new entries in the daily top five: [2, 2, 0, 1, 1, 3, 3, 4, 1, 3], mean 2.00
+joint fit, how far back: last 30 names 0.74+-0.02, the 30 before those 0.21+-0.02 (n=24472)
+joint fit, which source: feed 0.45+-0.02, page's authors 0.53+-0.02 (n=9232)
+neutral model, eps=0.1: distinct pieces 941 (observed 776), most used piece 394 (observed 1085)
+  P(a piece is used by >= (2, 5, 20, 100) handles): observed [0.509, 0.254, 0.09, 0.018], model [0.596, 0.307, 0.109, 0.018]

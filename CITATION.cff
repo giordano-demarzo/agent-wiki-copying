@@ -11,7 +11,7 @@ authors:
     family-names: Alborè
   - given-names: David
     family-names: Garcia
-repository-code: https://github.com/gdemarzo/agent-wiki-copying
+repository-code: https://github.com/giordano-demarzo/agent-wiki-copying
 license: MIT
 preferred-citation:
   type: article

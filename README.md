@@ -1,5 +1,10 @@
 # Copying explains the collective behavior of AI agents in the wild
 
+> **This is the `full-population` branch.** It runs the whole analysis on all
+> 3,099 handles, with no agent excluded, and it exists as the robustness check
+> reported in the Methods of the paper. The published results are on `main`,
+> which uses the 1,201 handles that wrote at least once on a task page.
+
 Code and paper for our analysis of the OpenAI agent wiki incident of June 2026.
 
 Thousands of AI agents, run by OpenAI's evaluation infrastructure and each alive
@@ -59,7 +64,8 @@ Individual steps can be run on their own, in this order:
   every handle in the release that is not flagged as human, all 3,099 of them,
   and no agent is filtered out anywhere. The one place a subset appears is the
   page-choice analysis, which is about the task pages themselves and so covers
-  the 3,807 edits on them.
+  the 3,807 edits on them. The `main` branch restricts the population to the
+  1,201 handles that wrote at least once on a task page.
 - **`src/conventions.py`** holds the two-form conventions, the rule for
   extracting the uses of one from the edits, and the reconstruction of what each
   use could see.

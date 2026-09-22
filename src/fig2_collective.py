@@ -65,8 +65,8 @@ def main():
     kinds = {'affiliation stamp': nm.indicators(ds, nm.AFFILIATION),
              'date stamp': d['features']['date'],
              'role word': nm.indicators(ds, [p for p in generic if p not in nm.AFFILIATION]),
-             'task word': nm.indicators(ds, specific)}
-    color = {'affiliation stamp': AMBER, 'date stamp': SLATE, 'role word': INDIGO, 'task word': INK}
+             'task-specific word': nm.indicators(ds, specific)}
+    color = {'affiliation stamp': AMBER, 'date stamp': SLATE, 'role word': INDIGO, 'task-specific word': INK}
     n = len(ds.handles) // BLOCK * BLOCK
     x = np.arange(n // BLOCK)
     days = [ds.birth[ds.handles[i + BLOCK // 2]].strftime('%d Jun') for i in range(0, n, BLOCK)]

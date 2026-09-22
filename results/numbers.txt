@@ -443,3 +443,10 @@ each convention, model volatility: all uses 2.12, first uses 2.08
 (d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
 (d) binned names: s=0.07:0.11 s=0.20:0.0331 s=0.33:0.0297 s=0.52:0.0248 s=0.78:0.00386 s=0.97:0.00319
 points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
+
+=== Figure 2 ===
+(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
+(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
+(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
+(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
+(b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34

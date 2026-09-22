@@ -1,40 +1,65 @@
-"""Reproduce every number and every figure of the paper.
+"""Reproduce every number, figure and table of the paper and of the
+Supplementary Information from the data release.
 
-    python src/run_all.py
+    python src/run_all.py            everything (about five minutes on 8 cores)
+    python src/run_all.py figures    only the figures and tables, from an existing cache
 
 Expects the release in data/ (see data/README.md). Writes cache/ (intermediate
-pickles), figures/ (the four figures as PDF and PNG) and results/numbers.txt
-(every number quoted in the paper). Takes a few minutes.
+pickles), paper/figs/ (the PDFs the manuscript includes), paper/tables/ (the
+LaTeX tables it inputs), figures/ (PNG previews) and results/numbers.txt (every
+number quoted in the paper and the SI, in the order the steps produce them).
 """
+import importlib
 import os
 import sys
+import time
 
 from common import RESULTS
 
-STEPS = [
-    ('build_dataset', 'parse the release'),
+ANALYSIS = [
+    ('build_dataset', 'parse the release into cache/data.pkl'),
     ('describe_population', 'the platform and the population'),
     ('timeline', 'daily counts for Figure 1c'),
     ('analysis_pages', 'where to write'),
-    ('analysis_names', 'what to call yourself'),
+    ('analysis_names', 'how to sign'),
     ('analysis_forms', 'how to write'),
-    ('figure1_setting', 'Figure 1'),
-    ('figure2_pages', 'Figure 2'),
-    ('figure3_names', 'Figure 3'),
-    ('figure4_forms', 'Figure 4'),
+    ('identification', 'the regressions of Table 1'),
+    ('run_model', 'the model'),
+    ('si_population', 'SI: the record and the population'),
+    ('si_names', 'SI: how to sign'),
+    ('si_forms', 'SI: how to write'),
+]
+FULL = [('analysis_forms', 'how to write, all handles'), ('identification', 'the regressions, all handles')]
+FIGURES = [
+    ('fig1_setting', 'Figure 1'),
+    ('fig2_collective', 'Figure 2'),
+    ('fig3_rule', 'Figure 3'),
+    ('fig4_model', 'Figure 4'),
+    ('si_figures', 'the SI figures'),
+    ('si_tables', 'Table 1 and the SI tables'),
 ]
 
 
-def main():
+def step(module, what, **kw):
+    t0 = time.time()
+    print(f'\n----- {module}: {what} -----', flush=True)
+    importlib.import_module(module).main(**kw)
+    print(f'      ({time.time() - t0:.0f} s)', flush=True)
+
+
+def main(only_figures=False):
     numbers = os.path.join(RESULTS, 'numbers.txt')
-    if os.path.exists(numbers):
-        os.remove(numbers)
-    for module, what in STEPS:
-        print(f'\n----- {module}: {what} -----')
-        sys.stdout.flush()
-        __import__(module).main()
-    print(f'\nDone. Numbers in {numbers}, figures in figures/.')
+    if not only_figures:
+        if os.path.exists(numbers):
+            os.remove(numbers)
+        for module, what in ANALYSIS:
+            step(module, what)
+        for module, what in FULL:
+            step(module, what, full=True)
+    for module, what in FIGURES:
+        step(module, what)
+    print(f'\nDone. Numbers in results/numbers.txt, figures in paper/figs/, tables in paper/tables/.')
 
 
 if __name__ == '__main__':
-    main()
+    main(only_figures='figures' in sys.argv[1:])

@@ -1,4 +1,4 @@
-"""Figure 1: the task loop (a), what an agent reads and writes (b), and the record over time (c).
+"""Figure 1: the task (a), what an agent reads and writes (b), and the record over time (c).
 
 Panels a and b are vector illustration; panel c plots cache/timeline.json, which
 src/timeline.py writes. All labels are editable text at 5 to 7 pt.
@@ -17,8 +17,8 @@ from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Circle, PathPatc
 from matplotlib.transforms import Affine2D
 from svgpath2mpl import parse_path
 
-from common import CACHE, FIGURES, ICONS as _ICONS
-OUT=Path(FIGURES)
+from common import CACHE, FIGS, PREVIEW, ICONS as _ICONS
+OUT=Path(FIGS)
 ICONS=Path(_ICONS)
 # Exactly the palette of figures A-C: ink for the subject, teal for reading, amber for writing, slate and rule for
 # everything passive. No tinted grounds beyond one neutral container, so the panels sit in the same visual world.
@@ -28,7 +28,7 @@ GROUND='#f2f3f4'
 
 # Three columns with 9 mm gutters: task loop 0-31, agent and wiki 40-120, timeline 136-178.
 W_MM, H_MM=183, 77
-TL=dict(x0=136, x1=178, ytop=13, ybot=62)
+TL=dict(x0=129, x1=178.5, ytop=22, ybot=66)
 
 
 def main():
@@ -96,7 +96,7 @@ def main():
     icon('repeat-2',3,item_centres[3]-3.5,7,color=SLATE,lw=.7)
     text(12.5,item_centres[3],'Repeat to R5',5.3)
     icon('square-x',3,item_centres[4]-3.5,7,color=SLATE,lw=.75)
-    text(12.5,item_centres[4],'Sandbox\ndestroyed',5.5)
+    text(12.5,item_centres[4],'Sandbox\nshut down',5.5)
 
     # b: key directly above the agent; no panel title or unused top band.
     text(40,2,'b',9,bold=True)
@@ -116,7 +116,7 @@ def main():
     box(76,6,44,67,fc=GROUND,ec='none',r=2)
     text(98,10,'Public wiki',6.3,bold=True,ha='center')
     rows=[
-        ('list-ordered',19,'RecentChanges','New edits across the wiki,\nlisted newest first.'),
+        ('list-ordered',19,'RecentChanges','New edits across the wiki,\nnewest at the top.'),
         ('file-search',34,'Task pages','Questions and answers,\nretrieved by page name.'),
         ('messages-square',49,'Notice boards','Links, access workarounds\nand coordination notes.'),
         ('file-user',64,'Own page','Self-chosen agent name\nand current run status.'),
@@ -134,31 +134,35 @@ def main():
     arrow((66,47),(76,51),c=AMBER,rad=.05)
     arrow((66,50),(76,64),c=AMBER,rad=.12)
 
-    # c: the record itself, one bar per day, on the same axes as the rest of the paper.
-    text(130,2,'c',9,bold=True)
+    # c: the record itself, in a card matching a and b, restricted to the active weeks.
+    text(TL['x0']-4,2,'c',9,bold=True)
+    box(TL['x0']-4,6,TL['x1']-TL['x0']+4,67,fc=GROUND,ec='none',r=2)
+    text((TL['x0']+TL['x1'])/2,10,'The record',6.3,bold=True,ha='center')
+    text((TL['x0']+TL['x1'])/2,13,'edits and new handles per day',5.3,ha='center')
     tl=json.loads((Path(CACHE)/'timeline.json').read_text())
     days=[datetime.date.fromisoformat(d) for d in tl['days']]
-    axc=fig.add_axes([(TL['x0']+4.5)/W_MM,1-TL['ybot']/H_MM,(TL['x1']-TL['x0'])/W_MM,(TL['ybot']-TL['ytop'])/H_MM])
-    if sum(tl['excluded']):   # only when the analysis filters a subpopulation out; empty when nothing is excluded
+    axc=fig.add_axes([(TL['x0']+9.5)/W_MM,1-TL['ybot']/H_MM,(TL['x1']-TL['x0']-12.5)/W_MM,(TL['ybot']-TL['ytop'])/H_MM])
+    axc.set_facecolor('none')
+    if sum(tl['excluded']):
         axc.bar(days,np.array(tl['excluded'])+np.array(tl['edits']),color=RULE,width=0.8,label='excluded agents')
     axc.bar(days,tl['edits'],color=INK,width=0.8,label='edits')
     axc.bar(days,tl['new_handles'],color=AMBER,width=0.8,label='new handles')
-    axc.set_yscale('symlog',linthresh=10); axc.set_ylim(0,15000)
-    axc.set_ylabel('count per day',fontsize=6)
-    MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']   # not %b: the system locale is not English
-    axc.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(lambda v,p: f'{mdates.num2date(v).day:02d} {MON[mdates.num2date(v).month-1]}'))
-    axc.xaxis.set_major_locator(mdates.DayLocator(bymonthday=[1,15]))
-    axc.xaxis.set_minor_locator(mdates.DayLocator(bymonthday=[8,22]))
+    axc.set_yscale('symlog',linthresh=10); axc.set_ylim(0,20000)
+    axc.set_yticks([0,10,100,1000,10000]); axc.set_yticklabels(['0','10','100','1,000','10,000'])
+    axc.set_xlim(datetime.date(2026,5,23),datetime.date(2026,6,24))
+    MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    axc.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(lambda v,p: f'{mdates.num2date(v).day} {MON[mdates.num2date(v).month-1]}'))
+    axc.xaxis.set_major_locator(mdates.DayLocator(bymonthday=[25,1,8,15,22]))
     axc.tick_params(labelsize=5.4,width=0.6,length=2.2)
-    axc.legend(loc='upper left',frameon=False,fontsize=5,handlelength=1.1,handletextpad=0.5,borderpad=0,labelspacing=0.3)
-
+    for lab in axc.get_xticklabels(): lab.set_rotation(0)
+    axc.legend(loc='upper left',frameon=False,fontsize=5.2,handlelength=1.1,handletextpad=0.5,borderpad=0.2,labelspacing=0.3)
     OUT.mkdir(parents=True,exist_ok=True)
     assert all(5<=t.get_fontsize()<=9 for t in ax.texts)
     licence=(ICONS/'LICENSE').read_text()
     description='Icons: Lucide, https://lucide.dev. '+licence
-    for ext in ['pdf','svg','png']:
-        metadata={'Subject':description} if ext=='pdf' else {'Description':description}
-        fig.savefig(OUT/f'fig1a_schematic.{ext}',dpi=600,facecolor='white',metadata=metadata)
+    fig.savefig(OUT/'fig1a_schematic.pdf',facecolor='white',metadata={'Subject':description})
+    fig.savefig(Path(PREVIEW)/'fig1a_schematic.png',dpi=300,facecolor='white',metadata={'Description':description})
+    print('wrote paper/figs/fig1a_schematic.pdf')
     plt.close(fig)
 
 

@@ -7,9 +7,11 @@ data/SHA256SUMS
 cache/*
 !cache/.gitkeep
 
-# Generated figures and numbers, tracked copies live in paper/figs/.
+# PNG previews of the figures; the PDFs the manuscript includes are tracked in paper/figs/.
 figures/*
 !figures/.gitkeep
+
+# results/numbers.txt is tracked; nothing else lands here.
 results/*
 !results/.gitkeep
 !results/numbers.txt
@@ -19,6 +21,8 @@ paper/*.aux
 paper/*.log
 paper/*.out
 paper/*.synctex.gz
+paper/*.bbl
+paper/*.blg
 
 __pycache__/
 *.pyc

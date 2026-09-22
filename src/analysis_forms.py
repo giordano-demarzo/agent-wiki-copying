@@ -1,59 +1,76 @@
-"""How to write: how agents pick between two forms. Produces cache/forms.pkl.
+"""How to write: the conventions, their selection and the response of an agent
+to the form on its page. Writes cache/forms.pkl (cache/forms_full.pkl with
+--full, the robustness check on all handles).
 
-Fits the copying response of every convention, measures which exposure the
-agents follow when two of them disagree, and compares the observed patchwork
-of pages with the model.
+1. Every candidate convention, its base probabilities with the profile interval
+   of the prior strength, and the selection (Table S3).
+2. The patchwork (Fig. 2c): agreement of two uses on the same page and on
+   different pages, and the same-page agreement with the forms shuffled among
+   the uses of the same three-hour block.
+3. The response of a handle's first use to the share of a form on the page,
+   by class (Fig. 3c), and the two conflict tests (page against feed, page
+   against the handle's own past).
+4. For every kept convention, the statistics placed on the prior-strength axis
+   of Fig. 4, and the usage rate that the model takes from the record.
 """
 import collections
-import pickle
+import sys
 
 import numpy as np
 
-from common import Dataset, Report, cache_path, wilson
-from conventions import CONV, FEED_USES, exposure, fit_mu, sequence
+from common import Dataset, Report, T, block_of, co_occurrence, save_cache, volatility, wilson
+from conventions import CLASSES, CONV, FEED_USES, MIN_IN_VIEW, candidates, exposure, sequence
 
-MIN_USES = 100        # a convention needs this many uses
-MIN_PAGES = 10        # and this many pages carrying five or more uses
-MIN_MINORITY = 0.05   # and a minority form used at least this often
-MIN_IN_VIEW = 3       # a record needs this many instances in view
-CLASSES = ('coined', 'semantic', 'habit')
-
-
-def fit_all(ds):
-    """Fit the two error rates of every candidate convention and keep the
-    ones with enough data."""
-    label = [r['label'] for r in ds.revs]
-    page = [r['page_id'] for r in ds.revs]
-    fits, keep = {}, []
-    for name in CONV:
-        idx, form = sequence(ds.revs, name)
-        if len(idx) < MIN_USES:
-            continue
-        share, share_page = exposure(idx, form, label, page)
-        took_a = (form == 0).astype(int)
-        mu = fit_mu(share, took_a)
-        if np.isnan(mu[0]):
-            continue
-        by_page = collections.defaultdict(list)
-        for k in range(len(idx)):
-            by_page[page[idx[k]]].append(form[k])
-        n_pages = sum(1 for v in by_page.values() if len(v) >= 5)
-        minority = min(np.mean(form == 0), 1 - np.mean(form == 0))
-        fits[name] = dict(cls=CONV[name][0], uses=len(idx), mu=mu, n_pages=n_pages,
-                          minority=minority)
-        if n_pages >= MIN_PAGES and minority >= MIN_MINORITY:
-            keep.append(name)
-    return fits, keep
+N_SHUFFLES = 50
+MIN_MINORITY_USES = 10     # a convention enters Fig. 4b with at least this many minority uses
+MIN_FIRST_USES = 150       # ... and Fig. 4c with at least this many first uses
+VOL_BLOCK = 50             # first uses per block in the volatility of a form
 
 
-def response_and_conflicts(ds, keep):
-    """The response curve by class, and the two conflict tests."""
+def agreement(pages_forms):
+    """P(two uses take the same form), for two uses on the same page and on
+    two different pages."""
+    same_n = same_a = total_n = total_a = 0
+    for forms in pages_forms.values():
+        n, n1 = len(forms), sum(forms)
+        if n >= 2:
+            same_n += n * (n - 1)
+            same_a += n1 * (n1 - 1) + (n - n1) * (n - n1 - 1)
+        total_n += n
+        total_a += n1
+    all_n = total_n * (total_n - 1)
+    all_a = total_a * (total_a - 1) + (total_n - total_a) * (total_n - total_a - 1)
+    diff_n, diff_a = all_n - same_n, all_a - same_a
+    return (same_a / same_n if same_n else np.nan, diff_a / diff_n if diff_n else np.nan)
+
+
+def by_page(page_ids, forms):
+    out = collections.defaultdict(list)
+    for p, f in zip(page_ids, forms):
+        out[p].append(int(f))
+    return out
+
+
+def shuffled_agreement(page_ids, forms, blocks, rng, n=N_SHUFFLES):
+    """Median same-page agreement over n shuffles of the forms among the uses
+    of the same three-hour block, which keeps the time and destroys the page."""
+    out = []
+    for _ in range(n):
+        f2 = forms.copy()
+        for b in np.unique(blocks):
+            m = np.where(blocks == b)[0]
+            f2[m] = rng.permutation(forms[m])
+        out.append(agreement(by_page(page_ids, f2))[0])
+    return float(np.median(out))
+
+
+def responses(ds, keep):
+    """First-use response by class, and the two conflict tests."""
     label = [r['label'] for r in ds.revs]
     page = [r['page_id'] for r in ds.revs]
     by_class = {c: [] for c in CLASSES}
     versus_feed = {c: [] for c in CLASSES}
     versus_own = {c: [] for c in CLASSES}
-
     for name in keep:
         cls = CONV[name][0]
         idx, form = sequence(ds.revs, name)
@@ -67,155 +84,119 @@ def response_and_conflicts(ds, keep):
             feed = (np.array([np.sum(form[window] == 0), np.sum(form[window] == 1)], float)
                     if window else np.zeros(2))
             first_use = handle not in seen
-
             if first_use and not np.isnan(share_page[k]):
                 by_class[cls].append((share_page[k], took_a[k]))
             if (first_use and feed.sum() >= MIN_IN_VIEW and on_page.sum() >= MIN_IN_VIEW
                     and feed[0] != feed[1] and on_page[0] != on_page[1]
                     and np.argmax(feed) != np.argmax(on_page)):
                 versus_feed[cls].append(int(form[k] == np.argmax(on_page)))
-            if (handle in previous and on_page.sum() >= MIN_IN_VIEW
-                    and on_page[0] != on_page[1]
+            if (handle in previous and on_page.sum() >= MIN_IN_VIEW and on_page[0] != on_page[1]
                     and int(np.argmax(on_page)) != previous[handle]):
-                versus_own[cls].append((on_page.max() / on_page.sum(),
-                                        int(form[k] == np.argmax(on_page))))
-
+                versus_own[cls].append(int(form[k] == np.argmax(on_page)))
             seen.add(handle)
             previous[handle] = form[k]
             step = np.zeros(2)
             step[form[k]] = 1
             page_hist[pg] = on_page + step
-    return by_class, versus_feed, versus_own
+    return ({c: np.array(v) for c, v in by_class.items()}, versus_feed, versus_own)
 
 
-def agreement(pages_forms):
-    """P(two uses take the same form), for two uses on the same page and on
-    two different pages."""
-    same_n = same_a = 0
-    total_n = total_a = 0
-    for forms in pages_forms.values():
-        n, n1 = len(forms), sum(forms)
-        if n >= 2:
-            same_n += n * (n - 1)
-            same_a += n1 * (n1 - 1) + (n - n1) * (n - n1 - 1)
-        total_n += n
-        total_a += n1
-    all_n = total_n * (total_n - 1)
-    all_a = total_a * (total_a - 1) + (total_n - total_a) * (total_n - total_a - 1)
-    diff_n, diff_a = all_n - same_n, all_a - same_a
-    return (same_a / same_n if same_n else np.nan,
-            diff_a / diff_n if diff_n else np.nan)
+def axis_statistics(ds, name, mu):
+    """What Fig. 4 places on the prior-strength axis for one convention."""
+    idx, form = sequence(ds.revs, name)
+    a = (form == 0).astype(float)
+    pages = [ds.revs[i]['page_id'] for i in idx]
+    seen, first = set(), []
+    for k, i in enumerate(idx):
+        if ds.revs[i]['label'] not in seen:
+            seen.add(ds.revs[i]['label'])
+            first.append(k)
+    s = mu[0] + mu[1]
+    minority_uses = min(a.sum(), len(a) - a.sum())
+    return dict(name=name, cls=CONV[name][0], s=min(s, 1.0), muA=mu[0], muB=mu[1], f=a.mean(),
+                n_first=len(first), minority_uses=int(minority_uses),
+                gap=co_occurrence(pages, a) if minority_uses >= MIN_MINORITY_USES else np.nan,
+                vol=volatility(a[first], VOL_BLOCK) if len(first) >= MIN_FIRST_USES else np.nan,
+                vol_all=volatility(a, VOL_BLOCK),
+                dev=max(abs(a.mean() - mu[0] / s), 1e-3) if s > 0 else np.nan)
 
 
-def simulate(mu, n_handles, edits_per, pages_per, c, seed=0, m=100,
-             k_feed=FEED_USES, p_use=0.5):
-    """The model of Figure 4c.
+def main(full=False):
+    say = Report('How to write' + (', all handles' if full else ''))
+    ds = Dataset(full=full)
+    rows = candidates(ds)
+    keep = [n for n in CONV if rows[n]['kept']]
+    enough = [n for n in CONV if rows[n]['uses'] >= 100]
+    say(f'{len(rows)} candidate conventions, {len(enough)} with at least 100 uses, {len(keep)} kept')
+    fails = collections.Counter(tuple(r['fails']) for r in rows.values() if not r['kept'])
+    say(f'  dropped: fewer than 100 uses {sum(1 for r in rows.values() if r["uses"] < 100)}; '
+        f'with 100 uses, the rarer form never used {sum(1 for n in enough if rows[n]["minority"] == 0)}; '
+        f'other failures {sum(1 for n in enough if 0 < rows[n]["minority"] and not rows[n]["kept"])}')
+    widths = lambda names: np.median([rows[n]['s_interval'][2] - rows[n]['s_interval'][1] for n in names])
+    dropped_measured = [n for n in enough if not rows[n]['kept'] and rows[n]['s_interval'] is not None]
+    say(f'  median width of the 95% interval of s: kept {widths(keep):.2f}, dropped with both forms used '
+        f'{widths(dropped_measured):.2f}')
+    say(f'  kept: uses {min(rows[n]["uses"] for n in keep)}-{max(rows[n]["uses"] for n in keep)}, '
+        f'pages {min(rows[n]["n_pages"] for n in keep)}-{max(rows[n]["n_pages"] for n in keep)}, '
+        f'prior strength {min(sum(rows[n]["mu"]) for n in keep):.2f}-{max(sum(rows[n]["mu"]) for n in keep):.2f}')
+    for n in keep:
+        r = rows[n]
+        say(f'  {n:26} {r["cls"]:9} uses {r["uses"]:5} pages {r["n_pages"]:3} minority {r["minority"]:.2f} '
+            f'mu_A {r["mu"][0]:.3f} mu_B {r["mu"][1]:.3f} s {sum(r["mu"]):.2f} '
+            f'[{r["s_interval"][1]:.2f}, {r["s_interval"][2]:.2f}]')
 
-    Handles arrive and land on pages exactly as in the page model, and each
-    edit uses the convention with a fixed probability p_use. A use takes form
-    A with probability mu_A + (1 - mu_A - mu_B) rho, where rho is the share of
-    form A already on that page, or in the last k_feed uses if the page carries
-    neither form. Nothing from the record enters the simulation.
-    """
-    rng = np.random.default_rng(seed)
-    feed, uses, recent, next_id = [], collections.defaultdict(list), [], 0
-    for h in range(n_handles):
-        mine = []
-        n_pages = max(1, int(round(pages_per[h % len(pages_per)])))
-        n_edits = max(n_pages, int(round(edits_per[h % len(edits_per)])))
-        for _ in range(n_edits):
-            if len(mine) < n_pages:
-                if not feed or rng.random() < c:
-                    next_id += 1
-                    page = ('new', next_id)
-                else:
-                    page = feed[rng.integers(min(len(feed), m))]
-                mine.append(page)
-            else:
-                page = mine[rng.integers(len(mine))]
-            if rng.random() < p_use:
-                source = uses[page] if uses[page] else recent[:k_feed]
-                rho = np.mean(source) if len(source) else 0.5
-                form = int(rng.random() < mu[0] + (1 - mu[0] - mu[1]) * rho)
-                uses[page].append(form)
-                recent.insert(0, form)
-                recent = recent[:k_feed]
-            feed.insert(0, page)
-            feed = feed[:m]
-    return uses
-
-
-def main():
-    say = Report('How to write (Figure 4)')
-    ds = Dataset()
-    with open(cache_path('pages.pkl'), 'rb') as fh:
-        page_inputs = pickle.load(fh)['inputs']
-
-    fits, keep = fit_all(ds)
-    say(f'{len(keep)} conventions kept of {len(fits)} with enough uses:')
-    for name in keep:
-        f = fits[name]
-        say(f'  {name:26} {f["cls"]:9} uses {f["uses"]:5} '
-            f'mu_A {f["mu"][0]:.3f} mu_B {f["mu"][1]:.3f} pages {f["n_pages"]:3}')
-
-    by_class, versus_feed, versus_own = response_and_conflicts(ds, keep)
+    by_class, versus_feed, versus_own = responses(ds, keep)
     for cls in CLASSES:
-        v = np.array(by_class[cls])
+        v = by_class[cls]
         slope, intercept = np.polyfit(v[:, 0], v[:, 1], 1)
-        mus = [fits[n]['mu'] for n in keep if fits[n]['cls'] == cls]
-        say(f'{cls:9}: response slope {slope:.2f}, intercept {intercept:.2f} '
-            f'(n={len(v)}); mean mu_A + mu_B {np.mean([m[0] + m[1] for m in mus]):.2f}')
-    pooled = []
-    for cls in CLASSES:
-        v = versus_feed[cls]
-        p, lo, hi = wilson(sum(v), len(v))
-        pooled += v
-        say(f'{cls:9}: page against feed, n={len(v):4} follow the page '
-            f'{p:.2f} [{lo:.2f}, {hi:.2f}]')
-    p, lo, hi = wilson(sum(pooled), len(pooled))
-    say(f'pooled   : page against feed, n={len(pooled)} follow the page '
-        f'{p:.2f} [{lo:.2f}, {hi:.2f}]')
-    for cls in CLASSES:
-        v = np.array(versus_own[cls])
-        p, lo, hi = wilson(v[:, 1].sum(), len(v))
-        say(f'{cls:9}: page against the handle\'s own past, n={len(v):4} follow the page '
-            f'{p:.2f} [{lo:.2f}, {hi:.2f}]')
+        say(f'{cls:9}: first-use response slope {slope:.2f}, intercept {intercept:.2f} (n={len(v)}); '
+            f'P(A) when the page has under 10% of A {v[v[:, 0] < 0.1, 1].mean():.2f}')
+    pooled = np.vstack(list(by_class.values()))
+    say(f'pooled   : slope {np.polyfit(pooled[:, 0], pooled[:, 1], 1)[0]:.2f} (n={len(pooled)})')
+    for test, d in (('page against feed', versus_feed), ("page against the handle's own past", versus_own)):
+        for cls in CLASSES + ('pooled',):
+            v = d[cls] if cls != 'pooled' else [x for c in CLASSES for x in d[c]]
+            p, lo, hi = wilson(sum(v), len(v))
+            say(f'{test}, {cls:9}: follow the page {p:.2f} [{lo:.2f}, {hi:.2f}] (n={len(v)})')
 
-    label = [r['label'] for r in ds.revs]
-    page = [r['page_id'] for r in ds.revs]
-    rows = []
-    for name in keep:
-        idx, form = sequence(ds.revs, name)
-        observed_pages = collections.defaultdict(list)
-        for k in range(len(idx)):
-            observed_pages[page[idx[k]]].append(1 - form[k])
-        same_obs, diff_obs = agreement(observed_pages)
-        same_mod, diff_mod = [], []
-        for seed in range(3):
-            uses = simulate(fits[name]['mu'], len(page_inputs['edits_per']),
-                            page_inputs['edits_per'], page_inputs['pages_per'],
-                            page_inputs['c'], seed=seed)
-            s, d = agreement({p_: v for p_, v in uses.items() if v})
-            same_mod.append(s)
-            diff_mod.append(d)
-        rows.append((name, CONV[name][0], same_obs, float(np.mean(same_mod)),
-                     diff_obs, float(np.mean(diff_mod))))
-        say(f'  {name:26} same page {same_obs:.3f} / {np.mean(same_mod):.3f}   '
-            f'different pages {diff_obs:.3f} / {np.mean(diff_mod):.3f}')
-    a = np.array([[r[2], r[3], r[4], r[5]] for r in rows])
-    say(f'same page: correlation {np.corrcoef(a[:, 0], a[:, 1])[0, 1]:.2f}, '
-        f'mean absolute error {np.mean(np.abs(a[:, 0] - a[:, 1])):.3f}')
-    say(f'different pages: correlation {np.corrcoef(a[:, 2], a[:, 3])[0, 1]:.2f}, '
-        f'mean absolute error {np.mean(np.abs(a[:, 2] - a[:, 3])):.3f}')
-    say(f'gap between the two: observed {np.mean(a[:, 0] - a[:, 2]):.3f}, '
-        f'model {np.mean(a[:, 1] - a[:, 3]):.3f}')
+    ts = np.array([T(r['time']).timestamp() for r in ds.revs])
+    rng = np.random.default_rng(0)
+    patchwork = []
+    for n in keep:
+        idx, form = sequence(ds.revs, n)
+        pages = [ds.revs[i]['page_id'] for i in idx]
+        a = (form == 0).astype(int)
+        same, diff = agreement(by_page(pages, a))
+        blocks = np.array([block_of(t) for t in ts[idx]])
+        patchwork.append(dict(name=n, cls=CONV[n][0], same=same, diff=diff,
+                              shuffled=shuffled_agreement(pages, a, blocks, rng)))
+    pw = {k: np.array([p[k] for p in patchwork]) for k in ('same', 'diff', 'shuffled')}
+    say(f'patchwork: two uses agree {pw["same"].mean():.3f} on the same page and {pw["diff"].mean():.3f} '
+        f'on different pages (means over conventions); shuffled within {3}-h blocks {pw["shuffled"].mean():.3f}; '
+        f'observed above the shuffle for {int((pw["same"] > pw["shuffled"]).sum())} of {len(keep)}')
+    for p in patchwork:
+        say(f'  {p["name"]:26} same {p["same"]:.2f} different {p["diff"]:.2f} shuffled {p["shuffled"]:.2f}')
 
-    with open(cache_path('forms.pkl'), 'wb') as fh:
-        pickle.dump(dict(fits=fits, keep=keep, by_class=by_class,
-                         versus_feed=versus_feed, versus_own=versus_own,
-                         agreement=rows), fh)
+    n_task = sum(ds.is_task(r) for r in ds.revs)
+    usage = {n: sum(ds.is_task(ds.revs[i]) for i in sequence(ds.revs, n)[0]) / n_task for n in keep}
+    say(f'usage rate: mean share of task edits using a convention {np.mean(list(usage.values())):.3f} '
+        f'(from {min(usage.values()):.2f}, {min(usage, key=usage.get)}, to {max(usage.values()):.2f}, '
+        f'{max(usage, key=usage.get)})')
+
+    axis = [axis_statistics(ds, n, rows[n]['mu']) for n in keep]
+    say(f'on the prior-strength axis: {sum(np.isfinite(e["gap"]) for e in axis)} conventions in Fig. 4b '
+        f'(at least {MIN_MINORITY_USES} minority uses), {sum(np.isfinite(e["vol"]) for e in axis)} in Fig. 4c '
+        f'(at least {MIN_FIRST_USES} first uses)')
+    va = np.array([e['vol_all'] for e in axis if np.isfinite(e['vol'])])
+    vf = np.array([e['vol'] for e in axis if np.isfinite(e['vol'])])
+    say(f'  volatility, mean over those: all uses {va.mean():.2f}, first uses {vf.mean():.2f}')
+
+    save_cache('forms_full.pkl' if full else 'forms.pkl',
+               dict(rows=rows, keep=keep, fits={n: rows[n]['mu'] for n in keep}, by_class=by_class,
+                    versus_feed=versus_feed, versus_own=versus_own, patchwork=patchwork,
+                    usage=usage, axis=axis))
     say.write()
 
 
 if __name__ == '__main__':
-    main()
+    main(full='--full' in sys.argv)

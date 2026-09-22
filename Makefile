@@ -1,29 +1,21 @@
 PY ?= python
 
-.PHONY: all data analysis figures paper clean
+.PHONY: all analysis figures paper clean
 
-all: analysis figures paper
+all: analysis paper
 
-data:
-	$(PY) src/build_dataset.py
+# everything: analyses, model, figures and tables (about five minutes on 8 cores)
+analysis:
+	$(PY) src/run_all.py
 
-analysis: data
-	$(PY) src/describe_population.py
-	$(PY) src/timeline.py
-	$(PY) src/analysis_pages.py
-	$(PY) src/analysis_names.py
-	$(PY) src/analysis_forms.py
-
+# only the figures and tables, from an existing cache
 figures:
-	$(PY) src/figure1_setting.py
-	$(PY) src/figure2_pages.py
-	$(PY) src/figure3_names.py
-	$(PY) src/figure4_forms.py
-	cp figures/fig1a_schematic.pdf figures/figA_pages.pdf figures/figB_names.pdf figures/figC_forms.pdf paper/figs/
+	$(PY) src/run_all.py figures
 
 paper:
-	cd paper && pdflatex -interaction=nonstopmode final.tex && pdflatex -interaction=nonstopmode final.tex
+	cd paper && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex
+	cd paper && pdflatex -interaction=nonstopmode si.tex && pdflatex -interaction=nonstopmode si.tex
 
 clean:
-	rm -rf cache/*.pkl cache/*.json figures/*.pdf figures/*.png figures/*.svg results/numbers.txt
-	rm -f paper/final.aux paper/final.log paper/final.out
+	rm -rf cache/*.pkl cache/*.json figures/*.png results/numbers.txt
+	rm -f paper/*.aux paper/*.log paper/*.out paper/*.synctex.gz

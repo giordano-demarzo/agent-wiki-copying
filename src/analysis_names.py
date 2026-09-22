@@ -1,175 +1,92 @@
-"""What to call yourself: how agents build their handle. Produces cache/names.pkl.
+"""How to sign: the pieces of names, the 16 name features, and what each
+newcomer could see. Writes cache/names.pkl.
 
-Two things are computed here.
-
-1. The copying response. For eight name tokens, whether a newcomer's handle
-   carries the token, against the share of names carrying it in what the
-   newcomer could see: the last 30 distinct handles that wrote before it, the
-   30 before those, and the authors of the page it first writes on.
-2. The neutral model. Names are strings of capitalised pieces; the model has
-   each newcomer copy pieces from the last 30 names, with a rate of
-   innovation as its only parameter.
+1. The pieces carried by at least 15 handles and their classification
+   (Table S2): generic, specific to one task, or a month.
+2. The name features and, for each newcomer, the share of each feature among
+   its task-mates on its page, in the feed, out of view, and among the handles
+   of other tasks in the feed (Fig. 3b, Table 1).
+3. For every piece: its prior strength, fitted on the share among the task-mates
+   in view, its co-occurrence among co-authors, and its volatility (Fig. 4,
+   Table S2).
 """
 import collections
-import pickle
-import re
 
 import numpy as np
 
-from common import Dataset, Report, T, cache_path
-
-FEED_NAMES = 30      # how many distinct earlier handles a newcomer is assumed to see
-MIN_PAGE_AUTHORS = 3
-PIECES_PER_NAME = 3  # round(4128 / 1201), fixed from the data, not fitted
-
-TOKENS = {
-    'Scout': r'Scout',
-    'Watcher': r'Watch',
-    'Helper': r'Helper',
-    'Research': r'Research',
-    'Agent': r'Agent',
-    'Coord': r'Coord',
-    'OAI/OpenAI': r'OAI|OpenAI',
-    'date': r'(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\d',
-}
-
-PIECE = re.compile(r'[A-Z][a-z]+|[A-Z]{2,}(?![a-z])')
+import names as nm
+from common import Dataset, Report, fit, save_cache
 
 
-def pieces(handle):
-    """The capitalised pieces of a name: OpenAIResearchHelperMay08 gives
-    Open, AI, Research, Helper, May."""
-    return [p for p in PIECE.findall(handle) if not re.fullmatch(r'\d+', p)]
-
-
-def exposure_windows(ds, k=FEED_NAMES):
-    """For each handle: the last k distinct handles seen, the k before those,
-    and the handles that had already edited the page of its first edit."""
-    ts = np.array([T(r['time']).timestamp() for r in ds.revs_all])
-    labels = [r['label'] for r in ds.revs_all]
-    page_ids = [r['page_id'] for r in ds.revs_all]
-    out = {}
-    for handle in ds.handles:
-        j = np.searchsorted(ts, ds.birth[handle].timestamp())
-        recent = []
-        for i in range(j - 1, -1, -1):
-            if labels[i] != handle and labels[i] not in recent:
-                recent.append(labels[i])
-            if len(recent) >= 2 * k:
-                break
-        first_page = ds.by_label[handle][0]['page_id']
-        authors = list({labels[i] for i in range(j)
-                        if page_ids[i] == first_page and labels[i] != handle})
-        out[handle] = (recent[:k], recent[k:2 * k], authors)
-    return out
-
-
-def token_records(ds, windows):
-    """One record per (token, handle): the three exposures and the outcome."""
-    feed, older, page, carries = [], [], [], []
-    for pattern in TOKENS.values():
-        r = re.compile(pattern)
-        for handle in ds.handles:
-            recent, before, authors = windows[handle]
-            if len(before) < 10:
-                continue
-            share = lambda names: np.mean([bool(r.search(h)) for h in names])
-            feed.append(share(recent))
-            older.append(share(before))
-            page.append(share(authors) if len(authors) >= MIN_PAGE_AUTHORS else np.nan)
-            carries.append(int(bool(r.search(handle))))
-    return (np.array(feed), np.array(older), np.array(page), np.array(carries))
-
-
-def ols(columns, y):
-    """Ordinary least squares with an intercept; returns coefficients and
-    standard errors."""
-    x = np.column_stack([np.ones(len(y))] + columns)
-    beta = np.linalg.lstsq(x, y, rcond=None)[0]
-    resid = y - x @ beta
-    s2 = resid @ resid / (len(y) - x.shape[1])
-    se = np.sqrt(np.diag(s2 * np.linalg.inv(x.T @ x)))
-    return beta, se
-
-
-def neutral_model(n_handles, m_pieces, k, eps, seed=0):
-    """Neutral copying with innovation.
-
-    Each newcomer draws m_pieces pieces. Each is copied uniformly from the
-    pieces of the last k names with probability 1 - eps, and is a piece never
-    used before with probability eps.
-    """
-    rng = np.random.default_rng(seed)
-    names, next_id = [], 0
-    for i in range(n_handles):
-        pool = [p for ps in names[max(0, i - k):i] for p in ps]
-        drawn = []
-        for _ in range(m_pieces):
-            if pool and rng.random() > eps:
-                drawn.append(pool[rng.integers(len(pool))])
-            else:
-                next_id += 1
-                drawn.append(f'new{next_id}')
-        names.append(drawn)
-    return names
-
-
-def main(eps=0.07):
-    say = Report('What to call yourself (Figure 3)')
+def main():
+    say = Report('How to sign')
     ds = Dataset()
+    n = len(ds.handles)
+    piece_rows = nm.classify_pieces(ds)
+    classes = collections.Counter(r['cls'] for r in piece_rows)
+    say(f'pieces carried by at least {nm.MIN_CARRIERS} handles: {len(piece_rows)} '
+        f'({classes["month"]} months, {classes["task-specific"]} task-specific, {classes["generic"]} generic)')
+    over = sorted(r['over'] for r in piece_rows if r['cls'] != 'month')
+    below = max(o for o in over if o < nm.TASK_SPECIFIC)
+    above = min(o for o in over if o >= nm.TASK_SPECIFIC)
+    say(f'  over-representation in one task: largest below the cut {below:.1f}, smallest above {above:.1f}')
+    say('  generic: ' + ', '.join(f'{r["name"]} ({r["carriers"]})' for r in piece_rows if r['cls'] == 'generic'))
+    say('  task-specific: ' + ', '.join(f'{r["name"]} ({r["carriers"]})' for r in piece_rows if r['cls'] == 'task-specific'))
 
-    per_name = [pieces(h) for h in ds.handles]
-    counts = collections.Counter(p for ps in per_name for p in ps)
-    n_pieces = sum(len(ps) for ps in per_name)
-    say(f'{len(ds.handles)} handles, {n_pieces} name pieces '
-        f'({n_pieces / len(ds.handles):.2f} per name), {len(counts)} distinct')
-    say(f'  most used: {counts.most_common(8)}')
-    fresh = np.mean([p not in {q for ps in per_name[:i] for q in ps}
-                     for i, ps in enumerate(per_name) for p in ps])
-    say(f'  share of pieces that had never appeared in an earlier name: {fresh:.3f}')
+    # what a name is made of: occurrences of pieces by class
+    cls_of = {r['name']: r['cls'] for r in piece_rows}
+    occ = collections.Counter()
+    for h in ds.handles:
+        for p in nm.pieces(h):
+            c = cls_of.get(p, 'rare')
+            occ['stamp' if (p in nm.AFFILIATION or c == 'month') else c] += 1
+    total = sum(occ.values())
+    say(f'piece occurrences: {total}; affiliation and date stamp {occ["stamp"] / total:.2f}, '
+        f'task-specific {occ["task-specific"] / total:.2f}, generic role pieces {occ["generic"] / total:.2f}, '
+        f'rare pieces (fewer than {nm.MIN_CARRIERS} carriers) {occ["rare"] / total:.2f}')
 
-    # daily turnover of the five most used pieces
-    days = sorted({ds.birth[h].strftime('%d %b') for h in ds.handles},
-                  key=lambda s: (s[3:], s[:2]))
-    tops = []
-    for day in days:
-        born = [h for h in ds.handles if ds.birth[h].strftime('%d %b') == day]
-        if len(born) < 50:
-            continue
-        c = collections.Counter(p for h in born for p in pieces(h))
-        tops.append((day, [p for p, _ in c.most_common(5)]))
-    turnover = [len(set(tops[i][1]) - set(tops[i - 1][1])) for i in range(1, len(tops))]
-    say(f'  top-5 pieces per day: {tops}')
-    say(f'  new entries in the daily top five: {turnover}, mean {np.mean(turnover):.2f}')
+    feats = nm.features(ds, piece_rows)
+    say(f'name features: {len(feats)} ({", ".join(feats)}); at least one in '
+        f'{int((sum(feats.values()) > 0).sum())} of {n} handles')
+    say('  carriers: ' + ', '.join(f'{t} {int(v.sum())}' for t, v in feats.items()))
+    affil = nm.indicators(ds, nm.AFFILIATION)
+    say(f'  affiliation stamp (Open, AI or OAI): {int(affil.sum())} handles; date stamp {int(feats["date"].sum())}')
 
-    windows = exposure_windows(ds)
-    feed, older, page, carries = token_records(ds, windows)
-    b_time, se_time = ols([feed, older], carries)
-    m = ~np.isnan(page)
-    b_src, se_src = ols([feed[m], page[m]], carries[m])
-    say(f'joint fit, how far back: last {FEED_NAMES} names {b_time[1]:.2f}+-{se_time[1]:.2f}, '
-        f'the {FEED_NAMES} before those {b_time[2]:.2f}+-{se_time[2]:.2f} (n={len(carries)})')
-    say(f'joint fit, which source: feed {b_src[1]:.2f}+-{se_src[1]:.2f}, '
-        f"page's authors {b_src[2]:.2f}+-{se_src[2]:.2f} (n={m.sum()})")
+    groups = nm.exposure_groups(ds)
+    rec = nm.records(ds, feats, groups)
+    in_sample = sum(nm.in_sample(g) for g in groups)
+    say(f'newcomers in the name analysis (complete feed, at least {nm.MIN_MATES} task-mates in '
+        f'{nm.MATES_H} h): {in_sample} of {n}; mean task-mates in view '
+        f'{np.mean([len(g["in_view"]) for g in groups if nm.in_sample(g)]):.1f}, out of view '
+        f'{np.mean([len(g["out_of_view"]) for g in groups if nm.in_sample(g)]):.1f}')
 
-    observed = np.array(sorted(counts.values(), reverse=True))
-    runs = []
-    for seed in range(20):
-        names = neutral_model(len(ds.handles), PIECES_PER_NAME, FEED_NAMES, eps, seed)
-        c = collections.Counter(p for ps in names for p in ps)
-        runs.append(np.array(sorted(c.values(), reverse=True)))
-    say(f'neutral model, eps={eps}: distinct pieces {np.mean([len(f) for f in runs]):.0f} '
-        f'(observed {len(counts)}), most used piece {np.mean([f[0] for f in runs]):.0f} '
-        f'(observed {observed[0]})')
-    ks = (2, 5, 20, 100)
-    say(f'  P(a piece is used by >= {ks} handles): '
-        f'observed {[round(float(np.mean(observed >= k)), 3) for k in ks]}, '
-        f'model {[round(float(np.median([np.mean(f >= k) for f in runs])), 3) for k in ks]}')
+    # the two curves of Fig. 3b: joint fit on the shares in view and out of view
+    m = ~np.isnan(rec['view']) & ~np.isnan(rec['out'])
+    b, se, _ = fit([rec['view'][m], rec['out'][m]], rec['y'][m], (rec['feature'][m],), cluster=rec['handle'][m])
+    say(f'joint fit, feature fixed effects (n={m.sum()}): task-mates in view {b[0]:.2f}+-{1.96 * se[0]:.2f}, '
+        f'out of view {b[1]:.2f}+-{1.96 * se[1]:.2f} (95% intervals, clustered by handle)')
 
-    with open(cache_path('names.pkl'), 'wb') as fh:
-        pickle.dump(dict(feed=feed, older=older, page=page, carries=carries,
-                         b_time=b_time, se_time=se_time, b_src=b_src, se_src=se_src,
-                         counts=counts, runs=runs, eps=eps, tops=tops), fh)
+    # every piece and feature: prior strength, co-occurrence, volatility
+    A = nm.coauthors(ds)
+    stats = {}
+    for r in piece_rows:
+        v = nm.indicators(ds, [r['name']])
+        stats[r['name']] = dict(r, **nm.feature_statistics(v, groups, A))
+    stats['date'] = dict(name='date', cls='generic', carriers=int(feats['date'].sum()),
+                         **nm.feature_statistics(feats['date'], groups, A))
+    for cls in ('generic', 'task-specific', 'month'):
+        rows = [s for s in stats.values() if s['cls'] == cls]
+        gaps = np.array([s['gap'] for s in rows if s['gap'] > 0])
+        say(f'{cls:13}: prior strength {min(s["s"] for s in rows):.2f}-{max(s["s"] for s in rows):.2f}; '
+            f'co-occurrence among co-authors, geometric mean {np.exp(np.log(gaps).mean()):.1f} '
+            f'({gaps.min():.1f}-{gaps.max():.1f}, {len(gaps)} pieces with at least {nm.MIN_CARRIERS_COOCCURRENCE} carriers)')
+    for t in feats:
+        s = stats[t]
+        say(f'  feature {t:10}: carriers {int(feats[t].sum()):4d}  mu_A {s["muA"]:.3f} mu_B {s["muB"]:.3f} '
+            f's {s["s"]:.2f}  co-occurrence {s["gap"]:.2f}  volatility {s["vol"]:.2f}')
+
+    save_cache('names.pkl', dict(pieces=piece_rows, stats=stats, features=feats, affiliation=affil,
+                                 groups=groups, records=rec))
     say.write()
 
 

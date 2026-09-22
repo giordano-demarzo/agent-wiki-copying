@@ -21,7 +21,8 @@ GREY = '#b8bfc6'
 DATA, MODEL, GREY_REF = INK, TEAL, GREY
 CLASS_COLOR = {'coined': (INDIGO, 'coined names'),
                'semantic': (MOSS, 'near-synonyms'),
-               'habit': (ROSE, 'typographic habits')}
+               'habit': (ROSE, 'habits of style')}
+NAME_BROWN = '#8c5a1e'   # binned empirical name features in Figure 4
 
 RC = {'font.size': 7.5, 'axes.titlesize': 6.4, 'axes.labelsize': 7.4,
       'legend.fontsize': 6, 'xtick.labelsize': 6.6, 'ytick.labelsize': 6.6,
@@ -40,9 +41,11 @@ def panel(ax, letter, x=-0.3):
 
 
 def save(fig, name):
+    """The PDF goes to paper/figs/, where the manuscript includes it; a PNG
+    preview goes to figures/."""
     import os
-    from common import FIGURES
-    for ext in ('pdf', 'png'):
-        fig.savefig(os.path.join(FIGURES, f'{name}.{ext}'), dpi=250,
-                    bbox_inches='tight')
-    print(f'wrote figures/{name}.pdf and .png')
+    from common import FIGS, PREVIEW
+    fig.savefig(os.path.join(FIGS, f'{name}.pdf'), bbox_inches='tight')
+    fig.savefig(os.path.join(PREVIEW, f'{name}.png'), dpi=200, bbox_inches='tight')
+    plt.close(fig)
+    print(f'wrote paper/figs/{name}.pdf')

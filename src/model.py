@@ -33,7 +33,7 @@ from common import FEED_LINES, co_occurrence, co_occurrence_coauthors, coauthor_
 
 S_GRID = (0.0, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
 DIRECTIONS = (0.15, 0.3, 0.5, 0.7, 0.85)   # the range of pi = mu_A / s of the conventions
-RUNS = 12
+RUNS = 50
 ARRIVAL_SEED = 12345
 
 

@@ -376,3 +376,70 @@ forms, fully interacted convention x task x 3 h FE (R2 0.83): 0.63 +- 0.04, 0.22
 (d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
 (d) binned names: s=0.07:0.11 s=0.20:0.0331 s=0.33:0.0297 s=0.52:0.0248 s=0.78:0.00386 s=0.97:0.00319
 points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
+
+=== The model ===
+parameters: 1201 agents over 5.3 days, 2 edits on distinct pages within 2.02 h, c = 0.260, usage rate 0.229, 50 runs per point of the axis
+Fig. 4a, 200 runs: P(>=5,10,20,40) median [0.210, 0.089, 0.030, 0.006] (observed [0.211, 0.097, 0.031, 0.007]); 5-95% of P(>=20) [0.022, 0.038]; largest page median 64, 5-95% 46-99 (observed 54); pages 626 (observed 679)
+window    30 lines, 10 runs: P(>=5,10,20,40) [0.233, 0.093, 0.027, 0.002], largest page 48
+window   100 lines, 10 runs: P(>=5,10,20,40) [0.207, 0.087, 0.029, 0.004], largest page 80
+window   300 lines, 10 runs: P(>=5,10,20,40) [0.188, 0.083, 0.025, 0.007], largest page 126
+window  1000 lines, 10 runs: P(>=5,10,20,40) [0.163, 0.056, 0.022, 0.009], largest page 210
+uniform choice among visible pages, 10 runs: P(>=10,20,40) [0.060, 0.003, 0.000], largest page 24
+uniform choice among all pages, 10 runs: P(>=10,20,40) [0.068, 0.003, 0.000], largest page 24
+axis, form, gap: 0:nan 0.02:6.64 0.05:3.56 0.1:2.71 0.15:2.66 0.2:2.47 0.3:2.20 0.4:1.93 0.5:1.68 0.6:1.54 0.7:1.34 0.8:1.19 0.9:1.09 1:0.98
+axis, form, vol: 0:nan 0.02:1.93 0.05:2.41 0.1:2.71 0.15:2.37 0.2:2.31 0.3:1.75 0.4:1.53 0.5:1.40 0.6:1.24 0.7:1.10 0.8:1.05 0.9:0.92 1:0.90
+axis, form, distance from the prior: 0:0.500 0.02:0.299 0.05:0.226 0.1:0.130 0.15:0.094 0.2:0.069 0.3:0.046 0.4:0.027 0.5:0.027 0.6:0.021 0.7:0.017 0.8:0.017 0.9:0.013 1:0.012
+axis, name, gap: 0:nan 0.02:1.32 0.05:1.17 0.1:1.16 0.15:1.19 0.2:1.13 0.3:1.07 0.4:1.04 0.5:1.02 0.6:1.01 0.7:1.01 0.8:1.01 0.9:1.01 1:0.99
+axis, name, vol: 0:nan 0.02:2.85 0.05:3.26 0.1:3.16 0.15:2.69 0.2:2.36 0.3:1.95 0.4:1.62 0.5:1.43 0.6:1.28 0.7:1.17 0.8:1.07 0.9:1.02 1:0.93
+axis, name, distance from the prior: 0:0.500 0.02:0.301 0.05:0.198 0.1:0.104 0.15:0.070 0.2:0.044 0.3:0.033 0.4:0.021 0.5:0.016 0.6:0.013 0.7:0.012 0.8:0.010 0.9:0.009 1:0.008
+final share of a form, s = 0.02, pi = 1/2: from 0.00 to 1.00
+final share of a form, s = 0.1, pi = 1/2: from 0.11 to 0.90
+final share of a form, s = 0.3, pi = 1/2: from 0.37 to 0.63
+final share of a form, s = 0.6, pi = 1/2: from 0.45 to 0.58
+final share of a form, s = 1, pi = 1/2: from 0.43 to 0.54
+2 s.d. of the final share across runs, form: 0:0.98 0.02:0.78 0.05:0.64 0.1:0.40 0.15:0.32 0.2:0.23 0.3:0.13 0.4:0.09 0.5:0.08 0.6:0.06 0.7:0.06 0.8:0.05 0.9:0.05 1:0.05
+2 s.d. of the final share across runs, name: 0:1.00 0.02:0.73 0.05:0.47 0.1:0.31 0.15:0.25 0.2:0.17 0.3:0.11 0.4:0.08 0.5:0.06 0.6:0.05 0.7:0.04 0.8:0.03 0.9:0.03 1:0.03
+direction, form, gap, s = 0.2: pi 0.15: 3.60, pi 0.3: 2.42, pi 0.5: 1.69, pi 0.7: 2.32, pi 0.85: 4.54
+direction, form, gap, s = 0.4: pi 0.15: 2.98, pi 0.3: 1.84, pi 0.5: 1.30, pi 0.7: 1.83, pi 0.85: 2.89
+direction, form, gap, s = 0.6: pi 0.15: 1.91, pi 0.3: 1.48, pi 0.5: 1.16, pi 0.7: 1.46, pi 0.85: 2.09
+direction, form, gap: s.d. of the median across directions 0.61, s.d. across runs at pi = 1/2 1.27 (means over s > 0)
+direction, form, vol, s = 0.2: pi 0.15: 2.32, pi 0.3: 2.29, pi 0.5: 2.23, pi 0.7: 2.33, pi 0.85: 2.38
+direction, form, vol, s = 0.4: pi 0.15: 1.50, pi 0.3: 1.52, pi 0.5: 1.61, pi 0.7: 1.64, pi 0.85: 1.49
+direction, form, vol, s = 0.6: pi 0.15: 1.28, pi 0.3: 1.25, pi 0.5: 1.17, pi 0.7: 1.26, pi 0.85: 1.17
+direction, form, vol: s.d. of the median across directions 0.08, s.d. across runs at pi = 1/2 0.54 (means over s > 0)
+direction, name, gap, s = 0.2: pi 0.15: 1.30, pi 0.3: 1.14, pi 0.5: 1.01, pi 0.7: 1.14, pi 0.85: 1.28
+direction, name, gap, s = 0.4: pi 0.15: 1.22, pi 0.3: 1.06, pi 0.5: 1.01, pi 0.7: 1.03, pi 0.85: 1.05
+direction, name, gap, s = 0.6: pi 0.15: 1.03, pi 0.3: 1.00, pi 0.5: 1.00, pi 0.7: 1.01, pi 0.85: 1.05
+direction, name, gap: s.d. of the median across directions 0.06, s.d. across runs at pi = 1/2 0.13 (means over s > 0)
+direction, name, vol, s = 0.2: pi 0.15: 2.32, pi 0.3: 2.56, pi 0.5: 2.28, pi 0.7: 2.59, pi 0.85: 2.23
+direction, name, vol, s = 0.4: pi 0.15: 1.71, pi 0.3: 1.57, pi 0.5: 1.52, pi 0.7: 1.58, pi 0.85: 1.64
+direction, name, vol, s = 0.6: pi 0.15: 1.25, pi 0.3: 1.27, pi 0.5: 1.29, pi 0.7: 1.35, pi 0.85: 1.27
+direction, name, vol: s.d. of the median across directions 0.10, s.d. across runs at pi = 1/2 0.53 (means over s > 0)
+usage rate, s = 0.2: co-occurrence 2.37 (0.5), 2.47 (0.23), 2.53 (0.1); volatility 2.00, 2.31, 2.26
+usage rate, s = 0.4: co-occurrence 1.73 (0.5), 1.93 (0.23), 2.20 (0.1); volatility 1.41, 1.53, 1.54
+last 30 uses anywhere, s = 0.2: co-occurrence 2.49 (model 2.47), volatility 2.22 (2.31), distance from the prior 0.068 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.77 (0.78)
+rho = 1/2 on an empty page, s = 0.2: co-occurrence 1.69 (model 2.47), volatility 1.21 (2.31), distance from the prior 0.159 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.09 (0.78)
+each convention, gap: n=18, correlation 0.43, mean observed 2.65, mean model 2.50, observed inside the 10-90% band of its runs 0.67
+each convention, vol: n=17, correlation 0.83, mean observed 2.53, mean model 2.08, observed inside the 10-90% band of its runs 0.76
+each convention, final: n=18, correlation 0.86, mean observed 0.62, mean model 0.56, observed inside the 10-90% band of its runs 0.83
+each convention, model volatility: all uses 2.12, first uses 2.08
+
+=== Figure 2 ===
+(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
+(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
+(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
+(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
+(b) task word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
+
+=== Figure 3 ===
+(a) share 0.010: 0.007, share 0.023: 0.021, share 0.047: 0.056, share 0.087: 0.093, share 0.170: 0.146
+(b) joint fit (n=9904): in view 0.61, out of view 0.08
+
+=== Figure 4 ===
+(b) binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
+(b) binned names: s=0.07:1.83 s=0.20:1.29 s=0.33:2.89 s=0.52:1.21 s=0.76:0.936 s=0.97:1.15
+(c) binned forms: s=0.04:3.41 s=0.17:2.99 s=0.34:1.91 s=0.71:1.1
+(c) binned names: s=0.07:5.63 s=0.20:2.73 s=0.33:2.12 s=0.52:2.09 s=0.78:1.18 s=0.97:1.15
+(d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
+(d) binned names: s=0.07:0.11 s=0.20:0.0331 s=0.33:0.0297 s=0.52:0.0248 s=0.78:0.00386 s=0.97:0.00319
+points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}

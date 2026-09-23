@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Compile source
+        run: python -m compileall -q src
+
+      - name: Import the pipeline modules
+        env:
+          PYTHONPATH: src
+        run: >-
+          python -c "import common, conventions, names, model, build_dataset,
+          describe_population, timeline, analysis_pages, analysis_names,
+          analysis_forms, identification, run_model, si_population, si_names,
+          si_forms, fig1_setting, fig2_collective, fig3_rule, fig4_model,
+          si_figures, si_tables, check_text, run_all"

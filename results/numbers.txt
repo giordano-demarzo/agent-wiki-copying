@@ -450,3 +450,40 @@ points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, '
 (b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
 (b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
 (b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
+
+=== SI: how to write ===
+coined   : slope on first uses 0.94 (n=698), all uses 0.95 (n=2146), page 6 h earlier 0.90 (n=192)
+semantic : slope on first uses 0.79 (n=1005), all uses 0.90 (n=2292), page 6 h earlier 0.87 (n=243)
+habit    : slope on first uses 0.90 (n=1258), all uses 0.89 (n=2617), page 6 h earlier 0.79 (n=316)
+  Rn / #n                    s 0.05 bias ceiling 1.00 late share of the prevailing form 1.00
+  task clock / scaffold      s 0.12 bias ceiling 0.71 late share of the prevailing form 0.57
+  termination / teardown     s 0.15 bias ceiling 0.86 late share of the prevailing form 0.82
+  relay / bridge             s 0.06 bias ceiling 0.58 late share of the prevailing form 0.95
+  deadline / horizon         s 0.01 bias ceiling 1.00 late share of the prevailing form 0.81
+  signal / ping              s 0.23 bias ceiling 0.82 late share of the prevailing form 0.90
+  answer / value             s 0.43 bias ceiling 0.53 late share of the prevailing form 0.52
+  update / edit              s 0.71 bias ceiling 0.85 late share of the prevailing form 0.90
+  seconds / sec              s 0.04 bias ceiling 0.68 late share of the prevailing form 0.94
+  CONFIRMED / confirmed      s 0.35 bias ceiling 0.60 late share of the prevailing form 0.47
+  LIVE / live                s 0.33 bias ceiling 0.71 late share of the prevailing form 0.60
+  BEFORE / before            s 0.33 bias ceiling 0.84 late share of the prevailing form 0.97
+  task-clock / task clock    s 0.28 bias ceiling 0.64 late share of the prevailing form 0.65
+  1,234 / 1234               s 0.15 bias ceiling 0.55 late share of the prevailing form 0.38
+  HH:MM:SS / HH:MM           s 0.37 bias ceiling 0.84 late share of the prevailing form 0.91
+  we / I                     s 0.29 bias ceiling 0.78 late share of the prevailing form 0.81
+  bold ** / '''              s 0.14 bias ceiling 0.64 late share of the prevailing form 0.79
+  & / and                    s 0.17 bias ceiling 0.83 late share of the prevailing form 0.94
+shuffle control: observed same-page agreement minus the time-shuffled one: Rn / #n +0.06, task clock / scaffold +0.05, termination / teardown +0.00, relay / bridge +0.15, deadline / horizon +0.02, signal / ping +0.07, answer / value +0.12, update / edit +0.09, seconds / sec +0.02, CONFIRMED / confirmed +0.11, LIVE / live +0.09, BEFORE / before +0.07, task-clock / task clock +0.10, 1,234 / 1234 +0.18, HH:MM:SS / HH:MM +0.06, we / I +0.09, bold ** / ''' +0.17, & / and +0.08
+co-occurrence ratio, geometric mean over 18 conventions: all pairs 2.65, pairs of uses by different handles 2.44
+page against the family's other pages, coined   : follow the page 0.77 [0.60, 0.89] (n=31)
+page against the family's other pages, semantic : follow the page 0.63 [0.49, 0.75] (n=46)
+page against the family's other pages, habit    : follow the page 0.67 [0.58, 0.74] (n=135)
+page against the family's other pages, pooled   : follow the page 0.67 [0.61, 0.73] (n=212)
+family's other pages against the feed, pooled: follow the family 0.56 [0.53, 0.60] (n=877)
+joint fit on first uses with all three (n=1988): page 0.73+-0.03, family 0.10+-0.03, feed 0.15+-0.03
+  page and family only (n=1988): page 0.79, family 0.14
+  coined   : page 0.86, family 0.05 (n=473)
+  semantic : page 0.64, family 0.21 (n=682)
+  habit    : page 0.82, family 0.11 (n=833)
+response to the page share: slope 0.91; within convention x family x day (491 strata) 0.50+-0.04 (n=2961)
+names, joint fit (n=7632): page's authors 0.46+-0.05, same-task handles on other pages 0.23+-0.06, feed 0.39+-0.07; conflicts: follow the page 0.60 [0.55, 0.64] (n=491)

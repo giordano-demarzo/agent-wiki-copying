@@ -75,6 +75,7 @@ Each writes one pickle in `cache/` and appends its numbers to
 | `fig1_setting.py` … `fig4_model.py` | Figures 1 to 4 | `paper/figs/` |
 | `si_figures.py` | the SI figures | `paper/figs/` |
 | `si_tables.py` | Table 1 and the SI tables | `paper/tables/` |
+| `check_text.py` | checks every number quoted in `paper/main.tex` and `paper/si.tex` against the cache; fails if one drifted | |
 
 The definitions the paper relies on live in one place each: the population in
 `common.Dataset`, the selection rule of the conventions in the constants at the top of

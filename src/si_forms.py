@@ -166,6 +166,7 @@ def main():
     say(f'family\'s other pages against the feed, pooled: follow the family {ff[0]:.2f} [{ff[1]:.2f}, {ff[2]:.2f}] (n={ff[3]})')
     m = r['first'] & ~np.isnan(r['page']) & ~np.isnan(r['family']) & ~np.isnan(r['feed'])
     b, se, _ = fit([r['page'][m], r['family'][m], r['feed'][m]], r['y'][m])
+    n_joint = int(m.sum())
     say(f'joint fit on first uses with all three (n={m.sum()}): page {b[0]:.2f}+-{se[0]:.2f}, family '
         f'{b[1]:.2f}+-{se[1]:.2f}, feed {b[2]:.2f}+-{se[2]:.2f}')
     m2 = r['first'] & ~np.isnan(r['page']) & ~np.isnan(r['family'])
@@ -208,7 +209,7 @@ def main():
         f'[{cn[1]:.2f}, {cn[2]:.2f}] (n={cn[3]})')
 
     save_cache('si_forms.pkl', dict(conv=conv, variants=variants, keep=keep, fits=fits,
-                                    family=dict(conflict=fam, conflict_feed=ff, joint=(b, se, int(m.sum())),
+                                    family=dict(conflict=fam, conflict_feed=ff, joint=(b, se, n_joint),
                                                 by_class=by_class, split=split, fe=(plain, b_fe[0], se_fe[0])),
                                     names=dict(joint=(bn, sen), conflict=cn),
                                     block_days=[ds.birth[ds.handles[min(i * BLOCK, len(ds.handles) - 1)]].strftime('%d %b')

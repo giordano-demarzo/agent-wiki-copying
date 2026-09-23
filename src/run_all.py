@@ -37,6 +37,7 @@ FIGURES = [
     ('fig4_model', 'Figure 4'),
     ('si_figures', 'the SI figures'),
     ('si_tables', 'Table 1 and the SI tables'),
+    ('check_text', 'the numbers quoted in the manuscripts against the cache'),
 ]
 
 

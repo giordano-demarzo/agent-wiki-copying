@@ -487,3 +487,10 @@ joint fit on first uses with all three (n=1988): page 0.73+-0.03, family 0.10+-0
   habit    : page 0.82, family 0.11 (n=833)
 response to the page share: slope 0.91; within convention x family x day (491 strata) 0.50+-0.04 (n=2961)
 names, joint fit (n=7632): page's authors 0.46+-0.05, same-task handles on other pages 0.23+-0.06, feed 0.39+-0.07; conflicts: follow the page 0.60 [0.55, 0.64] (n=491)
+
+=== Figure 2 ===
+(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
+(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
+(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
+(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
+(b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34

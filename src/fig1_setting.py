@@ -21,7 +21,7 @@ from common import CACHE, FIGS, PREVIEW, ICONS as _ICONS
 OUT=Path(FIGS)
 ICONS=Path(_ICONS)
 # Exactly the palette of figures A-C: ink for the subject, teal for reading, amber for writing, slate and rule for
-# everything passive. No tinted grounds beyond one neutral container, so the panels sit in the same visual world.
+# everything passive. No tinted grounds: the wiki is a thin outline, the task and the record stand on white.
 INK, SLATE, RULE='#1a1a1a','#6b7b8c','#b8bfc6'
 TEAL, AMBER='#3d9aa1','#d99b3f'
 GROUND='#f2f3f4'
@@ -76,7 +76,6 @@ def main():
     # a: illustrative task-clock durations, deliberately coarse, not measurements.
     # Cashier sequence: Education -> Business -> later fields of study.
     text(0,2,'a',9,bold=True)
-    box(0,6,31,67,fc=GROUND,ec='none',r=2)
     text(15.5,10,'Web Retrieval Task',5.8,bold=True,ha='center')
     text(15.5,13,'cashier task example',5.3,ha='center')
     # Five equally spaced item centres; paired labels share a compact leading.
@@ -113,7 +112,7 @@ def main():
     text(37.7,41.5,'Sandbox',5.5,ha='center',rotation=90)
     text(53,63,'HTTP GET requests\nallowed page edits',5.5,ha='center',color=SLATE)
 
-    box(76,6,44,67,fc=GROUND,ec='none',r=2)
+    box(76,6,44,67,fc='white',ec=RULE,lw=.65,r=2)
     text(98,10,'Public wiki',6.3,bold=True,ha='center')
     rows=[
         ('list-ordered',19,'RecentChanges','New edits across the wiki,\nnewest at the top.'),
@@ -136,7 +135,6 @@ def main():
 
     # c: the record itself, in a card matching a and b, restricted to the active weeks.
     text(TL['x0']-4,2,'c',9,bold=True)
-    box(TL['x0']-4,6,TL['x1']-TL['x0']+4,67,fc=GROUND,ec='none',r=2)
     text((TL['x0']+TL['x1'])/2,10,'The record',6.3,bold=True,ha='center')
     text((TL['x0']+TL['x1'])/2,13,'edits and new handles per day',5.3,ha='center')
     tl=json.loads((Path(CACHE)/'timeline.json').read_text())

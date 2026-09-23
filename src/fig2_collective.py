@@ -23,6 +23,10 @@ def main():
     ds = Dataset()
     fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.6), gridspec_kw=dict(width_ratios=[0.95, 1.1, 1.0]))
     plt.subplots_adjust(wspace=0.8)
+    # panel c carries long tick labels on its left: move b towards a to make room for them
+    for ax, dx in ((axes[1], -0.045), (axes[2], 0.01)):
+        p = ax.get_position()
+        ax.set_position([p.x0 + dx, p.y0, p.width, p.height])
 
     # (a) attention concentration per 6-hour block
     ax = axes[0]

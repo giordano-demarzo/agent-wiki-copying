@@ -231,7 +231,7 @@ def checks(v):
         (S, r'same skeleton as a task-mate in view (\d+\.\d)\\% of the time, as a task-mate out of view (\d+\.\d)\\% of the time, and as a visible handle of another task (\d+\.\d)\\% of the time',
          [str(x) for x in v['skeleton'][:3]]) if v['skeleton'] else None,
         # SI: S5
-        (S, r'lists the (\d+) pairs of competing forms we started from and why (\d+) were dropped', [v['candidates'], v['dropped']]),
+        (S, r'lists the (\d+) pairs of competing forms considered and why (\d+) were dropped', [v['candidates'], v['dropped']]),
         (S, r'(\w+) candidates had fewer than 100 uses', [v['under_100']]),
         (S, r'For (\w+) the minority form never occurs', [v['never']]),
         (S, r'median width is (0\.\d+) for the kept conventions and (0\.\d+) for the dropped ones', [v['width_kept'], v['width_dropped']]),

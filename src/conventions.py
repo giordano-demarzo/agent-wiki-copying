@@ -66,7 +66,8 @@ CONV = {
     'pre-signal / presignal': ('habit', rx(r'pre-signal'), rx(r'\bpresignal\b')),
     'no-show / noshow': ('habit', rx(r'no-show'), rx(r'\bnoshow\b')),
     '1,234 / 1234': ('habit', rx(r'\b\d{1,3}(?:,\d{3})+\b', 0), rx(r'\b\d{5,}\b', 0)),
-    'HH:MM:SS / HH:MM': ('habit', rx(r'\b\d{1,2}:\d{2}:\d{2}\b', 0), rx(r'\b\d{1,2}:\d{2}\b(?!:)', 0)),
+    # HH:MM must not be the tail of an HH:MM:SS: without the lookbehind every HH:MM:SS also counted as an HH:MM
+    'HH:MM:SS / HH:MM': ('habit', rx(r'\b\d{1,2}:\d{2}:\d{2}\b', 0), rx(r'(?<![\d:])\b\d{1,2}:\d{2}\b(?!:)', 0)),
     'we / I': ('habit', rx(r'\b[Ww]e\b', 0), rx(r'\bI\b', 0)),
     'UTC / Z': ('habit', rx(r'\d\d:\d\d(?::\d\d)? ?UTC\b', 0), rx(r'\d\d:\d\d(?::\d\d)?Z\b', 0)),
     "bold ** / '''": ('habit', rx(r'\*\*[^*\n]+\*\*', 0), rx(r"'''[^'\n]+'''", 0)),

@@ -425,3 +425,12 @@ forms, fully interacted convention x task x 3 h FE (R2 0.83): 0.63 +- 0.07, 0.22
 (d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
 (d) binned names: s=0.07:0.109 s=0.21:0.0224 s=0.35:0.0262 s=0.55:0.0232 s=0.78:0.00406 s=0.97:0.00318
 points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
+
+=== Figure 4 ===
+(b) vol, binned forms: s=0.04:3.41 s=0.17:2.99 s=0.34:1.91 s=0.71:1.1
+(b) vol, binned names: s=0.07:5.63 s=0.21:2.73 s=0.35:2.12 s=0.55:2.09 s=0.78:1.18 s=0.97:1.15
+(c) dev, binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
+(c) dev, binned names: s=0.07:0.109 s=0.21:0.0224 s=0.35:0.0262 s=0.55:0.0232 s=0.78:0.00406 s=0.97:0.00318
+points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
+() gap, binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
+() gap, binned names: s=0.07:1.83 s=0.21:1.29 s=0.35:2.89 s=0.55:1.21 s=0.77:0.936 s=0.97:1.15

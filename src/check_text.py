@@ -170,7 +170,7 @@ def checks(v):
         (M, r'edits on (\d+) task pages belonging to (\d+) tasks', [v['task_pages'], v['families']]),
         (M, r'The agents wrote on (\d+) task pages', [v['task_pages']]),
         # where to write
-        (M, r'(\w+) appends in (\w+) went to a page still in the last hundred lines', [round(10 * float(v['in_window'])), 10]),
+        (M, r'(\w+) out of (\w+) appends went to a page still in the last hundred lines', [round(10 * float(v['in_window'])), 10]),
         (M, r'\$c=(0\.\d+)\$', [v['c']]),
         (M, r'chosen (\w+) times less readily than a page of one', [round(v['own_vis_ratio'])]),
         # how to sign

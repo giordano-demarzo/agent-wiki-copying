@@ -494,3 +494,8 @@ names, joint fit (n=7632): page's authors 0.46+-0.05, same-task handles on other
 (b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
 (b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
 (b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
+
+=== The network of handles (Figure 1c) ===
+1201 handles, 14793 links (a task page edited in common)
+  101 handles share no task page with anyone
+  largest component: 1055 handles, 14737 links; the other 45 linked handles are in 18 small components

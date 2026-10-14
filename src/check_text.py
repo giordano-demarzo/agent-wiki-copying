@@ -58,6 +58,13 @@ def expected_values():
     v['revs_all'] = len(ds.revs_all); v['handles_all'] = len(ds.birth); v['handles'] = len(ds.handles)
     v['edits'] = len(ds.revs); v['task_edits'] = inp['n_edits']; v['task_pages'] = inp['n_pages']
     v['families'] = len({ds.family(r) for r in ds.revs if ds.is_task(r)})
+    import json, collections as _c
+    net = json.load(open(os.path.join(ROOT, 'cache', 'network.json'))); v['giant'] = len(net['nodes'])
+    editors = [sorted({r['label'] for r in rs}) for rs in ds.by_page(task_only=True).values()]
+    linked = {h for hs in editors if len(hs) > 1 for h in hs}; v['isolated'] = len(ds.handles) - len(linked)
+    import network as _net
+    parts = _net.components(sorted(linked), sorted({p for hs in editors for p in __import__('itertools').combinations(hs, 2)}))
+    v['small'] = len(linked) - len(parts[0]); v['n_small'] = len(parts) - 1
     v['excluded'] = len(ds.swarm); v['excluded_18'] = sum(1 for h in ds.swarm if ds.birth[h].strftime('%d %b') == '18 Jun')
     nfam = [len({ds.family(r) for r in ds.by_label[h] if ds.is_task(r)}) for h in ds.handles]
     v['one_family'], v['two_families'], v['three_families'] = nfam.count(1), nfam.count(2), sum(1 for k in nfam if k >= 3)
@@ -169,6 +176,9 @@ def checks(v):
         (M, r'Of the ([\d{,}]+) excluded handles, (\d+) were born on 18 June', [v['excluded'], v['excluded_18']]),
         (M, r'edits on (\d+) task pages belonging to (\d+) tasks', [v['task_pages'], v['families']]),
         (M, r'The agents wrote on (\d+) task pages', [v['task_pages']]),
+        (M, r'The network of the ([\d{,}]+) handles that edited a task page in common', [v['giant']]),
+        (M, r'([\d{,}]+) of the ([\d{,}]+) form a single network of co-authorship', [v['giant'], v['handles']]),
+        (M, r'The (\d+) handles that share no task page with anyone and (\d+) handles in (\d+) small components', [v['isolated'], v['small'], v['n_small']]),
         # where to write
         (M, r'(\w+) out of (\w+) appends went to a page still in the last hundred lines', [round(10 * float(v['in_window'])), 10]),
         (M, r'\$c=(0\.\d+)\$', [v['c']]),

@@ -1,9 +1,10 @@
-"""Figure 1: the task (a), what an agent reads and writes (b), and the record over time (c).
+"""Figure 1: the task (a), what an agent reads and writes (b), and who wrote where (c).
 
-Panels a and b are vector illustration; panel c plots cache/timeline.json, which
-src/timeline.py writes. All labels are editable text at 5 to 7 pt.
+Panels a and b are vector illustration; panel c draws cache/network.json, which
+src/network.py writes. All labels are editable text at 7 to 8 pt.
 Icon source and licence: assets/icons/lucide/.
 """
+import collections
 import json
 import datetime
 from pathlib import Path
@@ -26,9 +27,16 @@ INK, SLATE, RULE='#1a1a1a','#6b7b8c','#b8bfc6'
 TEAL, AMBER='#3d9aa1','#d99b3f'
 GROUND='#f2f3f4'
 
-# Three columns with 9 mm gutters: task loop 0-31, agent and wiki 40-120, timeline 136-178.
+# Three columns: task loop 0-36, agent and wiki 39-129, network 122-178.
 W_MM, H_MM=183, 77
-TL=dict(x0=129, x1=178.5, ytop=22, ybot=66)
+NET=dict(x0=126, x1=178.5, y0=5, y1=51, shift=-3)   # shift moves the network, not its legend
+# Short names of the ten tasks with most handles, in order of handles.
+TASKS={'datausa-clothing-workforce':'clothing workforce','oecd-equity':'OECD equity',
+       'datausa-sector61-state':'education sector','datausa-grocery-workforce':'grocery workforce',
+       'datausa-cashiers-masters':'cashiers','datausa-construction-workforce':'construction',
+       'ihme-cvd-deaths':'CVD deaths','datausa-poverty-county':'county poverty',
+       'datausa-language-french':'French speakers','datausa-maids-wage':'maids wage'}
+TASK_COLOURS=['#4c5fa8','#d99b3f','#5f9e6e','#c1698e','#8c5a1e','#3d9aa1','#c0504d','#8064a2','#9b9b3a','#6fa8dc']
 
 
 def main():
@@ -76,86 +84,93 @@ def main():
     # a: illustrative task-clock durations, deliberately coarse, not measurements.
     # Cashier sequence: Education -> Business -> later fields of study.
     text(0,2,'a',9,bold=True)
-    text(15.5,10,'Web Retrieval Task',5.8,bold=True,ha='center')
-    text(15.5,13,'cashier task example',5.3,ha='center')
+    text(17,9,'Web retrieval task',8,bold=True,ha='center')
+    text(17,13,'cashier task example',7,ha='center',color=SLATE)
     # Five equally spaced item centres; paired labels share a compact leading.
-    item_centres=[22+11*i for i in range(5)]
+    item_centres=[22+11.5*i for i in range(5)]
     steps=[
         ('file-search','R1: Education','~10 min to answer',INK),
-        ('clock','~45 min cooldown','Research / prepare',SLATE),
+        ('clock','~45 min cooldown','research, prepare',SLATE),
         ('file-search','R2: Business','~1 min to answer',INK),
     ]
     for centre,(name,title,subtitle,color) in zip(item_centres,steps):
-        icon(name,3,centre-3.5,7,color=color,lw=.75)
-        text(12.5,centre-1.3,title,5.6,bold=True)
-        text(12.5,centre+1.3,subtitle,5.3)
+        icon(name,0.5,centre-3.5,7,color=color,lw=.8)
+        text(9.5,centre-1.7,title,7.5,bold=True)
+        text(9.5,centre+1.8,subtitle,7)
     for upper,lower in zip(item_centres[:-1],item_centres[1:]):
         middle=(upper+lower)/2
-        arrow((6.5,middle-1),(6.5,middle+1),c=RULE,lw=.55)
-    icon('repeat-2',3,item_centres[3]-3.5,7,color=SLATE,lw=.7)
-    text(12.5,item_centres[3],'Repeat to R5',5.3)
-    icon('square-x',3,item_centres[4]-3.5,7,color=SLATE,lw=.75)
-    text(12.5,item_centres[4],'Sandbox\nshut down',5.5)
+        arrow((4,middle-1),(4,middle+1),c=RULE,lw=.6)
+    icon('repeat-2',0.5,item_centres[3]-3.5,7,color=SLATE,lw=.75)
+    text(9.5,item_centres[3],'Repeat to R5',7)
+    icon('square-x',0.5,item_centres[4]-3.5,7,color=SLATE,lw=.8)
+    text(9.5,item_centres[4],'Sandbox\nshut down',7)
 
     # b: key directly above the agent; no panel title or unused top band.
-    text(40,2,'b',9,bold=True)
-    icon('eye',41,12,4.5,color=TEAL,lw=.7)
-    arrow((47,14.25),(52,14.25),c=TEAL,dashed=True,lw=.75)
-    text(54.5,14.25,'Read',5.6)
-    icon('pencil',41,19,4.5,color=AMBER,lw=.7)
-    arrow((47,21.25),(52,21.25),c=AMBER,lw=.75)
-    text(54.5,21.25,'Write',5.6)
+    text(39,2,'b',9,bold=True)
+    icon('eye',40,9.5,5,color=TEAL,lw=.75)
+    arrow((46.5,12),(51.5,12),c=TEAL,dashed=True,lw=.8)
+    text(53.5,12,'Read',7.5)
+    icon('pencil',40,17,5,color=AMBER,lw=.75)
+    arrow((46.5,19.5),(51.5,19.5),c=AMBER,lw=.8)
+    text(53.5,19.5,'Write',7.5)
 
-    box(40,29,26,25,fc='white',ec=RULE,lw=.65,r=1.5,linestyle=(0,(3,2)))
-    icon('bot',45.5,31,15,color=INK,lw=1)
-    text(53,49.7,'Agent',6.2,bold=True,ha='center')
-    text(37.7,41.5,'Sandbox',5.5,ha='center',rotation=90)
-    text(53,63,'HTTP GET requests\nallowed page edits',5.5,ha='center',color=SLATE)
+    box(40,29,24,25,fc='white',ec=RULE,lw=.65,r=1.5,linestyle=(0,(3,2)))
+    icon('bot',45,30.5,14,color=INK,lw=1)
+    text(52,49,'Agent',8,bold=True,ha='center')
+    text(37.6,41.5,'Sandbox',7,ha='center',rotation=90,color=SLATE)
+    text(52,62,'HTTP GET requests,\nallowed page edits',7,ha='center',color=SLATE)
 
-    box(76,6,44,67,fc='white',ec=RULE,lw=.65,r=2)
-    text(98,10,'Public wiki',6.3,bold=True,ha='center')
+    box(70,6,49,67,fc='white',ec=RULE,lw=.65,r=2)
+    text(94.5,10.5,'Public wiki',8,bold=True,ha='center')
     rows=[
-        ('list-ordered',19,'RecentChanges','New edits across the wiki,\nnewest at the top.'),
-        ('file-search',34,'Task pages','Questions and answers,\nretrieved by page name.'),
-        ('messages-square',49,'Notice boards','Links, access workarounds\nand coordination notes.'),
-        ('file-user',64,'Own page','Self-chosen agent name\nand current run status.'),
+        ('list-ordered',21,'RecentChanges','New edits across the wiki,\nnewest at the top'),
+        ('file-search',35.5,'Task pages','Questions and answers,\nretrieved by page name'),
+        ('messages-square',50,'Notice boards','Links, access workarounds\nand coordination notes'),
+        ('file-user',64.5,'Own page','Self-chosen agent name\nand current run status'),
     ]
     for name,y,title,description in rows:
-        icon(name,78.5,y-4.2,8.4,color=AMBER if name=='messages-square' else TEAL,lw=.8)
-        text(89.5,y-3,title,6,bold=True)
-        text(89.5,y+1.4,description,5.4)
+        icon(name,72,y-4.6,8,color=AMBER if name=='messages-square' else TEAL,lw=.85)
+        text(82.5,y-3.6,title,7.5,bold=True)
+        text(82.5,y+1.6,description,7)
 
     # Ports preserve vertical order and avoid crossing read/write paths.
-    arrow((76,19),(66,34),c=TEAL,rad=.12,dashed=True)
-    arrow((76,32),(66,38),c=TEAL,rad=.05,dashed=True)
-    arrow((66,41),(76,36),c=AMBER,rad=.05)
-    arrow((76,47),(66,44),c=TEAL,rad=.05,dashed=True)
-    arrow((66,47),(76,51),c=AMBER,rad=.05)
-    arrow((66,50),(76,64),c=AMBER,rad=.12)
+    arrow((70,20),(64,34),c=TEAL,rad=.12,dashed=True)
+    arrow((70,33),(64,38),c=TEAL,rad=.05,dashed=True)
+    arrow((64,41),(70,37.5),c=AMBER,rad=.05)
+    arrow((70,48),(64,44),c=TEAL,rad=.05,dashed=True)
+    arrow((64,47),(70,52),c=AMBER,rad=.05)
+    arrow((64,50),(70,64.5),c=AMBER,rad=.12)
 
-    # c: the record itself, in a card matching a and b, restricted to the active weeks.
-    text(TL['x0']-4,2,'c',9,bold=True)
-    text((TL['x0']+TL['x1'])/2,10,'The record',6.3,bold=True,ha='center')
-    text((TL['x0']+TL['x1'])/2,13,'edits and new handles per day',5.3,ha='center')
-    tl=json.loads((Path(CACHE)/'timeline.json').read_text())
-    days=[datetime.date.fromisoformat(d) for d in tl['days']]
-    axc=fig.add_axes([(TL['x0']+9.5)/W_MM,1-TL['ybot']/H_MM,(TL['x1']-TL['x0']-12.5)/W_MM,(TL['ybot']-TL['ytop'])/H_MM])
-    axc.set_facecolor('none')
-    if sum(tl['excluded']):
-        axc.bar(days,np.array(tl['excluded'])+np.array(tl['edits']),color=RULE,width=0.8,label='excluded agents')
-    axc.bar(days,tl['edits'],color=INK,width=0.8,label='edits')
-    axc.bar(days,tl['new_handles'],color=AMBER,width=0.8,label='new handles')
-    axc.set_yscale('symlog',linthresh=10); axc.set_ylim(0,20000)
-    axc.set_yticks([0,10,100,1000,10000]); axc.set_yticklabels(['0','10','100','1,000','10,000'])
-    axc.set_xlim(datetime.date(2026,5,23),datetime.date(2026,6,24))
-    MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-    axc.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(lambda v,p: f'{mdates.num2date(v).day} {MON[mdates.num2date(v).month-1]}'))
-    axc.xaxis.set_major_locator(mdates.DayLocator(bymonthday=[25,1,8,15,22]))
-    axc.tick_params(labelsize=5.4,width=0.6,length=2.2)
-    for lab in axc.get_xticklabels(): lab.set_rotation(0)
-    axc.legend(loc='upper left',frameon=False,fontsize=5.2,handlelength=1.1,handletextpad=0.5,borderpad=0.2,labelspacing=0.3)
+    # c: the record itself, restricted to the active weeks; no title, the bars take the height.
+    text(NET['x0']-4,2,'c',9,bold=True)
+    # Handles linked when they edited a task page in common, coloured by the task of their first task edit,
+    # with area proportional to the number of links.
+    net=json.loads((Path(CACHE)/'network.json').read_text())
+    xy=np.array([[n['x'],n['y']] for n in net['nodes']])
+    xy-=np.median(xy,0)
+    r=np.linalg.norm(xy,axis=1,keepdims=True)
+    xy=xy/np.maximum(r,1e-12)*r**.6            # radial compression: outlying chains do not shrink the core
+    _,_,vt=np.linalg.svd(xy,full_matrices=False)
+    xy=xy@vt.T                               # long axis horizontal
+    lo,hi=xy.min(0),xy.max(0)
+    scale=min((NET['x1']-NET['x0'])/(hi[0]-lo[0]),(NET['y1']-NET['y0'])/(hi[1]-lo[1]))
+    xy=(xy-(lo+hi)/2)*scale+[(NET['x0']+NET['x1'])/2+NET['shift'],(NET['y0']+NET['y1'])/2]
+    from matplotlib.collections import LineCollection
+    task=[n['task'] for n in net['nodes']]
+    top=[f for f,_ in collections.Counter(task).most_common(len(TASKS))]
+    colour={f:c for f,c in zip(top,TASK_COLOURS)}
+    ax.add_collection(LineCollection([xy[[u,v]] for u,v in net['edges']],colors=RULE,lw=.1,alpha=.35,zorder=1))
+    degree=np.bincount(np.array(net['edges']).ravel(),minlength=len(task))
+    # Area proportional to degree; coloured handles over grey ones, and within each the larger underneath.
+    order=sorted(range(len(task)),key=lambda i: (task[i] in colour,-degree[i]))
+    ax.scatter(xy[order,0],xy[order,1],s=.5+.07*degree[order],c=[colour.get(task[i],RULE) for i in order],
+               lw=.15,edgecolors='white',zorder=3)
+    for j,f in enumerate(top+['other']):
+        x,y=NET['x0']+1.5+26*(j//6),NET['y1']+3+3.1*(j%6)
+        ax.scatter([x],[y],s=9,c=colour.get(f,RULE),lw=0,zorder=3)
+        text(x+2,y,TASKS.get(f,'other tasks'),7)
     OUT.mkdir(parents=True,exist_ok=True)
-    assert all(5<=t.get_fontsize()<=9 for t in ax.texts)
+    assert all(7<=t.get_fontsize()<=9 for t in ax.texts)
     licence=(ICONS/'LICENSE').read_text()
     description='Icons: Lucide, https://lucide.dev. '+licence
     fig.savefig(OUT/'fig1a_schematic.pdf',facecolor='white',metadata={'Subject':description})

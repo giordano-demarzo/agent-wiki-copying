@@ -1,5 +1,5 @@
 """Figure 2: a collective forms within a day.
-(a) attention concentrates: task pages written on and effective number of pages per 6-hour block;
+(a) attention concentrates: share of the task edits of each 6-hour block on its 5 busiest pages;
 (b) how names are dressed over time: share of new handles with each kind of piece, blocks of 100;
 (c) the patchwork: agreement of two uses on the same page and on different pages, with the time-shuffled null.
 """
@@ -14,6 +14,7 @@ from common import Dataset, Report, T, load_cache
 from style import AMBER, CLASS_COLOR, INDIGO, INK, SLATE, panel, plt, save, use
 
 H = 6
+TOP = 5
 BLOCK = 100
 
 
@@ -35,30 +36,35 @@ def main():
     times = np.array([T(r['time']) for r in task])
     t0, t1 = datetime.datetime(2026, 6, 15), datetime.datetime(2026, 6, 23)
     edges = [t0 + datetime.timedelta(hours=H * i) for i in range(int((t1 - t0).total_seconds() // 3600 // H) + 1)]
-    xs, active, effective = [], [], []
+    xs, active, effective, top = [], [], [], []
     for a, b in zip(edges[:-1], edges[1:]):
         m = [r for r, t in zip(task, times) if a <= t < b]
         if len(m) < 30:
             continue
-        c = collections.Counter(r['page_id'] for r in m)
-        p = np.array(list(c.values()), float) / len(m)
+        c = np.array(sorted(collections.Counter(r['page_id'] for r in m).values(), reverse=True), float)
+        p = c / len(m)
         xs.append(a + (b - a) / 2)
         active.append(len(c))
         effective.append(1 / np.sum(p ** 2))
-    ax.plot(xs, active, 'o-', color=INK, ms=2.6, label='pages written on')
-    ax.plot(xs, effective, 's-', color=AMBER, ms=2.6, label='effective number of pages')
-    ax.set_yscale('log')
-    ax.set_ylim(1, 300)
-    ax.set_ylabel('task pages per 6-hour block')
+        top.append(p[:TOP].sum())
+    even = np.minimum(TOP, active) / np.array(active)
+    ax.plot(xs, top, 'o-', color=INK, ms=2.6, label=f'{TOP} busiest pages')
+    ax.plot(xs, even, ':', color=SLATE, lw=1.1, label='if spread evenly')
+    ax.set_ylim(0, 1)
+    ax.set_ylabel('share of task edits')
+    ax.legend(frameon=False, fontsize=5.4, loc='upper center', bbox_to_anchor=(0.5, -0.17), ncol=1, handlelength=1.6)
     ax.xaxis.set_major_locator(mdates.DayLocator(bymonthday=[16, 18, 20, 22]))
     ax.set_xlim(datetime.datetime(2026, 6, 15, 12), datetime.datetime(2026, 6, 22, 12))
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%d Jun'))
     ax.tick_params(axis='x', labelsize=5.6)
-    ax.legend(frameon=False, fontsize=5.6, loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=1, handlelength=1.6)
-    top = np.argsort(active)[-2:]
+    busiest = np.argsort(active)[-2:]
     say(f'(a) {len(xs)} blocks of {H} h with at least 30 task edits; median pages written on {np.median(active):.0f}, '
-        f'median effective number {np.median(effective):.1f}; at the two busiest blocks {sorted(active[i] for i in top)} '
-        f'pages, effective {sorted(round(effective[i]) for i in top)}')
+        f'median effective number {np.median(effective):.1f}; at the two busiest blocks {sorted(active[i] for i in busiest)} '
+        f'pages, effective {sorted(round(effective[i]) for i in busiest)}')
+    late = np.array([x >= datetime.datetime(2026, 6, 18) for x in xs])
+    say(f'(a) share of a block\'s task edits on its {TOP} busiest pages: median {np.median(top):.2f}, '
+        f'range {min(top):.2f} to {max(top):.2f}; from 18 June {min(np.array(top)[late]):.2f} to {max(np.array(top)[late]):.2f}, '
+        f'against {min(even[late]):.2f} to {max(even[late]):.2f} if spread evenly over the pages written on')
 
     # (b) how names are dressed, over time
     ax = axes[1]
@@ -83,8 +89,7 @@ def main():
     ax.set_xticklabels([days[i] for i in ticks], fontsize=5.6, rotation=40, ha='right')
     ax.set_ylim(0, 1.0)
     ax.set_ylabel('share of new handles with the feature')
-    ax.set_xlabel('new handles in order of birth, blocks of 100', fontsize=6.6)
-    ax.legend(frameon=False, fontsize=5.6, loc='lower center', bbox_to_anchor=(0.5, 1.0), ncol=2, handlelength=1.6,
+    ax.legend(frameon=False, fontsize=5.4, loc='upper center', bbox_to_anchor=(0.5, -0.17), ncol=2, handlelength=1.6,
               columnspacing=1.2)
 
     # (c) the patchwork

@@ -19,7 +19,8 @@ from common import RESULTS
 ANALYSIS = [
     ('build_dataset', 'parse the release into cache/data.pkl'),
     ('describe_population', 'the platform and the population'),
-    ('timeline', 'daily counts for Figure 1c'),
+    ('timeline', 'daily counts of edits and handles'),
+    ('network', 'the network of handles of Figure 1c'),
     ('analysis_pages', 'where to write'),
     ('analysis_names', 'how to sign'),
     ('analysis_forms', 'how to write'),

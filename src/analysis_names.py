@@ -60,10 +60,11 @@ def main():
         f'{np.mean([len(g["in_view"]) for g in groups if nm.in_sample(g)]):.1f}, out of view '
         f'{np.mean([len(g["out_of_view"]) for g in groups if nm.in_sample(g)]):.1f}')
 
-    # the two curves of Fig. 3b: joint fit on the shares in view and out of view
+    # the two curves of Fig. 3b: joint fit on the shares in the feed and out of view
     m = ~np.isnan(rec['view']) & ~np.isnan(rec['out'])
     b, se, _ = fit([rec['view'][m], rec['out'][m]], rec['y'][m], (rec['feature'][m],), cluster=rec['handle'][m])
-    say(f'joint fit, feature fixed effects (n={m.sum()}): task-mates in view {b[0]:.2f}+-{1.96 * se[0]:.2f}, '
+    joint = dict(b=b, se=se, n=int(m.sum()))
+    say(f'joint fit, feature fixed effects (n={m.sum()}): task-mates in the feed {b[0]:.2f}+-{1.96 * se[0]:.2f}, '
         f'out of view {b[1]:.2f}+-{1.96 * se[1]:.2f} (95% intervals, clustered by handle)')
 
     # every piece and feature: prior strength, co-occurrence, volatility
@@ -85,7 +86,7 @@ def main():
         say(f'  feature {t:10}: carriers {int(feats[t].sum()):4d}  mu_A {s["muA"]:.3f} mu_B {s["muB"]:.3f} '
             f's {s["s"]:.2f}  co-occurrence {s["gap"]:.2f}  volatility {s["vol"]:.2f}')
 
-    save_cache('names.pkl', dict(pieces=piece_rows, stats=stats, features=feats, affiliation=affil,
+    save_cache('names.pkl', dict(pieces=piece_rows, stats=stats, features=feats, affiliation=affil, joint=joint,
                                  groups=groups, records=rec))
     say.write()
 

@@ -122,6 +122,7 @@ def exposure_groups(ds, mates_h=MATES_H):
             on_page=[m for m in mates if m in authors],
             in_feed=[m for m in mates if m in feed and m not in authors],
             in_view=[m for m in mates if m in seen],
+            in_feed_any=[m for m in mates if m in feed],   # in the feed, whether or not also on the page
             out_of_view=[m for m in mates if m not in seen],
             other_tasks=[h for h in feed if fam[h] != fam[i]],
             block=block_of(birth[i])))
@@ -137,7 +138,8 @@ def in_sample(g):
 def records(ds, feats, groups):
     """One record per newcomer in the sample and name feature: the outcome and
     the share of the feature among the task-mates on the page, in the feed only,
-    out of view, among all task-mates in view, and among other tasks in the feed.
+    out of view, among all task-mates in the feed (`view`, the black curve of
+    Fig. 3b), and among other tasks in the feed.
     `page0` is the page share with zero where the first page had fewer than
     MIN_GROUP earlier task-mates, and `no_page` marks those newcomers."""
     fam = np.array([ds.first_family[h] for h in ds.handles])
@@ -149,7 +151,7 @@ def records(ds, feats, groups):
             rows.append((t, i, fam[i], g['block'], v[i],
                          share(v, g['on_page'], MIN_GROUP), share(v, g['in_feed'], MIN_GROUP),
                          share(v, g['out_of_view'], MIN_GROUP), share(v, g['other_tasks'], MIN_OTHER),
-                         share(v, g['in_view'], MIN_GROUP)))
+                         share(v, g['in_feed_any'], MIN_GROUP)))
     cols = list(zip(*rows))
     return dict(feature=np.array(cols[0]), handle=np.array(cols[1]), family=np.array(cols[2]),
                 block=np.array(cols[3]), y=np.array(cols[4], float), page=np.array(cols[5], float),

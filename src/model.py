@@ -17,8 +17,8 @@ of all agents are processed in time order, and every edit follows one rule.
     carried by the last 100 lines of the feed, and 1/2 if there are none.
 
     How to sign. On its first edit the agent decides each name feature by the
-    same rule, with rho the share of the feature among the agents it can see:
-    the authors of its page and the agents of the last 100 lines.
+    same rule, with rho the share of the feature among the agents of the last
+    100 lines of the feed.
 
 Everything the model takes from the record is measured on individual decisions
 (analysis_pages.py, analysis_forms.py): the number of agents and their arrival
@@ -85,7 +85,7 @@ def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback=
         else:
             pg = cands[rng.integers(len(cands))]
         if seen[h] is None:
-            seen[h] = list(dict.fromkeys(authors[pg] + [a for _, a in window]))
+            seen[h] = list(dict.fromkeys(a for _, a in window))
         mine[h].add(pg)
         for k, (mu_a, mu_b) in conventions.items():
             if rng.random() >= usage:

@@ -116,6 +116,7 @@ def expected_values():
     v['own_vis_ratio'] = p['b1'][0] / p['b1'][1]; v['r2'] = (f['r2_1'], n['r2_1'], p['r2_1']); v['fx'] = list(f['bx'])
     v['out_full'], v['out_pop'] = ident_full['names']['b1'][2], n['b1'][2]; v['full_names'] = list(ident_full['names']['b1'])
     th = load_cache('si_thresholds.pkl'); v['th_page'] = (min(r['b'][0] for r in th), max(r['b'][0] for r in th)); v['th_kept'] = (min(r['kept'] for r in th), max(r['kept'] for r in th))
+    jn = names['joint']; v['joint'] = (jn['b'][0], jn['se'][0], jn['b'][1], jn['se'][1], jn['n'])
     v['n1'] = list(n['b1']); v['n2'], v['n3'] = list(n['b2']), list(n['b3']); v['c_page'] = (n['b2'][0] - n['b2'][2], n['b1'][0] - n['b1'][2], n['b2'][1] - n['b2'][2], n['b1'][1] - n['b1'][2])
     v['c3'] = (n['b3'][0] - n['b3'][2], n['b3'][1] - n['b3'][2]); cl = p['clogit']['b']; v['logodds'] = cl[2] + cl[3]
     for w, r in ident['windows'].items():
@@ -277,6 +278,7 @@ def checks(v):
         # SI: S2 and S8
         (S, r'the feed carries most, (0\.\d+), the authors of the first page (0\.\d+), the task-mates out of view (0\.\d+) and other tasks (0\.\d+); the coefficient of the task-mates out of view is larger than in the population, where it is (0\.\d+)', [v['full_names'][1], v['full_names'][0], v['full_names'][2], v['full_names'][3], v['out_pop']]),
         (S, r'to \$(-?0\.\d+) \\pm 0\.\d+\$ on the page, \$(0\.\d+) \\pm 0\.\d+\$ in the feed and \$(-0\.\d+) \\pm 0\.\d+\$ out of view', v['n2'][:3]),
+        (S, r'in which the task-mates in the feed carry \$(0\.\d+) \\pm (0\.\d+)\$ and those out of view \$(0\.\d+) \\pm (0\.\d+)\$ \(([\d,]+) records', list(v['joint'])),
         (S, r'The feed against the exposure out of view holds, \$(0\.\d+)\$ against \$(0\.\d+)\$ in the main specification', [v['c_page'][2], v['c_page'][3]]),
         (S, r'survives feature by block intercepts as well, \$(0\.\d+)\$ in the fourth column', [v['c3'][1]]),
         (S, r'its earlier same-task authors carry \$(0\.\d+) \\pm 0\.\d+\$ in the main specification, no more than the task-mates out of view, \$(0\.\d+) \\pm', [v['n1'][0], v['n1'][2]]),

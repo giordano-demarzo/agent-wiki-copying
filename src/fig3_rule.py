@@ -71,7 +71,7 @@ def main():
     X = np.column_stack([np.ones(len(y)), xv, xo] + [(feat == lev).astype(float) for lev in levels[1:]])
     beta = np.linalg.lstsq(X, y, rcond=None)[0]
     resid = y - X @ beta
-    for x, coef, col, mk, lab in ((xv, beta[1], INK, 'o', 'task-mates in view'),
+    for x, coef, col, mk, lab in ((xv, beta[1], INK, 'o', 'task-mates in the feed'),
                                   (xo, beta[2], SLATE, 's', 'task-mates out of view')):
         adjusted = y.mean() + coef * (x - x.mean()) + resid
         xs, ps, es = [], [], []
@@ -89,7 +89,7 @@ def main():
     ax.set_xlabel('share of task-mates with the feature')
     ax.set_ylabel('P(name has the feature)')
     ax.legend(frameon=False, fontsize=5.6, loc='upper left', handlelength=1.6)
-    say(f'(b) joint fit (n={m.sum()}): in view {b[0]:.2f}, out of view {b[1]:.2f}')
+    say(f'(b) joint fit (n={m.sum()}): in the feed {b[0]:.2f}, out of view {b[1]:.2f}')
 
     ax = axes[2]
     panel(ax, 'c')

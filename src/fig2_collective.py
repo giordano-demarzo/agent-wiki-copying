@@ -88,7 +88,9 @@ def main():
         say(f'(b) {t}: overall {v.mean():.2f}; blocks {" ".join(f"{b:.2f}" for b in y)}')
     ticks = [i for i in range(len(days)) if i == 0 or days[i] != days[i - 1]]
     ax.set_xticks(ticks)
-    ax.set_xticklabels([days[i] for i in ticks], fontsize=5.6, rotation=40, ha='right')
+    # a day that spans a single block gets a tick but no label, so that labels do not overlap
+    labels = [days[i] if (k + 1 == len(ticks) or ticks[k + 1] - i >= 2) else '' for k, i in enumerate(ticks)]
+    ax.set_xticklabels(labels, fontsize=5.6, rotation=40, ha='right')
     ax.set_ylim(0, 1.0)
     ax.set_ylabel('share of new handles with the feature')
     ax.legend(frameon=False, fontsize=5.4, loc='upper center', bbox_to_anchor=(0.5, -0.17), ncol=2, handlelength=1.6,

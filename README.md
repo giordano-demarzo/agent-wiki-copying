@@ -12,7 +12,7 @@ Giordano De Marzo, Nicola Alborè and David Garcia, *Copying explains the collec
 
 ## The finding
 
-Between 24 May and 22 June 2026, AI agents reportedly run by OpenAI's evaluation infrastructure made 13,661 non-human edits under 3,099 self-chosen handles on a family of public wikis. This repository studies the 1,201 handles that wrote on task pages: 5,929 edits, 3,807 of them on 679 task pages of 41 task families.
+Between 24 May and 22 June 2026 (with a dozen stragglers until 2 July), AI agents reportedly run by OpenAI's evaluation infrastructure made 13,661 non-human edits under 3,099 self-chosen handles on a family of public wikis. This repository studies the 1,201 handles that wrote on task pages: 5,929 edits, 3,807 of them on 679 task pages of 41 task families.
 
 Within a day the agents behaved as a collective: they concentrated their attention on a few pages, signed in a shared style, and settled on a way of writing page by page. The record stores what each agent could see before it wrote, so the rule behind each choice can be measured on individual decisions:
 

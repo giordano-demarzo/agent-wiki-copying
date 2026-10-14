@@ -516,3 +516,11 @@ fashion Helper   : mu_A 0.063 mu_B 0.483; observed first block 0.24, last 0.11, 
 points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
 () gap, binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
 () gap, binned names: s=0.07:1.83 s=0.25:1.26 s=0.34:2.22 s=0.58:1.21 s=0.77:0.841 s=0.96:1.16
+
+=== Figure 2 ===
+(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
+(a) share of a block's task edits on its 5 busiest pages: median 0.52, range 0.21 to 0.84; from 18 June 0.27 to 0.84, against 0.06 to 0.56 if spread evenly over the pages written on
+(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
+(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
+(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
+(b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34

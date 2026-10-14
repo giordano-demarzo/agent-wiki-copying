@@ -233,7 +233,7 @@ def checks(v):
         (S, r'created more often than its later ones, (0\.\d+) against (0\.\d+)', [v['c_first'], v['c_later']]),
         (S, r'of the ([\d,]+) decisions, ([\d,]+) were taken with a page of the handle.s own task visible in the last 100 lines, and (\d+)\\% of them created a page, while the (\d+) taken with none visible created one (\d+)\\%',
          [v['decisions'], v['n_vis'], v['c_vis'], v['n_novis'], v['c_novis']]),
-        (S, r'Of the ([\d,]+) handles, (\d+) wrote on one task family only, (\d+) on two and (\d+) on three or more, and of the ([\d,]+) landings after a handle.s first, (\d+)\\% fell on a page of the handle.s own family',
+        (S, r'Of the ([\d,]+) handles, (\d+) wrote on one task family only, (\d+) on two and (\d+) on three or more, and of the ([\d,]+) arrivals after a handle.s first, (\d+)\\% fell on a page of the handle.s own family',
          [v['handles'], v['one_family'], v['two_families'], v['three_families'], v['n_later'], v['own_later']]),
         (S, r'over ([\d,]+) candidate page-moments', [v['n_attach']]),
         (S, r'the rate is (\d\.\d), (\d\.\d), (\d\.\d) and (\d\.\d) at \$k\$ of 2, 3', v['kernel'][1:5]),

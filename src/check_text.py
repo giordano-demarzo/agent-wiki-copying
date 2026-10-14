@@ -58,6 +58,7 @@ def expected_values():
     v['revs_all'] = len(ds.revs_all); v['handles_all'] = len(ds.birth); v['handles'] = len(ds.handles)
     v['edits'] = len(ds.revs); v['task_edits'] = inp['n_edits']; v['task_pages'] = inp['n_pages']
     v['families'] = len({ds.family(r) for r in ds.revs if ds.is_task(r)})
+    f2 = load_cache('fig2.pkl'); v['top_late'], v['even_late'] = f2['top_late'], f2['even_late']
     import json, collections as _c
     net = json.load(open(os.path.join(ROOT, 'cache', 'network.json'))); v['giant'] = len(net['nodes'])
     editors = [sorted({r['label'] for r in rs}) for rs in ds.by_page(task_only=True).values()]
@@ -65,7 +66,7 @@ def expected_values():
     import network as _net
     parts = _net.components(sorted(linked), sorted({p for hs in editors for p in __import__('itertools').combinations(hs, 2)}))
     v['small'] = len(linked) - len(parts[0]); v['n_small'] = len(parts) - 1
-    v['excluded'] = len(ds.swarm); v['excluded_18'] = sum(1 for h in ds.swarm if ds.birth[h].strftime('%d %b') == '18 Jun')
+    v['excluded'] = len(ds.swarm); v['excluded_18'] = sum(1 for h in ds.swarm if (ds.birth[h].month, ds.birth[h].day) == (6, 18))  # not strftime: locale-dependent
     nfam = [len({ds.family(r) for r in ds.by_label[h] if ds.is_task(r)}) for h in ds.handles]
     v['one_family'], v['two_families'], v['three_families'] = nfam.count(1), nfam.count(2), sum(1 for k in nfam if k >= 3)
     v['span_h'] = np.median(pop['handle_span']) / 60; v['n_span'] = len(pop['handle_span'])
@@ -113,7 +114,10 @@ def expected_values():
     p, n, f = ident['pages'], ident['names'], ident['forms']
     v['n_records'], v['n_first'], v['n_cand'], v['n_dec'] = n['n'], f['n'], p['n'], p['n_decisions']
     v['own_vis_ratio'] = p['b1'][0] / p['b1'][1]; v['r2'] = (f['r2_1'], n['r2_1'], p['r2_1']); v['fx'] = list(f['bx'])
-    v['out_full'], v['out_pop'] = ident_full['names']['b1'][2], n['b1'][2]
+    v['out_full'], v['out_pop'] = ident_full['names']['b1'][2], n['b1'][2]; v['full_names'] = list(ident_full['names']['b1'])
+    th = load_cache('si_thresholds.pkl'); v['th_page'] = (min(r['b'][0] for r in th), max(r['b'][0] for r in th)); v['th_kept'] = (min(r['kept'] for r in th), max(r['kept'] for r in th))
+    v['n1'] = list(n['b1']); v['n2'], v['n3'] = list(n['b2']), list(n['b3']); v['c_page'] = (n['b2'][0] - n['b2'][2], n['b1'][0] - n['b1'][2], n['b2'][1] - n['b2'][2], n['b1'][1] - n['b1'][2])
+    v['c3'] = (n['b3'][0] - n['b3'][2], n['b3'][1] - n['b3'][2]); cl = p['clogit']['b']; v['logodds'] = cl[2] + cl[3]
     for w, r in ident['windows'].items():
         v[f'win_{w}'] = list(r['same']['b']); v[f'win_other_{w}'] = list(r['other']['b'])
     v['view_fit'] = None   # the joint fit of Fig. 3b is recomputed in fig3_rule; checked through si_names below
@@ -166,7 +170,7 @@ def expected_values():
 def checks(v):
     """(file, pattern, values): every group of the pattern must agree with the value at the same position."""
     M, S = 'main.tex', 'si.tex'
-    win = lambda w: v[f'win_{w}']
+    win = lambda w: v[f'win_{w}'][:3]
     return [
         # main text: the record and the population
         (M, r'leaving ([\d{,}]+) edits under ([\d{,}]+) handles', [v['edits'] + sum(1 for r in ds_revs_swarm(v)), v['handles_all']]),
@@ -176,12 +180,14 @@ def checks(v):
         (M, r'Of the ([\d{,}]+) excluded handles, (\d+) were born on 18 June', [v['excluded'], v['excluded_18']]),
         (M, r'edits on (\d+) task pages belonging to (\d+) tasks', [v['task_pages'], v['families']]),
         (M, r'The agents wrote on (\d+) task pages', [v['task_pages']]),
+        (M, r'took between (\d+)\\% and (\d+)\\% of its edits, against (\d+)\\% to (\d+)\\% had the edits been spread evenly',
+         [round(100 * x) for x in v['top_late'] + v['even_late']]),
         (M, r'The network of the ([\d{,}]+) handles that edited a task page in common', [v['giant']]),
         (M, r'([\d{,}]+) of the ([\d{,}]+) form a single network of co-authorship', [v['giant'], v['handles']]),
         (M, r'The (\d+) handles that share no task page with anyone and (\d+) handles in (\d+) small components', [v['isolated'], v['small'], v['n_small']]),
         # where to write
         (M, r'(\w+) out of (\w+) appends went to a page still in the last hundred lines', [round(10 * float(v['in_window'])), 10]),
-        (M, r'\$c=(0\.\d+)\$', [v['c']]),
+        (M, r'\$p_c=(0\.\d+)\$', [v['c']]),
         (M, r'chosen (\w+) times less readily than a page of one', [round(v['own_vis_ratio'])]),
         # how to sign
         (M, r'runs from (0\.\d+) to (0\.\d+) across the 16 name features, against (0\.\d+) to (0\.\d+) across the conventions',
@@ -191,7 +197,7 @@ def checks(v):
         (M, r'and (\d+) are found across tasks', [v['n_generic']]),
         (M, r'These (\d+) pieces and the date stamp are the (\d+) name features', [v['n_generic'], v['n_features']]),
         # how to write
-        (M, r'We start from (\d+) candidate conventions and keep the (\d+) that have', [v['candidates'], v['kept']]),
+        (M, r'The (\d+) candidate pairs were collected by reading the corpus with the help of a language model, and we keep the (\d+) whose prior', [v['candidates'], v['kept']]),
         (M, r'we took (\d+) conventions in which two forms', [v['kept']]),
         (M, r'still writes \\texttt\{R4\} one time in (\w+)', [('rel', 1 / v['mu_Rn'], 0.1)]),
         (M, r'still writes \\texttt\{CONFIRMED\} one time in (\w+)', [('rel', 1 / v['mu_CONFIRMED'], 0.1)]),
@@ -234,7 +240,7 @@ def checks(v):
         (S, r'lists the (\d+) name pieces carried by at least 15 handles. Thirteen are months', [v['n_pieces']]),
         (S, r'no piece between (\d\.\d) and (\d\.\d)', [v['gap_below'], v['gap_above']]),
         (S, r'The sixteen pieces above it', [None]) if v['n_specific'] == 16 else (S, r'The (\w+) pieces above it', [v['n_specific']]),
-        (S, r'the authors of the page carry \$(0\.\d+) \\pm (0\.\d+)\$, the task-mates in the feed \$(0\.\d+) \\pm (0\.\d+)\$ and the task-mates out of view \$(0\.\d+) \\pm (0\.\d+)\$',
+        (S, r'the earlier task-mates on the page of the first edit carry \$(0\.\d+) \\pm (0\.\d+)\$, the task-mates in the feed \$(0\.\d+) \\pm (0\.\d+)\$ and the task-mates out of view \$(0\.\d+) \\pm (0\.\d+)\$',
          [win(6)[0], None, win(6)[1], None, win(6)[2], None]),
         (S, r'with three hours the three coefficients are (0\.\d+), (0\.\d+) and (0\.\d+), and with one and a half hours (0\.\d+), (0\.\d+) and (0\.\d+)', [*win(3), *win(1.5)]),
         (S, r'the two shorter windows, \$(-?0\.\d+)\$ and \$(-?0\.\d+)\$, and (0\.\d+) at six hours', [v['win_other_1.5'][0], v['win_other_3'][0], v['win_other_6'][0]]),
@@ -250,7 +256,7 @@ def checks(v):
          [str(v['fam_conflict'][0]), str(v['fam_conflict'][1]), str(v['fam_conflict'][2]), *[str(v_[0]) for v_ in (load_cache('si_forms.pkl')['family']['conflict'][c] for c in ('coined', 'semantic', 'habit'))]]),
         (S, r'on the ([\d,]+) first uses that have all three, the page carries a coefficient of \$(0\.\d+) \\pm', [v['fam_n'], v['fam_joint'][0]]),
         (S, r'within convention x family x day|(\d+) strata, the slope of the response to the page share is \$(0\.\d+) \\pm (0\.\d+)\$ against (0\.\d+) without them', [None, v['fam_fe'][1], v['fam_fe'][2], v['fam_fe'][0]]),
-        (S, r'the authors of the page carry \$(0\.\d+) \\pm (0\.\d+)\$ against \$(0\.\d+) \\pm (0\.\d+)\$ for the task-mates of the previous six hours who were not among them and \$(0\.\d+) \\pm (0\.\d+)\$ for the feed, and when the page.s authors and the task-mates disagree the newcomer follows the page (\d+)\\% of the time \(n = (\d+)\)',
+        (S, r'in a joint fit the authors of the page carry \$(0\.\d+) \\pm (0\.\d+)\$, the task-mates of the previous six hours on other pages \$(0\.\d+) \\pm (0\.\d+)\$ and the feed \$(0\.\d+) \\pm (0\.\d+)\$, and when the page authors and the task-mates disagree the newcomer follows the page (\d+)\\% of the time \(n = (\d+)\)',
          [v['names_fam'][0], None, v['names_fam'][1], None, v['names_fam'][2], None, str(v['names_conflict'][0]), v['names_conflict'][3]]),
         # SI: S6, S7
         (S, r'At \$s = 0\.02\$ the final share ranges from (0\.\d+) to (\d\.\d+), at \$s = 0\.1\$ from (0\.\d+) to (0\.\d+), at \$s = 0\.3\$ from (0\.\d+) to (0\.\d+), and at \$s\$ of 0\.6 and 1 from (0\.\d+) to (0\.\d+)',
@@ -269,7 +275,15 @@ def checks(v):
         (S, r'a geometric mean of (\d\.\d) in the model against (\d\.\d) observed, and is noisy convention by convention, with a correlation of (0\.\d+)', [v['pc_gap'][1], v['pc_gap'][2], v['pc_gap'][0]]),
         (S, r'with a correlation of (0\.\d+), and is close in level, (\d\.\d) in the model against (\d\.\d) on average', [v['pc_vol'][0], v['pc_vol'][1], v['pc_vol'][2]]),
         # SI: S2 and S8
-        (S, r'0\.(\d+) for the task-mates out of view and 0\.\d+ for other tasks, but the coefficient of the task-mates out of view is larger than in the population, where it is (0\.\d+)', [None, v['out_pop']]),
+        (S, r'the feed carries most, (0\.\d+), the authors of the first page (0\.\d+), the task-mates out of view (0\.\d+) and other tasks (0\.\d+); the coefficient of the task-mates out of view is larger than in the population, where it is (0\.\d+)', [v['full_names'][1], v['full_names'][0], v['full_names'][2], v['full_names'][3], v['out_pop']]),
+        (S, r'to \$(-?0\.\d+) \\pm 0\.\d+\$ on the page, \$(0\.\d+) \\pm 0\.\d+\$ in the feed and \$(-0\.\d+) \\pm 0\.\d+\$ out of view', v['n2'][:3]),
+        (S, r'The feed against the exposure out of view holds, \$(0\.\d+)\$ against \$(0\.\d+)\$ in the main specification', [v['c_page'][2], v['c_page'][3]]),
+        (S, r'survives feature by block intercepts as well, \$(0\.\d+)\$ in the fourth column', [v['c3'][1]]),
+        (S, r'its earlier same-task authors carry \$(0\.\d+) \\pm 0\.\d+\$ in the main specification, no more than the task-mates out of view, \$(0\.\d+) \\pm', [v['n1'][0], v['n1'][2]]),
+        (S, r'and the contrast is \$(0\.\d+)\$ with feature by task intercepts and \$(0\.\d+)\$ with feature by block intercepts added', [v['c_page'][0], v['c3'][0]]),
+        (S, r'The share among other tasks is \$(0\.\d+) \\pm 0\.\d+\$ in the main specification and rises to \$(0\.\d+) \\pm 0\.\d+\$ with feature by task intercepts \(\$(0\.\d+) \\pm', [v['n1'][3], v['n2'][3], v['n3'][3]]),
+        (S, r'The coefficient of the page lies between (0\.\d+) and (0\.\d+) under every rule, the number of conventions kept between (\d+) and (\d+)', list(v['th_page']) + list(v['th_kept'])),
+        (S, r'log-odds higher by \$(\d\.\d)\$ than a page of another task, a factor of (\d+)', [v['logodds'], round(float(np.exp(v['logodds'])))]),
         (S, r'It gives \$(0\.\d+) \\pm 0\.\d+\$ for the page, \$(0\.\d+) \\pm 0\.\d+\$ for the same-task uses visible in the feed, \$(-?0\.\d+) \\pm 0\.\d+\$ for the same-task uses out of view and \$(-?0\.\d+) \\pm', v['fx']),
         (S, r'with slopes of (0\.\d+), (0\.\d+) and (0\.\d+) for the three classes against (0\.\d+), (0\.\d+) and (0\.\d+) at the time of the use',
          [v['variants'][c]['shifted'] for c in ('coined', 'semantic', 'habit')] + [v['variants'][c]['first'] for c in ('coined', 'semantic', 'habit')]),

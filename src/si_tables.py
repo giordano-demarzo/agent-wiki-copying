@@ -13,20 +13,33 @@ def pm(b, se, d=2):
     return f'${b:.{d}f}\\pm{1.96 * se:.{d}f}$'
 
 
+def ci(b, se, d=2):
+    return f'[{b - 1.96 * se:.{d}f}, {b + 1.96 * se:.{d}f}]'
+
+
 def table_regressions():
-    """Table 1 of the paper: the three choices, baseline and task x 3 h fixed effects, 95% intervals."""
+    """Table 1 of the paper in the standard layout: one panel per choice, the
+    regressors as rows with the 95% interval beneath each coefficient, then the
+    intercepts, the task x 3 h effects, the observations and R^2."""
     d = load_cache('identification.pkl')
     p, n, f = d['pages'], d['names'], d['forms']
-    lines = ['\\begin{tabular}{llcc}', '\\toprule', 'Choice & Exposure & Baseline FE & + task $\\times$ 3\\,h FE \\\\',
-             '\\midrule']
-    heads = {'pages': [f'Where to write', f'({p["n_decisions"]:,} decisions,', f'{p["n"]:,} candidates)', '', ''],
-             'names': ['How to sign', f'({n["n"]:,} records)', '', ''],
-             'forms': ['How to write', f'({f["n"]:,} first uses)', '', '']}
-    for key, r in (('pages', p), ('names', n), ('forms', f)):
-        digits = 3 if key == 'pages' else 2
+    lines = ['\\begin{tabular}{lcc}', '\\toprule', ' & (1) & (2) \\\\', '\\midrule']
+    panels = (('A. Where to write: the candidate page is the one chosen', 'pages', p, 'arrival', f'{p["n"]:,} candidates, {p["n_decisions"]:,} arrivals'),
+              ('B. How to sign: the name carries the feature', 'names', n, 'feature', f'{n["n"]:,} newcomer--feature records'),
+              ('C. How to write: the first use takes form A', 'forms', f, 'convention', f'{f["n"]:,} first uses'))
+    for title, key, r, unit, obs in panels:
+        nested = r.get('nested', False)
+        lines.append(f'\\multicolumn{{3}}{{l}}{{\\textit{{{title}}}}} \\\\[2pt]')
         for j, lab in enumerate(d['labels'][key]):
-            dj = 2 if (key == 'pages' and j < 2) else digits
-            lines.append(f'{heads[key][j]} & {lab} & {pm(r["b0"][j], r["se0"][j], dj)} & {pm(r["b1"][j], r["se1"][j], dj)} \\\\')
+            dj = 3 if (key == 'pages' and j >= 2) else 2
+            c1 = f'{r["b0"][j]:.{dj}f}'
+            c2 = '' if nested else f'{r["b1"][j]:.{dj}f}'
+            lines.append(f'{lab} & {c1} & {c2} \\\\')
+            lines.append(f' & {ci(r["b0"][j], r["se0"][j], dj)} & {"" if nested else ci(r["b1"][j], r["se1"][j], dj)} \\\\')
+        lines.append(f'{unit.capitalize()} intercepts & yes & {"" if nested else "yes"} \\\\')
+        lines.append(f'Task $\\times$ 3\\,h intercepts & no & {"nested" if nested else "yes"} \\\\')
+        lines.append(f'Observations & \\multicolumn{{2}}{{c}}{{{obs}}} \\\\')
+        lines.append(f'$R^2$ & {r["r2_0"]:.2f} & {"" if nested else f"{r[chr(114)+chr(50)+chr(95)+chr(49)]:.2f}"} \\\\')
         if key != 'forms':
             lines.append('\\midrule')
     lines += ['\\bottomrule', '\\end{tabular}']
@@ -118,17 +131,18 @@ def table_identification():
     """The three regressions in full: every specification, with standard errors."""
     d = load_cache('identification.pkl')
     p = d['pages']
-    lines = ['\\begin{tabular}{lcc}', '\\toprule', 'regressor & decision FE & + task $\\times$ 3\\,h FE \\\\', '\\midrule']
+    lines = ['\\begin{tabular}{lc}', '\\toprule', 'regressor & arrival intercepts \\\\', '\\midrule']
     for j, lab in enumerate(d['labels']['pages']):
-        lines.append(f'{lab} & ${p["b0"][j]:.3f} \\pm {p["se0"][j]:.3f}$ & ${p["b1"][j]:.3f} \\pm {p["se1"][j]:.3f}$ \\\\')
+        lines.append(f'{lab} & ${p["b0"][j]:.3f} \\pm {p["se0"][j]:.3f}$ \\\\')
     lines += ['\\bottomrule', '\\end{tabular}']
     write_table('si_table_reg_pages.tex', lines)
 
     n, w = d['names'], d['windows']
-    lines = ['\\begin{tabular}{lccccc}', '\\toprule',
-             'regressor & feature FE & + task $\\times$ 3\\,h FE & 1.5 h & 3 h & 6 h \\\\', '\\midrule']
+    lines = ['\\begin{tabular}{lccccccc}', '\\toprule',
+             'regressor & feature & + task $\\times$ 3\\,h & + feature $\\times$ task & + feature $\\times$ 3\\,h & 1.5 h & 3 h & 6 h \\\\', '\\midrule']
     for j, lab in enumerate(d['labels']['names']):
-        cells = [f'${n["b0"][j]:.2f} \\pm {n["se0"][j]:.2f}$', f'${n["b1"][j]:.2f} \\pm {n["se1"][j]:.2f}$']
+        cells = [f'${n["b0"][j]:.2f} \\pm {n["se0"][j]:.2f}$', f'${n["b1"][j]:.2f} \\pm {n["se1"][j]:.2f}$',
+                 f'${n["b2"][j]:.2f} \\pm {n["se2"][j]:.2f}$', f'${n["b3"][j]:.2f} \\pm {n["se3"][j]:.2f}$']
         cells += [f'${w[h]["same"]["b"][j]:.2f} \\pm {w[h]["same"]["se"][j]:.2f}$' if j < 3 else '' for h in (1.5, 3, 6)]
         lines.append(f'{lab} & ' + ' & '.join(cells) + ' \\\\')
     lines += ['\\bottomrule', '\\end{tabular}']
@@ -136,7 +150,7 @@ def table_identification():
 
     f = d['forms']
     lines = ['\\begin{tabular}{lccc}', '\\toprule',
-             'regressor & convention FE & + task $\\times$ 3\\,h FE & convention $\\times$ task $\\times$ 3\\,h FE \\\\',
+             'regressor & convention intercepts & + task $\\times$ 3\\,h & convention $\\times$ task $\\times$ 3\\,h \\\\',
              '\\midrule']
     for j, lab in enumerate(d['labels']['forms']):
         lines.append(f'{lab} & ${f["b0"][j]:.2f} \\pm {f["se0"][j]:.2f}$ & ${f["b1"][j]:.2f} \\pm {f["se1"][j]:.2f}$ & '
@@ -144,9 +158,53 @@ def table_identification():
     lines += ['\\bottomrule', '\\end{tabular}']
     write_table('si_table_reg_forms.tex', lines)
 
+    # the contrasts the text relies on, tested directly
+    lines = ['\\begin{tabular}{llrrl}', '\\toprule', 'choice & contrast & difference & $\\chi^2$ & $p$ \\\\', '\\midrule']
+    pw = p['wald']['own task vs other task, share of the feed']
+    lines.append(f'where to write & share of the feed, own task vs other task & {p["b1"][0] - p["b1"][1]:.2f} & {pw[0]:.1f} & {pw[1]:.1e} \\\\')
+    order = [1, 2, 3]
+    for key, r, spec in (('how to sign', n, 'wald'), ('how to sign, feature $\\times$ task intercepts', n, 'wald2'), ('how to write', f, 'wald')):
+        b = r['b2'] if spec == 'wald2' else r['b1']
+        for (name, (stat, pv)), (i, j) in zip(r[spec].items(), ((0, 2), (1, 2), (1, 3))):
+            lines.append(f'{key} & {name} & {b[i] - b[j]:.2f} & {stat:.1f} & {pv:.1e} \\\\')
+    lines += ['\\bottomrule', '\\end{tabular}']
+    write_table('si_table_wald.tex', lines)
+
+    # standard errors clustered one way and two ways
+    lines = ['\\begin{tabular}{llccc}', '\\toprule', 'choice & regressor & coefficient & s.e., handle & s.e., handle and task $\\times$ 3\\,h \\\\', '\\midrule']
+    for key, r, dg in (('where to write', p, 3), ('how to sign', n, 2), ('how to write', f, 2)):
+        for j, lab in enumerate(d['labels'][{'where to write': 'pages', 'how to sign': 'names', 'how to write': 'forms'}[key]]):
+            dj = 2 if (key == 'where to write' and j < 2) else dg
+            lines.append(f'{key if j == 0 else ""} & {lab} & {r["b1"][j]:.{dj}f} & {r["se1"][j]:.{dj}f} & {r["se_twoway"][j]:.{dj}f} \\\\')
+    lines += ['\\bottomrule', '\\end{tabular}']
+    write_table('si_table_twoway.tex', lines)
+
+    # conditional logit for the page choice
+    cl = p['clogit']
+    lines = ['\\begin{tabular}{lcc}', '\\toprule', 'regressor & linear probability model & conditional logit \\\\', '\\midrule']
+    for j, lab in enumerate(d['labels']['pages']):
+        dj = 2 if j < 2 else 3
+        lines.append(f'{lab} & ${p["b1"][j]:.{dj}f} \\pm {p["se1"][j]:.{dj}f}$ & ${cl["b"][j]:.2f} \\pm {cl["se"][j]:.2f}$ \\\\')
+    lines += ['\\midrule', f'$R^2$ & {p["r2_1"]:.2f} & {cl["pseudo_r2"]:.2f} (McFadden) \\\\', '\\bottomrule', '\\end{tabular}']
+    write_table('si_table_clogit.tex', lines)
+
+
+def table_thresholds():
+    """SI: the writing results under other selection rules."""
+    rows = load_cache('si_thresholds.pkl')
+    lines = ['\\begin{tabular}{rrrrrccccc}', '\\toprule',
+             'uses & minority & pages & kept & first uses & page & feed, own task & out of view & other tasks & slope \\\\', '\\midrule']
+    for r in rows:
+        cells = ' & '.join(f'${b:.2f} \\pm {s:.2f}$' for b, s in zip(r['b'], r['se']))
+        mark = '$^*$' if r['main'] else ''
+        lines.append(f'{r["uses"]}{mark} & {100 * r["minority"]:g}\\% & {r["pages"]} & {r["kept"]} & {r["n"]:,} & {cells} & {r["slope"]:.2f} \\\\')
+    lines += ['\\bottomrule', '\\end{tabular}']
+    write_table('si_table_thresholds.tex', lines)
+
 
 def main():
     table_regressions()
+    table_thresholds()
     table_families()
     table_pieces()
     table_conventions()

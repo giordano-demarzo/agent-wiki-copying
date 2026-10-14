@@ -91,8 +91,10 @@ def indicators(ds, names):
 
 
 def exposure_groups(ds, mates_h=MATES_H):
-    """For every handle, in birth order, the index sets of what it could see:
-    page authors, feed handles, and task-mates in and out of view."""
+    """For every handle, in birth order, the index sets of what it could see
+    when it chose its name: the earlier authors of the page of its first edit,
+    the handles of the feed before its birth, and its task-mates in and out
+    of view."""
     labels = [r['label'] for r in ds.revs_all]
     pos_of_rev = {id(r): k for k, r in enumerate(ds.revs_all)}
     ts = np.array([T(r['time']).timestamp() for r in ds.revs_all])
@@ -103,11 +105,12 @@ def exposure_groups(ds, mates_h=MATES_H):
     edits_of_page = collections.defaultdict(list)
     for r in ds.revs:
         edits_of_page[r['page_id']].append((pos_of_rev[id(r)], ds.index[r['label']]))
-    pages_of = [{r['page_id'] for r in ds.by_label[h]} for h in ds.handles]
+    # only the page of the first edit: the name is chosen then, and pages visited later cannot have been seen
+    first_page = [ds.by_label[h][0]['page_id'] for h in ds.handles]
     out = []
     for i in range(n):
         j = int(np.searchsorted(ts, birth[i]))
-        authors = {h for pg in pages_of[i] for k, h in edits_of_page[pg] if k < j and h != i}
+        authors = {h for k, h in edits_of_page[first_page[i]] if k < j and h != i}
         feed = {ds.index[labels[k]] for k in range(max(0, j - FEED_LINES), j)
                 if labels[k] in ds.index and ds.index[labels[k]] != i}
         mates = np.where((fam == fam[i]) & (birth < birth[i]) & (birth >= birth[i] - mates_h * 3600))[0]
@@ -134,7 +137,9 @@ def in_sample(g):
 def records(ds, feats, groups):
     """One record per newcomer in the sample and name feature: the outcome and
     the share of the feature among the task-mates on the page, in the feed only,
-    out of view, among all task-mates in view, and among other tasks in the feed."""
+    out of view, among all task-mates in view, and among other tasks in the feed.
+    `page0` is the page share with zero where the first page had fewer than
+    MIN_GROUP earlier task-mates, and `no_page` marks those newcomers."""
     fam = np.array([ds.first_family[h] for h in ds.handles])
     rows = []
     for i, g in enumerate(groups):
@@ -149,7 +154,8 @@ def records(ds, feats, groups):
     return dict(feature=np.array(cols[0]), handle=np.array(cols[1]), family=np.array(cols[2]),
                 block=np.array(cols[3]), y=np.array(cols[4], float), page=np.array(cols[5], float),
                 feed=np.array(cols[6], float), out=np.array(cols[7], float),
-                other=np.array(cols[8], float), view=np.array(cols[9], float))
+                other=np.array(cols[8], float), view=np.array(cols[9], float),
+                page0=np.nan_to_num(np.array(cols[5], float)), no_page=np.isnan(np.array(cols[5], float)).astype(float))
 
 
 def coauthors(ds):

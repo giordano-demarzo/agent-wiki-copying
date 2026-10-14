@@ -10,7 +10,7 @@ import matplotlib.dates as mdates
 import numpy as np
 
 import names as nm
-from common import Dataset, Report, T, load_cache
+from common import Dataset, Report, T, load_cache, save_cache
 from style import AMBER, CLASS_COLOR, INDIGO, INK, SLATE, panel, plt, save, use
 
 H = 6
@@ -62,6 +62,8 @@ def main():
         f'median effective number {np.median(effective):.1f}; at the two busiest blocks {sorted(active[i] for i in busiest)} '
         f'pages, effective {sorted(round(effective[i]) for i in busiest)}')
     late = np.array([x >= datetime.datetime(2026, 6, 18) for x in xs])
+    save_cache('fig2.pkl', dict(top_late=(float(min(np.array(top)[late])), float(max(np.array(top)[late]))),
+                                even_late=(float(min(even[late])), float(max(even[late])))))
     say(f'(a) share of a block\'s task edits on its {TOP} busiest pages: median {np.median(top):.2f}, '
         f'range {min(top):.2f} to {max(top):.2f}; from 18 June {min(np.array(top)[late]):.2f} to {max(np.array(top)[late]):.2f}, '
         f'against {min(even[late]):.2f} to {max(even[late]):.2f} if spread evenly over the pages written on')

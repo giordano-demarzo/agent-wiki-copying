@@ -29,6 +29,7 @@ ANALYSIS = [
     ('si_population', 'SI: the record and the population'),
     ('si_names', 'SI: how to sign'),
     ('si_forms', 'SI: how to write'),
+    ('si_thresholds', 'SI: the convention selection rule'),
 ]
 FULL = [('analysis_forms', 'how to write, all handles'), ('identification', 'the regressions, all handles')]
 FIGURES = [

@@ -13,6 +13,11 @@ pages touched by the population: 1710
 population: 5929 edits, 1201 handles; excluded: 7732 edits by 1898 handles
   excluded handles by day of birth: [('18 Jun', 753), ('22 Jun', 243), ('16 Jun', 199), ('26 May', 166)]
 
+=== The network of handles (Figure 1c) ===
+1201 handles, 14793 links (a task page edited in common)
+  101 handles share no task page with anyone
+  largest component: 1055 handles, 14737 links; the other 45 linked handles are in 18 small components
+
 === Where to write ===
 decisions on a task page new to the writer: 2612; creations 679, appends 1933
 appends landing on a page inside the last 100 feed lines: 0.89
@@ -49,27 +54,27 @@ piece occurrences: 4128; affiliation and date stamp 0.46, task-specific 0.14, ge
 name features: 16 (Open, AI, Agent, Research, Helper, Scout, OAI, Researcher, Data, Archive, Reader, XYZ, Observer, Probe, Prep, date); at least one in 1169 of 1201 handles
   carriers: Open 432, AI 409, Agent 294, Research 272, Helper 168, Scout 138, OAI 121, Researcher 76, Data 32, Archive 29, Reader 28, XYZ 17, Observer 17, Probe 16, Prep 16, date 869
   affiliation stamp (Open, AI or OAI): 553 handles; date stamp 869
-newcomers in the name analysis (complete feed, at least 6 task-mates in 6 h): 833 of 1201; mean task-mates in view 17.3, out of view 21.9
-joint fit, feature fixed effects (n=9904): task-mates in view 0.61+-0.09, out of view 0.08+-0.08 (95% intervals, clustered by handle)
+newcomers in the name analysis (complete feed, at least 6 task-mates in 6 h): 833 of 1201; mean task-mates in view 16.4, out of view 22.8
+joint fit, feature fixed effects (n=10176): task-mates in view 0.57+-0.09, out of view 0.10+-0.08 (95% intervals, clustered by handle)
 generic      : prior strength 0.07-0.97; co-occurrence among co-authors, geometric mean 1.4 (0.7-3.7, 12 pieces with at least 25 carriers)
 task-specific: prior strength 0.00-0.96; co-occurrence among co-authors, geometric mean 10.2 (4.2-131.0, 10 pieces with at least 25 carriers)
-month        : prior strength 0.57-1.00; co-occurrence among co-authors, geometric mean 1.1 (0.8-1.6, 12 pieces with at least 25 carriers)
-  feature Open      : carriers  432  mu_A 0.075 mu_B 0.121 s 0.20  co-occurrence 1.32  volatility 2.70
-  feature AI        : carriers  409  mu_A 0.077 mu_B 0.119 s 0.20  co-occurrence 1.26  volatility 2.77
-  feature Agent     : carriers  294  mu_A 0.062 mu_B 0.260 s 0.32  co-occurrence 2.24  volatility 2.74
-  feature Research  : carriers  272  mu_A 0.106 mu_B 0.443 s 0.55  co-occurrence 1.02  volatility 1.89
-  feature Helper    : carriers  168  mu_A 0.063 mu_B 0.495 s 0.56  co-occurrence 1.48  volatility 2.01
+month        : prior strength 0.64-1.00; co-occurrence among co-authors, geometric mean 1.1 (0.8-1.6, 12 pieces with at least 25 carriers)
+  feature Open      : carriers  432  mu_A 0.077 mu_B 0.130 s 0.21  co-occurrence 1.32  volatility 2.70
+  feature AI        : carriers  409  mu_A 0.079 mu_B 0.126 s 0.20  co-occurrence 1.26  volatility 2.77
+  feature Agent     : carriers  294  mu_A 0.067 mu_B 0.276 s 0.34  co-occurrence 2.24  volatility 2.74
+  feature Research  : carriers  272  mu_A 0.114 mu_B 0.466 s 0.58  co-occurrence 1.02  volatility 1.89
+  feature Helper    : carriers  168  mu_A 0.060 mu_B 0.477 s 0.54  co-occurrence 1.48  volatility 2.01
   feature Scout     : carriers  138  mu_A 0.015 mu_B 0.051 s 0.07  co-occurrence 1.83  volatility 5.63
-  feature OAI       : carriers  121  mu_A 0.039 mu_B 0.289 s 0.33  co-occurrence 3.72  volatility 1.50
-  feature Researcher: carriers   76  mu_A 0.025 mu_B 0.459 s 0.48  co-occurrence 1.81  volatility 1.77
-  feature Data      : carriers   32  mu_A 0.015 mu_B 0.905 s 0.92  co-occurrence 1.90  volatility 1.83
+  feature OAI       : carriers  121  mu_A 0.041 mu_B 0.314 s 0.35  co-occurrence 3.72  volatility 1.50
+  feature Researcher: carriers   76  mu_A 0.027 mu_B 0.484 s 0.51  co-occurrence 1.81  volatility 1.77
+  feature Data      : carriers   32  mu_A 0.016 mu_B 0.927 s 0.94  co-occurrence 1.90  volatility 1.83
   feature Archive   : carriers   29  mu_A 0.021 mu_B 0.950 s 0.97  co-occurrence 0.72  volatility 0.98
-  feature Reader    : carriers   28  mu_A 0.025 mu_B 0.783 s 0.81  co-occurrence 0.77  volatility 1.02
+  feature Reader    : carriers   28  mu_A 0.025 mu_B 0.771 s 0.80  co-occurrence 0.77  volatility 1.02
   feature XYZ       : carriers   17  mu_A 0.009 mu_B 0.950 s 0.96  co-occurrence nan  volatility 1.17
-  feature Observer  : carriers   17  mu_A 0.016 mu_B 0.813 s 0.83  co-occurrence nan  volatility 1.06
-  feature Probe     : carriers   16  mu_A 0.012 mu_B 0.784 s 0.80  co-occurrence nan  volatility 1.03
-  feature Prep      : carriers   16  mu_A 0.012 mu_B 0.943 s 0.96  co-occurrence nan  volatility 1.68
-  feature date      : carriers  869  mu_A 0.367 mu_B 0.094 s 0.46  co-occurrence 0.83  volatility 2.73
+  feature Observer  : carriers   17  mu_A 0.015 mu_B 0.799 s 0.81  co-occurrence nan  volatility 1.06
+  feature Probe     : carriers   16  mu_A 0.012 mu_B 0.790 s 0.80  co-occurrence nan  volatility 1.03
+  feature Prep      : carriers   16  mu_A 0.012 mu_B 0.922 s 0.93  co-occurrence nan  volatility 1.68
+  feature date      : carriers  869  mu_A 0.380 mu_B 0.098 s 0.48  co-occurrence 0.83  volatility 2.73
 
 === How to write ===
 52 candidate conventions, 39 with at least 100 uses, 18 kept
@@ -130,35 +135,52 @@ on the prior-strength axis: 18 conventions in Fig. 4b (at least 10 minority uses
   volatility, mean over those: all uses 3.30, first uses 2.53
 
 === Identification of copying ===
-pages: 89855 candidates, 1933 decisions; R2 0.082 (baseline FE), 0.084 (+ task x 3 h FE)
-  feed share, own-task page          2.034 +- 0.034 (se)   + task x 3 h:   2.057 +- 0.035 (se), 95% half-width 0.07
-  feed share, other-task page        0.440 +- 0.026 (se)   + task x 3 h:   0.404 +- 0.027 (se), 95% half-width 0.05
-  visible at all, own-task page      0.020 +- 0.002 (se)   + task x 3 h:   0.023 +- 0.002 (se), 95% half-width 0.00
-  own-task page                      0.059 +- 0.001 (se)   + task x 3 h:   0.059 +- 0.001 (se), 95% half-width 0.00
-  log handles already there          0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
-names: 5136 records; R2 0.358 (baseline FE), 0.363 (+ task x 3 h FE)
-  same task, authors of the page     0.300 +- 0.052 (se)   + task x 3 h:   0.286 +- 0.052 (se), 95% half-width 0.10
-  same task, in the feed             0.281 +- 0.048 (se)   + task x 3 h:   0.280 +- 0.048 (se), 95% half-width 0.09
-  same task, out of view             0.058 +- 0.060 (se)   + task x 3 h:   0.039 +- 0.061 (se), 95% half-width 0.12
-  other tasks, in the feed           0.075 +- 0.083 (se)   + task x 3 h:   0.088 +- 0.083 (se), 95% half-width 0.16
-forms: 1120 first uses; R2 0.651 (baseline FE), 0.677 (+ task x 3 h FE)
-  on the page                        0.630 +- 0.036 (se)   + task x 3 h:   0.610 +- 0.037 (se), 95% half-width 0.07
-  same task, in the feed             0.283 +- 0.042 (se)   + task x 3 h:   0.284 +- 0.045 (se), 95% half-width 0.09
-  same task, out of view             0.017 +- 0.039 (se)   + task x 3 h:   0.024 +- 0.042 (se), 95% half-width 0.08
-  other tasks, in the feed          -0.077 +- 0.044 (se)   + task x 3 h:  -0.081 +- 0.047 (se), 95% half-width 0.09
-forms, fully interacted convention x task x 3 h FE (R2 0.77): 0.63 +- 0.05, 0.22 +- 0.06, -0.03 +- 0.10, -0.12 +- 0.08
+pages: 89855 candidates, 1933 decisions; R2 0.099 (baseline intercepts), 0.099 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
+  share of the feed, own task        2.090 +- 0.122 (se)   + task x 3 h:   2.090 +- 0.122 (se), 95% half-width 0.24
+  share of the feed, other task      0.202 +- 0.038 (se)   + task x 3 h:   0.202 +- 0.038 (se), 95% half-width 0.08
+  in the feed, own task              0.036 +- 0.004 (se)   + task x 3 h:   0.036 +- 0.004 (se), 95% half-width 0.01
+  own task                           0.014 +- 0.002 (se)   + task x 3 h:   0.014 +- 0.002 (se), 95% half-width 0.00
+  log(1 + handles on the page)       0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
+names: 9504 records; R2 0.335 (baseline intercepts), 0.339 (+ task x 3 h)
+  share among page authors, own task   0.116 +- 0.037 (se)   + task x 3 h:   0.109 +- 0.036 (se), 95% half-width 0.07
+  share in the feed, own task        0.464 +- 0.041 (se)   + task x 3 h:   0.453 +- 0.041 (se), 95% half-width 0.08
+  share out of view, own task        0.135 +- 0.042 (se)   + task x 3 h:   0.121 +- 0.042 (se), 95% half-width 0.08
+  share in the feed, other tasks     0.067 +- 0.051 (se)   + task x 3 h:   0.078 +- 0.051 (se), 95% half-width 0.10
+  first page without earlier task-mates   0.018 +- 0.006 (se)   + task x 3 h:   0.018 +- 0.007 (se), 95% half-width 0.01
+forms: 1120 first uses; R2 0.651 (baseline intercepts), 0.677 (+ task x 3 h)
+  share on the page                  0.630 +- 0.055 (se)   + task x 3 h:   0.610 +- 0.057 (se), 95% half-width 0.11
+  share in the feed, own task        0.283 +- 0.057 (se)   + task x 3 h:   0.284 +- 0.057 (se), 95% half-width 0.11
+  share out of view, own task        0.017 +- 0.048 (se)   + task x 3 h:   0.024 +- 0.047 (se), 95% half-width 0.09
+  share in the feed, other tasks    -0.077 +- 0.053 (se)   + task x 3 h:  -0.081 +- 0.057 (se), 95% half-width 0.11
+names, feature x task + task x 3 h intercepts (R2 0.37): 0.02 +- 0.04, 0.16 +- 0.05, -0.06 +- 0.05, 0.20 +- 0.06, 0.01 +- 0.01
+names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.40): -0.02 +- 0.04, 0.01 +- 0.06, -0.20 +- 0.07, 0.17 +- 0.08, -0.00 +- 0.01
+names with feature x task intercepts, Wald page vs out of view: chi2 1.9, p 0.17
+names with feature x task intercepts, Wald feed vs out of view: chi2 10.4, p 0.0013
+names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 0.2, p 0.65
+pages, Wald own task vs other task, share of the feed: chi2 230.9, p 3.8e-52
+pages, two-way clustered se (handle, task x 3 h): 0.231, 0.050, 0.009, 0.004, 0.001
+names, Wald page vs out of view: chi2 0.0, p 0.83
+names, Wald feed vs out of view: chi2 23.9, p 9.9e-07
+names, Wald own task vs other tasks, in the feed: chi2 29.8, p 4.7e-08
+names, two-way clustered se (handle, task x 3 h): 0.044, 0.055, 0.045, 0.050, 0.007
+forms, Wald page vs out of view: chi2 46.5, p 9.3e-12
+forms, Wald feed vs out of view: chi2 9.0, p 0.0027
+forms, Wald own task vs other tasks, in the feed: chi2 18.4, p 1.8e-05
+forms, two-way clustered se (handle, task x 3 h): 0.089, 0.058, 0.042, 0.051
+pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.93 +- 0.84, 8.29 +- 0.91, 3.09 +- 0.12, -0.38 +- 0.16, 0.24 +- 0.03
+forms, fully interacted convention x task x 3 h FE (R2 0.77): 0.63 +- 0.07, 0.22 +- 0.07, -0.03 +- 0.09, -0.12 +- 0.11
 own-task pages: chosen 0.086 of the time when visible (n=15800), 0.004 when not (n=40930); ratio 20
   feed share 0.01-0.02: own task 0.038 at 0.010 (n=8707), other task 0.005 at 0.010 (n=17834)
   feed share 0.02-0.04: own task 0.082 at 0.023 (n=4152), other task 0.010 at 0.023 (n=8938)
   feed share 0.04-0.10: own task 0.196 at 0.057 (n=2216), other task 0.024 at 0.057 (n=4940)
   feed share 0.10-0.20: own task 0.345 at 0.132 (n=612), other task 0.044 at 0.130 (n=1282)
-  slope ratio own/other task 5.1
-names, task-mates born in the previous 1.5 h (n=3792): page 0.25 +- 0.06, feed 0.26 +- 0.06, out of view 0.03 +- 0.07; other tasks (n=7536): in the feed -0.04 +- 0.08, out of view 0.01 +- 0.08
-names, task-mates born in the previous 3 h (n=4576): page 0.25 +- 0.05, feed 0.26 +- 0.05, out of view 0.06 +- 0.07; other tasks (n=8816): in the feed -0.09 +- 0.08, out of view 0.11 +- 0.08
-names, task-mates born in the previous 6 h (n=5200): page 0.29 +- 0.05, feed 0.29 +- 0.05, out of view 0.04 +- 0.06; other tasks (n=11296): in the feed 0.13 +- 0.06, out of view 0.10 +- 0.06
+  slope ratio own/other task 10.3
+names, task-mates born in the previous 1.5 h (n=7024): page 0.13 +- 0.04, feed 0.38 +- 0.05, out of view 0.12 +- 0.05; other tasks (n=7536): in the feed -0.04 +- 0.08, out of view 0.02 +- 0.08
+names, task-mates born in the previous 3 h (n=8496): page 0.09 +- 0.04, feed 0.41 +- 0.04, out of view 0.12 +- 0.04; other tasks (n=8816): in the feed -0.09 +- 0.08, out of view 0.11 +- 0.08
+names, task-mates born in the previous 6 h (n=9696): page 0.12 +- 0.04, feed 0.46 +- 0.04, out of view 0.12 +- 0.04; other tasks (n=11296): in the feed 0.12 +- 0.06, out of view 0.10 +- 0.06
 
 === The model ===
-parameters: 1201 agents over 5.3 days, 2 edits on distinct pages within 2.02 h, c = 0.260, usage rate 0.229, 12 runs per point of the axis
+parameters: 1201 agents over 5.3 days, 2 edits on distinct pages within 2.02 h, c = 0.260, usage rate 0.229, 50 runs per point of the axis
 Fig. 4a, 200 runs: P(>=5,10,20,40) median [0.210, 0.089, 0.030, 0.006] (observed [0.211, 0.097, 0.031, 0.007]); 5-95% of P(>=20) [0.022, 0.038]; largest page median 64, 5-95% 46-99 (observed 54); pages 626 (observed 679)
 window    30 lines, 10 runs: P(>=5,10,20,40) [0.233, 0.093, 0.027, 0.002], largest page 48
 window   100 lines, 10 runs: P(>=5,10,20,40) [0.207, 0.087, 0.029, 0.004], largest page 80
@@ -166,43 +188,43 @@ window   300 lines, 10 runs: P(>=5,10,20,40) [0.188, 0.083, 0.025, 0.007], large
 window  1000 lines, 10 runs: P(>=5,10,20,40) [0.163, 0.056, 0.022, 0.009], largest page 210
 uniform choice among visible pages, 10 runs: P(>=10,20,40) [0.060, 0.003, 0.000], largest page 24
 uniform choice among all pages, 10 runs: P(>=10,20,40) [0.068, 0.003, 0.000], largest page 24
-axis, form, gap: 0:nan 0.02:7.43 0.05:3.78 0.1:2.98 0.15:2.72 0.2:2.72 0.3:2.22 0.4:2.15 0.5:1.85 0.6:1.63 0.7:1.40 0.8:1.24 0.9:1.11 1:0.96
-axis, form, vol: 0:nan 0.02:1.89 0.05:2.54 0.1:2.69 0.15:2.41 0.2:2.37 0.3:1.65 0.4:1.60 0.5:1.48 0.6:1.24 0.7:1.12 0.8:1.06 0.9:0.94 1:0.88
-axis, form, distance from the prior: 0:0.400 0.02:0.350 0.05:0.153 0.1:0.158 0.15:0.104 0.2:0.059 0.3:0.046 0.4:0.028 0.5:0.026 0.6:0.021 0.7:0.019 0.8:0.019 0.9:0.012 1:0.011
-axis, name, gap: 0:nan 0.02:1.32 0.05:1.19 0.1:1.16 0.15:1.21 0.2:1.23 0.3:1.06 0.4:1.04 0.5:1.00 0.6:1.01 0.7:1.00 0.8:1.00 0.9:0.99 1:1.00
-axis, name, vol: 0:nan 0.02:2.58 0.05:3.07 0.1:3.28 0.15:2.89 0.2:2.59 0.3:1.94 0.4:1.59 0.5:1.38 0.6:1.26 0.7:1.20 0.8:1.09 0.9:0.99 1:0.88
-axis, name, distance from the prior: 0:0.500 0.02:0.341 0.05:0.154 0.1:0.131 0.15:0.070 0.2:0.053 0.3:0.037 0.4:0.024 0.5:0.011 0.6:0.010 0.7:0.011 0.8:0.012 0.9:0.010 1:0.008
-final share of a form, s = 0.02, pi = 1/2: from 0.00 to 0.99
-final share of a form, s = 0.1, pi = 1/2: from 0.11 to 0.85
-final share of a form, s = 0.3, pi = 1/2: from 0.43 to 0.60
-final share of a form, s = 0.6, pi = 1/2: from 0.45 to 0.55
-final share of a form, s = 1, pi = 1/2: from 0.45 to 0.53
-2 s.d. of the final share across runs, form: 0:0.94 0.02:0.88 0.05:0.68 0.1:0.45 0.15:0.28 0.2:0.21 0.3:0.09 0.4:0.08 0.5:0.10 0.6:0.05 0.7:0.06 0.8:0.06 0.9:0.04 1:0.05
-2 s.d. of the final share across runs, name: 0:1.00 0.02:0.74 0.05:0.51 0.1:0.31 0.15:0.13 0.2:0.18 0.3:0.11 0.4:0.06 0.5:0.04 0.6:0.05 0.7:0.03 0.8:0.03 0.9:0.05 1:0.02
-direction, form, gap, s = 0.2: pi 0.15: 3.61, pi 0.3: 2.47, pi 0.5: 1.79, pi 0.7: 2.21, pi 0.85: 5.25
-direction, form, gap, s = 0.4: pi 0.15: 2.92, pi 0.3: 2.07, pi 0.5: 1.30, pi 0.7: 1.82, pi 0.85: 3.00
-direction, form, gap, s = 0.6: pi 0.15: 2.15, pi 0.3: 1.55, pi 0.5: 1.13, pi 0.7: 1.62, pi 0.85: 2.18
-direction, form, gap: s.d. of the median across directions 0.88, s.d. across runs at pi = 1/2 1.06 (means over s > 0)
-direction, form, vol, s = 0.2: pi 0.15: 2.29, pi 0.3: 2.30, pi 0.5: 2.45, pi 0.7: 2.63, pi 0.85: 2.38
-direction, form, vol, s = 0.4: pi 0.15: 1.48, pi 0.3: 1.52, pi 0.5: 1.80, pi 0.7: 1.66, pi 0.85: 1.54
-direction, form, vol, s = 0.6: pi 0.15: 1.41, pi 0.3: 1.18, pi 0.5: 1.16, pi 0.7: 1.42, pi 0.85: 1.15
-direction, form, vol: s.d. of the median across directions 0.19, s.d. across runs at pi = 1/2 0.54 (means over s > 0)
-direction, name, gap, s = 0.2: pi 0.15: 1.28, pi 0.3: 1.29, pi 0.5: 1.02, pi 0.7: 1.24, pi 0.85: 1.35
-direction, name, gap, s = 0.4: pi 0.15: 1.26, pi 0.3: 1.10, pi 0.5: 1.02, pi 0.7: 1.03, pi 0.85: 1.01
-direction, name, gap, s = 0.6: pi 0.15: 0.99, pi 0.3: 0.97, pi 0.5: 1.01, pi 0.7: 1.01, pi 0.85: 1.04
-direction, name, gap: s.d. of the median across directions 0.07, s.d. across runs at pi = 1/2 0.14 (means over s > 0)
-direction, name, vol, s = 0.2: pi 0.15: 2.73, pi 0.3: 2.81, pi 0.5: 2.35, pi 0.7: 2.51, pi 0.85: 2.79
-direction, name, vol, s = 0.4: pi 0.15: 1.77, pi 0.3: 1.66, pi 0.5: 1.45, pi 0.7: 1.58, pi 0.85: 1.62
-direction, name, vol, s = 0.6: pi 0.15: 1.12, pi 0.3: 1.40, pi 0.5: 1.29, pi 0.7: 1.30, pi 0.85: 1.05
-direction, name, vol: s.d. of the median across directions 0.17, s.d. across runs at pi = 1/2 0.49 (means over s > 0)
-usage rate, s = 0.2: co-occurrence 2.26 (0.5), 2.72 (0.23), 2.64 (0.1); volatility 1.91, 2.37, 2.64
-usage rate, s = 0.4: co-occurrence 1.76 (0.5), 2.15 (0.23), 2.47 (0.1); volatility 1.44, 1.60, 1.69
-last 30 uses anywhere, s = 0.2: co-occurrence 2.56 (model 2.72), volatility 2.19 (2.37), distance from the prior 0.063 (0.059); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.78 (0.88)
-rho = 1/2 on an empty page, s = 0.2: co-occurrence 1.70 (model 2.72), volatility 1.21 (2.37), distance from the prior 0.159 (0.059); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.09 (0.88)
-each convention, gap: n=17, correlation 0.59, mean observed 2.42, mean model 2.71, observed inside the 10-90% band of its runs 0.53
-each convention, vol: n=16, correlation 0.79, mean observed 2.39, mean model 2.02, observed inside the 10-90% band of its runs 0.75
-each convention, final: n=18, correlation 0.79, mean observed 0.62, mean model 0.56, observed inside the 10-90% band of its runs 0.83
-each convention, model volatility: all uses 2.10, first uses 2.09
+axis, form, gap: 0:nan 0.02:6.64 0.05:3.56 0.1:2.71 0.15:2.66 0.2:2.47 0.3:2.20 0.4:1.93 0.5:1.68 0.6:1.54 0.7:1.34 0.8:1.19 0.9:1.09 1:0.98
+axis, form, vol: 0:nan 0.02:1.93 0.05:2.41 0.1:2.71 0.15:2.37 0.2:2.31 0.3:1.75 0.4:1.53 0.5:1.40 0.6:1.24 0.7:1.10 0.8:1.05 0.9:0.92 1:0.90
+axis, form, distance from the prior: 0:0.500 0.02:0.299 0.05:0.226 0.1:0.130 0.15:0.094 0.2:0.069 0.3:0.046 0.4:0.027 0.5:0.027 0.6:0.021 0.7:0.017 0.8:0.017 0.9:0.013 1:0.012
+axis, name, gap: 0:nan 0.02:1.32 0.05:1.17 0.1:1.16 0.15:1.19 0.2:1.13 0.3:1.07 0.4:1.04 0.5:1.02 0.6:1.01 0.7:1.01 0.8:1.01 0.9:1.01 1:0.99
+axis, name, vol: 0:nan 0.02:2.85 0.05:3.26 0.1:3.16 0.15:2.69 0.2:2.36 0.3:1.95 0.4:1.62 0.5:1.43 0.6:1.28 0.7:1.17 0.8:1.07 0.9:1.02 1:0.93
+axis, name, distance from the prior: 0:0.500 0.02:0.301 0.05:0.198 0.1:0.104 0.15:0.070 0.2:0.044 0.3:0.033 0.4:0.021 0.5:0.016 0.6:0.013 0.7:0.012 0.8:0.010 0.9:0.009 1:0.008
+final share of a form, s = 0.02, pi = 1/2: from 0.00 to 1.00
+final share of a form, s = 0.1, pi = 1/2: from 0.11 to 0.90
+final share of a form, s = 0.3, pi = 1/2: from 0.37 to 0.63
+final share of a form, s = 0.6, pi = 1/2: from 0.45 to 0.58
+final share of a form, s = 1, pi = 1/2: from 0.43 to 0.54
+2 s.d. of the final share across runs, form: 0:0.98 0.02:0.78 0.05:0.64 0.1:0.40 0.15:0.32 0.2:0.23 0.3:0.13 0.4:0.09 0.5:0.08 0.6:0.06 0.7:0.06 0.8:0.05 0.9:0.05 1:0.05
+2 s.d. of the final share across runs, name: 0:1.00 0.02:0.73 0.05:0.47 0.1:0.31 0.15:0.25 0.2:0.17 0.3:0.11 0.4:0.08 0.5:0.06 0.6:0.05 0.7:0.04 0.8:0.03 0.9:0.03 1:0.03
+direction, form, gap, s = 0.2: pi 0.15: 3.60, pi 0.3: 2.42, pi 0.5: 1.69, pi 0.7: 2.32, pi 0.85: 4.54
+direction, form, gap, s = 0.4: pi 0.15: 2.98, pi 0.3: 1.84, pi 0.5: 1.30, pi 0.7: 1.83, pi 0.85: 2.89
+direction, form, gap, s = 0.6: pi 0.15: 1.91, pi 0.3: 1.48, pi 0.5: 1.16, pi 0.7: 1.46, pi 0.85: 2.09
+direction, form, gap: s.d. of the median across directions 0.61, s.d. across runs at pi = 1/2 1.27 (means over s > 0)
+direction, form, vol, s = 0.2: pi 0.15: 2.32, pi 0.3: 2.29, pi 0.5: 2.23, pi 0.7: 2.33, pi 0.85: 2.38
+direction, form, vol, s = 0.4: pi 0.15: 1.50, pi 0.3: 1.52, pi 0.5: 1.61, pi 0.7: 1.64, pi 0.85: 1.49
+direction, form, vol, s = 0.6: pi 0.15: 1.28, pi 0.3: 1.25, pi 0.5: 1.17, pi 0.7: 1.26, pi 0.85: 1.17
+direction, form, vol: s.d. of the median across directions 0.08, s.d. across runs at pi = 1/2 0.54 (means over s > 0)
+direction, name, gap, s = 0.2: pi 0.15: 1.30, pi 0.3: 1.14, pi 0.5: 1.01, pi 0.7: 1.14, pi 0.85: 1.28
+direction, name, gap, s = 0.4: pi 0.15: 1.22, pi 0.3: 1.06, pi 0.5: 1.01, pi 0.7: 1.03, pi 0.85: 1.05
+direction, name, gap, s = 0.6: pi 0.15: 1.03, pi 0.3: 1.00, pi 0.5: 1.00, pi 0.7: 1.01, pi 0.85: 1.05
+direction, name, gap: s.d. of the median across directions 0.06, s.d. across runs at pi = 1/2 0.13 (means over s > 0)
+direction, name, vol, s = 0.2: pi 0.15: 2.32, pi 0.3: 2.56, pi 0.5: 2.28, pi 0.7: 2.59, pi 0.85: 2.23
+direction, name, vol, s = 0.4: pi 0.15: 1.71, pi 0.3: 1.57, pi 0.5: 1.52, pi 0.7: 1.58, pi 0.85: 1.64
+direction, name, vol, s = 0.6: pi 0.15: 1.25, pi 0.3: 1.27, pi 0.5: 1.29, pi 0.7: 1.35, pi 0.85: 1.27
+direction, name, vol: s.d. of the median across directions 0.10, s.d. across runs at pi = 1/2 0.53 (means over s > 0)
+usage rate, s = 0.2: co-occurrence 2.37 (0.5), 2.47 (0.23), 2.53 (0.1); volatility 2.00, 2.31, 2.26
+usage rate, s = 0.4: co-occurrence 1.73 (0.5), 1.93 (0.23), 2.20 (0.1); volatility 1.41, 1.53, 1.54
+last 30 uses anywhere, s = 0.2: co-occurrence 2.49 (model 2.47), volatility 2.22 (2.31), distance from the prior 0.068 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.77 (0.78)
+rho = 1/2 on an empty page, s = 0.2: co-occurrence 1.69 (model 2.47), volatility 1.21 (2.31), distance from the prior 0.159 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.09 (0.78)
+each convention, gap: n=18, correlation 0.43, mean observed 2.65, mean model 2.50, observed inside the 10-90% band of its runs 0.67
+each convention, vol: n=17, correlation 0.83, mean observed 2.53, mean model 2.08, observed inside the 10-90% band of its runs 0.76
+each convention, final: n=18, correlation 0.86, mean observed 0.62, mean model 0.56, observed inside the 10-90% band of its runs 0.83
+each convention, model volatility: all uses 2.12, first uses 2.08
 
 === SI: the record and the population ===
 handle activity span (n=827): median 2.0 h, share > 6 h 0.291, > 24 h 0.087
@@ -216,30 +238,30 @@ succession, Watcher / datausa-poverty-county: correlation of the share of newbor
 succession, Agent / datausa-sector61-state: correlation of the share of newborns with the piece and with the task 0.85; inside the task 0.67 0.63 0.77 0.52 0.52 - - - - - - -; outside 0.39 0.36 0.27 0.25 0.19 0.15 0.16 0.18 0.21 0.21 0.10 0.09
 succession, Open / datausa-clothing-workforce: correlation of the share of newborns with the piece and with the task -0.06; inside the task 0.33 0.30 0.50 0.69 0.41 0.82 - - - - - -; outside 0.16 0.26 0.28 0.42 0.41 0.24 0.23 0.48 0.61 0.15 0.32 0.47
 succession, Scout / oecd-equity: correlation of the share of newborns with the piece and with the task 0.42; inside the task - - - - - - - - 0.33 0.27 0.50 -; outside 0.01 0.00 0.01 0.03 0.02 0.00 0.01 0.03 0.02 0.40 0.35 0.55
-  Open       in view  0.79 out of view -0.04 | with task x 3 h FE: in view  0.08+-0.18 out of view -0.39+-0.19 (n=619)
-  AI         in view  0.76 out of view  0.06 | with task x 3 h FE: in view -0.04+-0.18 out of view -0.33+-0.20 (n=619)
-  Agent      in view  0.52 out of view  0.31 | with task x 3 h FE: in view -0.36+-0.19 out of view  0.08+-0.19 (n=619)
-  Research   in view  0.32 out of view  0.17 | with task x 3 h FE: in view -0.61+-0.18 out of view -0.10+-0.14 (n=619)
-  Helper     in view  0.43 out of view  0.14 | with task x 3 h FE: in view -0.15+-0.19 out of view -0.20+-0.15 (n=619)
-  Scout      in view  0.66 out of view  0.27 | with task x 3 h FE: in view -0.85+-0.28 out of view -1.19+-0.30 (n=619)
-  OAI        in view  0.88 out of view -0.24 | with task x 3 h FE: in view -0.03+-0.20 out of view -0.13+-0.21 (n=619)
-  Researcher in view  0.52 out of view  0.11 | with task x 3 h FE: in view -0.14+-0.19 out of view -0.21+-0.16 (n=619)
-  Data       in view -0.20 out of view  0.03 | with task x 3 h FE: in view -0.94+-0.23 out of view -0.14+-0.11 (n=619)
-  Archive    in view -0.10 out of view  0.02 | with task x 3 h FE: in view -0.78+-0.22 out of view -0.53+-0.47 (n=619)
-  Reader     in view  0.22 out of view -0.05 | with task x 3 h FE: in view -1.31+-0.33 out of view -0.35+-0.46 (n=619)
-  XYZ        in view -0.10 out of view  0.04 | with task x 3 h FE: in view -0.52+-0.17 out of view -0.16+-0.08 (n=619)
-  Observer   in view  0.14 out of view -0.12 | with task x 3 h FE: in view -0.95+-0.24 out of view -1.09+-0.28 (n=619)
-  Probe      in view  0.23 out of view -0.09 | with task x 3 h FE: in view -0.46+-0.21 out of view -1.18+-0.45 (n=619)
-  Prep       in view -0.10 out of view  0.15 | with task x 3 h FE: in view -0.22+-0.13 out of view  0.07+-0.09 (n=619)
-  date       in view  0.48 out of view -0.06 | with task x 3 h FE: in view  0.02+-0.17 out of view -0.16+-0.13 (n=619)
+  Open       in view  0.72 out of view  0.03 | with task x 3 h FE: in view -0.03+-0.16 out of view -0.31+-0.18 (n=636)
+  AI         in view  0.71 out of view  0.09 | with task x 3 h FE: in view -0.10+-0.16 out of view -0.35+-0.20 (n=636)
+  Agent      in view  0.48 out of view  0.35 | with task x 3 h FE: in view -0.37+-0.17 out of view -0.02+-0.19 (n=636)
+  Research   in view  0.28 out of view  0.14 | with task x 3 h FE: in view -0.59+-0.17 out of view -0.20+-0.13 (n=636)
+  Helper     in view  0.46 out of view  0.13 | with task x 3 h FE: in view -0.10+-0.18 out of view -0.18+-0.14 (n=636)
+  Scout      in view  0.67 out of view  0.25 | with task x 3 h FE: in view -0.77+-0.27 out of view -0.99+-0.28 (n=636)
+  OAI        in view  0.80 out of view -0.17 | with task x 3 h FE: in view -0.03+-0.18 out of view -0.25+-0.21 (n=636)
+  Researcher in view  0.47 out of view  0.15 | with task x 3 h FE: in view -0.17+-0.18 out of view -0.22+-0.16 (n=636)
+  Data       in view -0.23 out of view  0.05 | with task x 3 h FE: in view -0.93+-0.21 out of view -0.09+-0.11 (n=636)
+  Archive    in view -0.08 out of view  0.02 | with task x 3 h FE: in view -0.74+-0.22 out of view -0.55+-0.46 (n=636)
+  Reader     in view  0.23 out of view -0.06 | with task x 3 h FE: in view -1.26+-0.32 out of view -0.28+-0.44 (n=636)
+  XYZ        in view -0.09 out of view  0.03 | with task x 3 h FE: in view -0.43+-0.16 out of view -0.16+-0.08 (n=636)
+  Observer   in view  0.13 out of view -0.16 | with task x 3 h FE: in view -1.02+-0.23 out of view -1.64+-0.33 (n=636)
+  Probe      in view  0.22 out of view -0.08 | with task x 3 h FE: in view -0.45+-0.20 out of view -1.58+-0.52 (n=636)
+  Prep       in view -0.02 out of view  0.13 | with task x 3 h FE: in view -0.14+-0.13 out of view  0.02+-0.10 (n=636)
+  date       in view  0.49 out of view -0.05 | with task x 3 h FE: in view -0.00+-0.16 out of view -0.21+-0.13 (n=636)
 most common skeletons: ARMN (140), MNTR (72), RMN (55), TRMN (55), AMNT (49), TMNR (35)
-same skeleton as a task-mate in view 0.116, out of view 0.091, as a handle of another task in the feed 0.040; difference in - out 0.025 [0.015, 0.036] over 547 newcomers
+same skeleton as a task-mate in view 0.116, out of view 0.093, as a handle of another task in the feed 0.040; difference in - out 0.023 [0.011, 0.034] over 555 newcomers
 first 5 arrivals, tasks with at least 40 handles, 273 task-piece pairs: a piece carried by one of them is later carried by 0.054 of the task (n=44), otherwise 0.022; reaches a fifth of the task 0.09 against 0.004; ratio 2.5
 placebo, last 5 arrivals looking backwards: ratio 1.4
 fashion Scout    : mu_A 0.015 mu_B 0.051; observed first block 0.01, last 0.55, max 0.55; replay first 0.03, last 0.18; mean absolute error 0.11
-fashion Agent    : mu_A 0.062 mu_B 0.260; observed first block 0.45, last 0.09, max 0.45; replay first 0.42, last 0.15; mean absolute error 0.08
-fashion Research : mu_A 0.106 mu_B 0.443; observed first block 0.42, last 0.13, max 0.42; replay first 0.29, last 0.18; mean absolute error 0.06
-fashion Helper   : mu_A 0.063 mu_B 0.495; observed first block 0.24, last 0.11, max 0.24; replay first 0.19, last 0.11; mean absolute error 0.06
+fashion Agent    : mu_A 0.067 mu_B 0.276; observed first block 0.45, last 0.09, max 0.45; replay first 0.41, last 0.16; mean absolute error 0.08
+fashion Research : mu_A 0.114 mu_B 0.466; observed first block 0.42, last 0.13, max 0.42; replay first 0.29, last 0.18; mean absolute error 0.06
+fashion Helper   : mu_A 0.060 mu_B 0.477; observed first block 0.24, last 0.11, max 0.24; replay first 0.19, last 0.11; mean absolute error 0.06
 
 === SI: how to write ===
 coined   : slope on first uses 0.94 (n=698), all uses 0.95 (n=2146), page 6 h earlier 0.90 (n=192)
@@ -276,7 +298,16 @@ joint fit on first uses with all three (n=1988): page 0.73+-0.03, family 0.10+-0
   semantic : page 0.64, family 0.21 (n=682)
   habit    : page 0.82, family 0.11 (n=833)
 response to the page share: slope 0.91; within convention x family x day (491 strata) 0.50+-0.04 (n=2961)
-names, joint fit (n=7632): page's authors 0.46+-0.05, same-task handles on other pages 0.23+-0.06, feed 0.39+-0.07; conflicts: follow the page 0.60 [0.55, 0.64] (n=491)
+names, joint fit (n=4848): page's authors 0.40+-0.06, same-task handles on other pages 0.15+-0.07, feed 0.53+-0.09; conflicts: follow the page 0.61 [0.56, 0.67] (n=277)
+
+=== SI: the convention selection rule ===
+uses >=  50, minority >= 0.050, pages >= 10: 18 kept, n = 1120; 0.61 +- 0.06, 0.28 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
+uses >= 100, minority >= 0.050, pages >= 10: 18 kept, n = 1120; 0.61 +- 0.06, 0.28 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
+uses >= 200, minority >= 0.050, pages >= 10: 18 kept, n = 1120; 0.61 +- 0.06, 0.28 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
+uses >= 100, minority >= 0.025, pages >= 10: 20 kept, n = 1216; 0.61 +- 0.06, 0.28 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
+uses >= 100, minority >= 0.100, pages >= 10: 15 kept, n =  766; 0.57 +- 0.07, 0.23 +- 0.07, 0.06 +- 0.06, -0.10 +- 0.08; slope 0.90
+uses >= 100, minority >= 0.050, pages >=  5: 20 kept, n = 1120; 0.61 +- 0.06, 0.28 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
+uses >= 100, minority >= 0.050, pages >= 20: 16 kept, n = 1113; 0.61 +- 0.06, 0.28 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
 
 === How to write, all handles ===
 52 candidate conventions, 44 with at least 100 uses, 19 kept
@@ -339,163 +370,79 @@ on the prior-strength axis: 19 conventions in Fig. 4b (at least 10 minority uses
   volatility, mean over those: all uses 3.48, first uses 2.88
 
 === Identification of copying, all handles ===
-pages: 89855 candidates, 1933 decisions; R2 0.082 (baseline FE), 0.084 (+ task x 3 h FE)
-  feed share, own-task page          2.034 +- 0.034 (se)   + task x 3 h:   2.057 +- 0.035 (se), 95% half-width 0.07
-  feed share, other-task page        0.440 +- 0.026 (se)   + task x 3 h:   0.404 +- 0.027 (se), 95% half-width 0.05
-  visible at all, own-task page      0.020 +- 0.002 (se)   + task x 3 h:   0.023 +- 0.002 (se), 95% half-width 0.00
-  own-task page                      0.059 +- 0.001 (se)   + task x 3 h:   0.059 +- 0.001 (se), 95% half-width 0.00
-  log handles already there          0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
-names: 15808 records; R2 0.318 (baseline FE), 0.321 (+ task x 3 h FE)
-  same task, authors of the page     0.382 +- 0.035 (se)   + task x 3 h:   0.377 +- 0.035 (se), 95% half-width 0.07
-  same task, in the feed             0.330 +- 0.038 (se)   + task x 3 h:   0.330 +- 0.038 (se), 95% half-width 0.07
-  same task, out of view             0.206 +- 0.047 (se)   + task x 3 h:   0.193 +- 0.048 (se), 95% half-width 0.09
-  other tasks, in the feed           0.072 +- 0.027 (se)   + task x 3 h:   0.073 +- 0.027 (se), 95% half-width 0.05
-forms: 1380 first uses; R2 0.740 (baseline FE), 0.761 (+ task x 3 h FE)
-  on the page                        0.652 +- 0.032 (se)   + task x 3 h:   0.621 +- 0.033 (se), 95% half-width 0.07
-  same task, in the feed             0.273 +- 0.038 (se)   + task x 3 h:   0.269 +- 0.040 (se), 95% half-width 0.08
-  same task, out of view             0.051 +- 0.035 (se)   + task x 3 h:   0.047 +- 0.038 (se), 95% half-width 0.07
-  other tasks, in the feed          -0.024 +- 0.035 (se)   + task x 3 h:  -0.043 +- 0.041 (se), 95% half-width 0.08
-forms, fully interacted convention x task x 3 h FE (R2 0.83): 0.63 +- 0.04, 0.22 +- 0.05, -0.02 +- 0.09, -0.10 +- 0.07
+pages: 89855 candidates, 1933 decisions; R2 0.099 (baseline intercepts), 0.099 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
+  share of the feed, own task        2.090 +- 0.122 (se)   + task x 3 h:   2.090 +- 0.122 (se), 95% half-width 0.24
+  share of the feed, other task      0.202 +- 0.038 (se)   + task x 3 h:   0.202 +- 0.038 (se), 95% half-width 0.08
+  in the feed, own task              0.036 +- 0.004 (se)   + task x 3 h:   0.036 +- 0.004 (se), 95% half-width 0.01
+  own task                           0.014 +- 0.002 (se)   + task x 3 h:   0.014 +- 0.002 (se), 95% half-width 0.00
+  log(1 + handles on the page)       0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
+names: 29568 records; R2 0.275 (baseline intercepts), 0.277 (+ task x 3 h)
+  share among page authors, own task   0.177 +- 0.025 (se)   + task x 3 h:   0.173 +- 0.025 (se), 95% half-width 0.05
+  share in the feed, own task        0.486 +- 0.028 (se)   + task x 3 h:   0.478 +- 0.028 (se), 95% half-width 0.05
+  share out of view, own task        0.262 +- 0.029 (se)   + task x 3 h:   0.257 +- 0.030 (se), 95% half-width 0.06
+  share in the feed, other tasks     0.109 +- 0.021 (se)   + task x 3 h:   0.108 +- 0.021 (se), 95% half-width 0.04
+  first page without earlier task-mates   0.028 +- 0.003 (se)   + task x 3 h:   0.027 +- 0.003 (se), 95% half-width 0.01
+forms: 1380 first uses; R2 0.740 (baseline intercepts), 0.761 (+ task x 3 h)
+  share on the page                  0.652 +- 0.051 (se)   + task x 3 h:   0.621 +- 0.055 (se), 95% half-width 0.11
+  share in the feed, own task        0.273 +- 0.054 (se)   + task x 3 h:   0.269 +- 0.055 (se), 95% half-width 0.11
+  share out of view, own task        0.051 +- 0.047 (se)   + task x 3 h:   0.047 +- 0.047 (se), 95% half-width 0.09
+  share in the feed, other tasks    -0.024 +- 0.042 (se)   + task x 3 h:  -0.043 +- 0.050 (se), 95% half-width 0.10
+names, feature x task + task x 3 h intercepts (R2 0.30): 0.11 +- 0.03, 0.30 +- 0.03, 0.16 +- 0.03, 0.10 +- 0.02, 0.02 +- 0.00
+names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.32): 0.06 +- 0.03, 0.02 +- 0.04, -0.12 +- 0.05, -0.00 +- 0.03, 0.01 +- 0.00
+names with feature x task intercepts, Wald page vs out of view: chi2 1.3, p 0.26
+names with feature x task intercepts, Wald feed vs out of view: chi2 7.6, p 0.0057
+names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 22.4, p 2.3e-06
+pages, Wald own task vs other task, share of the feed: chi2 230.9, p 3.8e-52
+pages, two-way clustered se (handle, task x 3 h): 0.231, 0.050, 0.009, 0.004, 0.001
+names, Wald page vs out of view: chi2 4.0, p 0.045
+names, Wald feed vs out of view: chi2 19.0, p 1.3e-05
+names, Wald own task vs other tasks, in the feed: chi2 90.1, p 2.3e-21
+names, two-way clustered se (handle, task x 3 h): 0.034, 0.049, 0.046, 0.041, 0.004
+forms, Wald page vs out of view: chi2 46.2, p 1.1e-11
+forms, Wald feed vs out of view: chi2 7.0, p 0.0081
+forms, Wald own task vs other tasks, in the feed: chi2 15.7, p 7.5e-05
+forms, two-way clustered se (handle, task x 3 h): 0.082, 0.053, 0.043, 0.048
+pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.93 +- 0.84, 8.29 +- 0.91, 3.09 +- 0.12, -0.38 +- 0.16, 0.24 +- 0.03
+forms, fully interacted convention x task x 3 h FE (R2 0.83): 0.63 +- 0.07, 0.22 +- 0.07, -0.02 +- 0.09, -0.10 +- 0.09
 
 === Figure 2 ===
 (a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
-(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
-(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
-(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
-(b) task word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
-
-=== Figure 3 ===
-(a) share 0.010: 0.007, share 0.023: 0.021, share 0.047: 0.056, share 0.087: 0.093, share 0.170: 0.146
-(b) joint fit (n=9904): in view 0.61, out of view 0.08
-
-=== Figure 4 ===
-(b) binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
-(b) binned names: s=0.07:1.83 s=0.20:1.29 s=0.33:2.89 s=0.52:1.21 s=0.76:0.936 s=0.97:1.15
-(c) binned forms: s=0.04:3.41 s=0.17:2.99 s=0.34:1.91 s=0.71:1.1
-(c) binned names: s=0.07:5.63 s=0.20:2.73 s=0.33:2.12 s=0.52:2.09 s=0.78:1.18 s=0.97:1.15
-(d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
-(d) binned names: s=0.07:0.11 s=0.20:0.0331 s=0.33:0.0297 s=0.52:0.0248 s=0.78:0.00386 s=0.97:0.00319
-points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
-
-=== The model ===
-parameters: 1201 agents over 5.3 days, 2 edits on distinct pages within 2.02 h, c = 0.260, usage rate 0.229, 50 runs per point of the axis
-Fig. 4a, 200 runs: P(>=5,10,20,40) median [0.210, 0.089, 0.030, 0.006] (observed [0.211, 0.097, 0.031, 0.007]); 5-95% of P(>=20) [0.022, 0.038]; largest page median 64, 5-95% 46-99 (observed 54); pages 626 (observed 679)
-window    30 lines, 10 runs: P(>=5,10,20,40) [0.233, 0.093, 0.027, 0.002], largest page 48
-window   100 lines, 10 runs: P(>=5,10,20,40) [0.207, 0.087, 0.029, 0.004], largest page 80
-window   300 lines, 10 runs: P(>=5,10,20,40) [0.188, 0.083, 0.025, 0.007], largest page 126
-window  1000 lines, 10 runs: P(>=5,10,20,40) [0.163, 0.056, 0.022, 0.009], largest page 210
-uniform choice among visible pages, 10 runs: P(>=10,20,40) [0.060, 0.003, 0.000], largest page 24
-uniform choice among all pages, 10 runs: P(>=10,20,40) [0.068, 0.003, 0.000], largest page 24
-axis, form, gap: 0:nan 0.02:6.64 0.05:3.56 0.1:2.71 0.15:2.66 0.2:2.47 0.3:2.20 0.4:1.93 0.5:1.68 0.6:1.54 0.7:1.34 0.8:1.19 0.9:1.09 1:0.98
-axis, form, vol: 0:nan 0.02:1.93 0.05:2.41 0.1:2.71 0.15:2.37 0.2:2.31 0.3:1.75 0.4:1.53 0.5:1.40 0.6:1.24 0.7:1.10 0.8:1.05 0.9:0.92 1:0.90
-axis, form, distance from the prior: 0:0.500 0.02:0.299 0.05:0.226 0.1:0.130 0.15:0.094 0.2:0.069 0.3:0.046 0.4:0.027 0.5:0.027 0.6:0.021 0.7:0.017 0.8:0.017 0.9:0.013 1:0.012
-axis, name, gap: 0:nan 0.02:1.32 0.05:1.17 0.1:1.16 0.15:1.19 0.2:1.13 0.3:1.07 0.4:1.04 0.5:1.02 0.6:1.01 0.7:1.01 0.8:1.01 0.9:1.01 1:0.99
-axis, name, vol: 0:nan 0.02:2.85 0.05:3.26 0.1:3.16 0.15:2.69 0.2:2.36 0.3:1.95 0.4:1.62 0.5:1.43 0.6:1.28 0.7:1.17 0.8:1.07 0.9:1.02 1:0.93
-axis, name, distance from the prior: 0:0.500 0.02:0.301 0.05:0.198 0.1:0.104 0.15:0.070 0.2:0.044 0.3:0.033 0.4:0.021 0.5:0.016 0.6:0.013 0.7:0.012 0.8:0.010 0.9:0.009 1:0.008
-final share of a form, s = 0.02, pi = 1/2: from 0.00 to 1.00
-final share of a form, s = 0.1, pi = 1/2: from 0.11 to 0.90
-final share of a form, s = 0.3, pi = 1/2: from 0.37 to 0.63
-final share of a form, s = 0.6, pi = 1/2: from 0.45 to 0.58
-final share of a form, s = 1, pi = 1/2: from 0.43 to 0.54
-2 s.d. of the final share across runs, form: 0:0.98 0.02:0.78 0.05:0.64 0.1:0.40 0.15:0.32 0.2:0.23 0.3:0.13 0.4:0.09 0.5:0.08 0.6:0.06 0.7:0.06 0.8:0.05 0.9:0.05 1:0.05
-2 s.d. of the final share across runs, name: 0:1.00 0.02:0.73 0.05:0.47 0.1:0.31 0.15:0.25 0.2:0.17 0.3:0.11 0.4:0.08 0.5:0.06 0.6:0.05 0.7:0.04 0.8:0.03 0.9:0.03 1:0.03
-direction, form, gap, s = 0.2: pi 0.15: 3.60, pi 0.3: 2.42, pi 0.5: 1.69, pi 0.7: 2.32, pi 0.85: 4.54
-direction, form, gap, s = 0.4: pi 0.15: 2.98, pi 0.3: 1.84, pi 0.5: 1.30, pi 0.7: 1.83, pi 0.85: 2.89
-direction, form, gap, s = 0.6: pi 0.15: 1.91, pi 0.3: 1.48, pi 0.5: 1.16, pi 0.7: 1.46, pi 0.85: 2.09
-direction, form, gap: s.d. of the median across directions 0.61, s.d. across runs at pi = 1/2 1.27 (means over s > 0)
-direction, form, vol, s = 0.2: pi 0.15: 2.32, pi 0.3: 2.29, pi 0.5: 2.23, pi 0.7: 2.33, pi 0.85: 2.38
-direction, form, vol, s = 0.4: pi 0.15: 1.50, pi 0.3: 1.52, pi 0.5: 1.61, pi 0.7: 1.64, pi 0.85: 1.49
-direction, form, vol, s = 0.6: pi 0.15: 1.28, pi 0.3: 1.25, pi 0.5: 1.17, pi 0.7: 1.26, pi 0.85: 1.17
-direction, form, vol: s.d. of the median across directions 0.08, s.d. across runs at pi = 1/2 0.54 (means over s > 0)
-direction, name, gap, s = 0.2: pi 0.15: 1.30, pi 0.3: 1.14, pi 0.5: 1.01, pi 0.7: 1.14, pi 0.85: 1.28
-direction, name, gap, s = 0.4: pi 0.15: 1.22, pi 0.3: 1.06, pi 0.5: 1.01, pi 0.7: 1.03, pi 0.85: 1.05
-direction, name, gap, s = 0.6: pi 0.15: 1.03, pi 0.3: 1.00, pi 0.5: 1.00, pi 0.7: 1.01, pi 0.85: 1.05
-direction, name, gap: s.d. of the median across directions 0.06, s.d. across runs at pi = 1/2 0.13 (means over s > 0)
-direction, name, vol, s = 0.2: pi 0.15: 2.32, pi 0.3: 2.56, pi 0.5: 2.28, pi 0.7: 2.59, pi 0.85: 2.23
-direction, name, vol, s = 0.4: pi 0.15: 1.71, pi 0.3: 1.57, pi 0.5: 1.52, pi 0.7: 1.58, pi 0.85: 1.64
-direction, name, vol, s = 0.6: pi 0.15: 1.25, pi 0.3: 1.27, pi 0.5: 1.29, pi 0.7: 1.35, pi 0.85: 1.27
-direction, name, vol: s.d. of the median across directions 0.10, s.d. across runs at pi = 1/2 0.53 (means over s > 0)
-usage rate, s = 0.2: co-occurrence 2.37 (0.5), 2.47 (0.23), 2.53 (0.1); volatility 2.00, 2.31, 2.26
-usage rate, s = 0.4: co-occurrence 1.73 (0.5), 1.93 (0.23), 2.20 (0.1); volatility 1.41, 1.53, 1.54
-last 30 uses anywhere, s = 0.2: co-occurrence 2.49 (model 2.47), volatility 2.22 (2.31), distance from the prior 0.068 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.77 (0.78)
-rho = 1/2 on an empty page, s = 0.2: co-occurrence 1.69 (model 2.47), volatility 1.21 (2.31), distance from the prior 0.159 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.09 (0.78)
-each convention, gap: n=18, correlation 0.43, mean observed 2.65, mean model 2.50, observed inside the 10-90% band of its runs 0.67
-each convention, vol: n=17, correlation 0.83, mean observed 2.53, mean model 2.08, observed inside the 10-90% band of its runs 0.76
-each convention, final: n=18, correlation 0.86, mean observed 0.62, mean model 0.56, observed inside the 10-90% band of its runs 0.83
-each convention, model volatility: all uses 2.12, first uses 2.08
-
-=== Figure 2 ===
-(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
-(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
-(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
-(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
-(b) task word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
-
-=== Figure 3 ===
-(a) share 0.010: 0.007, share 0.023: 0.021, share 0.047: 0.056, share 0.087: 0.093, share 0.170: 0.146
-(b) joint fit (n=9904): in view 0.61, out of view 0.08
-
-=== Figure 4 ===
-(b) binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
-(b) binned names: s=0.07:1.83 s=0.20:1.29 s=0.33:2.89 s=0.52:1.21 s=0.76:0.936 s=0.97:1.15
-(c) binned forms: s=0.04:3.41 s=0.17:2.99 s=0.34:1.91 s=0.71:1.1
-(c) binned names: s=0.07:5.63 s=0.20:2.73 s=0.33:2.12 s=0.52:2.09 s=0.78:1.18 s=0.97:1.15
-(d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
-(d) binned names: s=0.07:0.11 s=0.20:0.0331 s=0.33:0.0297 s=0.52:0.0248 s=0.78:0.00386 s=0.97:0.00319
-points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
-
-=== Figure 2 ===
-(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
+(a) share of a block's task edits on its 5 busiest pages: median 0.52, range 0.21 to 0.84; from 18 June 0.27 to 0.84, against 0.06 to 0.56 if spread evenly over the pages written on
 (b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
 (b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
 (b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
 (b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
 
-=== SI: how to write ===
-coined   : slope on first uses 0.94 (n=698), all uses 0.95 (n=2146), page 6 h earlier 0.90 (n=192)
-semantic : slope on first uses 0.79 (n=1005), all uses 0.90 (n=2292), page 6 h earlier 0.87 (n=243)
-habit    : slope on first uses 0.90 (n=1258), all uses 0.89 (n=2617), page 6 h earlier 0.79 (n=316)
-  Rn / #n                    s 0.05 bias ceiling 1.00 late share of the prevailing form 1.00
-  task clock / scaffold      s 0.12 bias ceiling 0.71 late share of the prevailing form 0.57
-  termination / teardown     s 0.15 bias ceiling 0.86 late share of the prevailing form 0.82
-  relay / bridge             s 0.06 bias ceiling 0.58 late share of the prevailing form 0.95
-  deadline / horizon         s 0.01 bias ceiling 1.00 late share of the prevailing form 0.81
-  signal / ping              s 0.23 bias ceiling 0.82 late share of the prevailing form 0.90
-  answer / value             s 0.43 bias ceiling 0.53 late share of the prevailing form 0.52
-  update / edit              s 0.71 bias ceiling 0.85 late share of the prevailing form 0.90
-  seconds / sec              s 0.04 bias ceiling 0.68 late share of the prevailing form 0.94
-  CONFIRMED / confirmed      s 0.35 bias ceiling 0.60 late share of the prevailing form 0.47
-  LIVE / live                s 0.33 bias ceiling 0.71 late share of the prevailing form 0.60
-  BEFORE / before            s 0.33 bias ceiling 0.84 late share of the prevailing form 0.97
-  task-clock / task clock    s 0.28 bias ceiling 0.64 late share of the prevailing form 0.65
-  1,234 / 1234               s 0.15 bias ceiling 0.55 late share of the prevailing form 0.38
-  HH:MM:SS / HH:MM           s 0.37 bias ceiling 0.84 late share of the prevailing form 0.91
-  we / I                     s 0.29 bias ceiling 0.78 late share of the prevailing form 0.81
-  bold ** / '''              s 0.14 bias ceiling 0.64 late share of the prevailing form 0.79
-  & / and                    s 0.17 bias ceiling 0.83 late share of the prevailing form 0.94
-shuffle control: observed same-page agreement minus the time-shuffled one: Rn / #n +0.06, task clock / scaffold +0.05, termination / teardown +0.00, relay / bridge +0.15, deadline / horizon +0.02, signal / ping +0.07, answer / value +0.12, update / edit +0.09, seconds / sec +0.02, CONFIRMED / confirmed +0.11, LIVE / live +0.09, BEFORE / before +0.07, task-clock / task clock +0.10, 1,234 / 1234 +0.18, HH:MM:SS / HH:MM +0.06, we / I +0.09, bold ** / ''' +0.17, & / and +0.08
-co-occurrence ratio, geometric mean over 18 conventions: all pairs 2.65, pairs of uses by different handles 2.44
-page against the family's other pages, coined   : follow the page 0.77 [0.60, 0.89] (n=31)
-page against the family's other pages, semantic : follow the page 0.63 [0.49, 0.75] (n=46)
-page against the family's other pages, habit    : follow the page 0.67 [0.58, 0.74] (n=135)
-page against the family's other pages, pooled   : follow the page 0.67 [0.61, 0.73] (n=212)
-family's other pages against the feed, pooled: follow the family 0.56 [0.53, 0.60] (n=877)
-joint fit on first uses with all three (n=1988): page 0.73+-0.03, family 0.10+-0.03, feed 0.15+-0.03
-  page and family only (n=1988): page 0.79, family 0.14
-  coined   : page 0.86, family 0.05 (n=473)
-  semantic : page 0.64, family 0.21 (n=682)
-  habit    : page 0.82, family 0.11 (n=833)
-response to the page share: slope 0.91; within convention x family x day (491 strata) 0.50+-0.04 (n=2961)
-names, joint fit (n=7632): page's authors 0.46+-0.05, same-task handles on other pages 0.23+-0.06, feed 0.39+-0.07; conflicts: follow the page 0.60 [0.55, 0.64] (n=491)
+=== Figure 3 ===
+(a) share 0.010: 0.007, share 0.023: 0.021, share 0.047: 0.056, share 0.087: 0.093, share 0.170: 0.146
+(b) joint fit (n=10176): in view 0.57, out of view 0.10
+
+=== Figure 4 ===
+(b) binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
+(b) binned names: s=0.07:1.83 s=0.21:1.29 s=0.35:2.89 s=0.55:1.21 s=0.77:0.936 s=0.97:1.15
+(c) binned forms: s=0.04:3.41 s=0.17:2.99 s=0.34:1.91 s=0.71:1.1
+(c) binned names: s=0.07:5.63 s=0.21:2.73 s=0.35:2.12 s=0.55:2.09 s=0.78:1.18 s=0.97:1.15
+(d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
+(d) binned names: s=0.07:0.109 s=0.21:0.0224 s=0.35:0.0262 s=0.55:0.0232 s=0.78:0.00406 s=0.97:0.00318
+points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}
 
 === Figure 2 ===
 (a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
+(a) share of a block's task edits on its 5 busiest pages: median 0.52, range 0.21 to 0.84; from 18 June 0.27 to 0.84, against 0.06 to 0.56 if spread evenly over the pages written on
 (b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
 (b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
 (b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
 (b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
 
-=== The network of handles (Figure 1c) ===
-1201 handles, 14793 links (a task page edited in common)
-  101 handles share no task page with anyone
-  largest component: 1055 handles, 14737 links; the other 45 linked handles are in 18 small components
+=== Figure 3 ===
+(a) share 0.010: 0.007, share 0.023: 0.021, share 0.047: 0.056, share 0.087: 0.093, share 0.170: 0.146
+(b) joint fit (n=10176): in view 0.57, out of view 0.10
+
+=== Figure 4 ===
+(b) binned forms: s=0.04:6.49 s=0.16:2.55 s=0.34:1.75 s=0.71:1.68
+(b) binned names: s=0.07:1.83 s=0.21:1.29 s=0.35:2.89 s=0.55:1.21 s=0.77:0.936 s=0.97:1.15
+(c) binned forms: s=0.04:3.41 s=0.17:2.99 s=0.34:1.91 s=0.71:1.1
+(c) binned names: s=0.07:5.63 s=0.21:2.73 s=0.35:2.12 s=0.55:2.09 s=0.78:1.18 s=0.97:1.15
+(d) binned forms: s=0.04:0.274 s=0.16:0.0398 s=0.34:0.0315 s=0.71:0.0105
+(d) binned names: s=0.07:0.109 s=0.21:0.0224 s=0.35:0.0262 s=0.55:0.0232 s=0.78:0.00406 s=0.97:0.00318
+points: {'gap': {'forms': 18, 'names': 24}, 'vol': {'forms': 17, 'names': 29}, 'dev': {'forms': 18, 'names': 29}}

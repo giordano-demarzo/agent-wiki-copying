@@ -168,7 +168,7 @@ def fig_names_visibility():
     ax.set_title('predecessors of the same task', fontsize=5.8, color=SLATE)
     for k, w in enumerate((1.5, 3, 6)):
         r = win[w]['same']
-        ax.errorbar(np.arange(3) + (k - 1) * 0.18, r['b'], yerr=1.96 * r['se'], fmt='o', color=cols[w], ms=3.4,
+        ax.errorbar(np.arange(3) + (k - 1) * 0.18, r['b'][:3], yerr=1.96 * r['se'][:3], fmt='o', color=cols[w], ms=3.4,
                     capsize=1.5, lw=0.8, label=f'born in the last {w:g} h')
     ax.axhline(0, color=GREY, lw=0.7)
     ax.set_xticks(range(3))
@@ -481,15 +481,18 @@ def fig_regressions():
         ax.set_title(title, fontsize=7, color=SLATE)
         r = d[key]
         x = np.arange(len(d['labels'][key]))
-        ax.errorbar(x - 0.12, r['b0'], yerr=1.96 * r['se0'], fmt='o', color=GREY, ms=3.4, capsize=1.5, lw=0.8,
-                    label='baseline fixed effects')
-        ax.errorbar(x + 0.12, r['b1'], yerr=1.96 * r['se1'], fmt='o', color=INK, ms=3.4, capsize=1.5, lw=0.8,
-                    label='+ task x 3 h fixed effects')
+        if r.get('nested'):
+            ax.errorbar(x, r['b0'], yerr=1.96 * r['se0'], fmt='o', color=INK, ms=3.4, capsize=1.5, lw=0.8)
+        else:
+            ax.errorbar(x - 0.12, r['b0'], yerr=1.96 * r['se0'], fmt='o', color=GREY, ms=3.4, capsize=1.5, lw=0.8,
+                        label='baseline intercepts')
+            ax.errorbar(x + 0.12, r['b1'], yerr=1.96 * r['se1'], fmt='o', color=INK, ms=3.4, capsize=1.5, lw=0.8,
+                        label='+ task x 3 h intercepts')
         ax.axhline(0, color=GREY, lw=0.7)
         ax.set_xticks(x)
         ax.set_xticklabels(d['labels'][key], fontsize=4.6, rotation=35, ha='right', rotation_mode='anchor')
         ax.set_ylabel('coefficient estimate')
-    axes[0].legend(frameon=False, fontsize=4.6, loc='upper right')
+    axes[1].legend(frameon=False, fontsize=4.6, loc='upper right')
     save(fig, 'figS_regressions')
 
 

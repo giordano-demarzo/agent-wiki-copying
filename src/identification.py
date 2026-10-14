@@ -1,8 +1,9 @@
 """Identification of copying: linear probability models in which the exposure
 is split by task (own or other) and by visibility (on the page or in the last
-100 feed lines, against older). Each model is estimated with a baseline fixed
-effect and again with fixed effects for the task family and the three-hour
-block. Writes cache/identification.pkl (Table 1, Tables S5-S7, Fig. S15) and,
+100 feed lines, against older). Names and forms are estimated with intercepts
+per feature or convention and again with task-family by three-hour-block
+effects added; pages within the arrival, whose intercept nests both. Standard
+errors are clustered by handle throughout. Writes cache/identification.pkl (Table 1, Tables S5-S7, Fig. S15) and,
 with --full, cache/identification_full.pkl (Table S1).
 """
 import collections
@@ -11,7 +12,8 @@ import sys
 import numpy as np
 
 import names as nm
-from common import FEED_LINES, Dataset, Report, T, block_of, demean, fit, load_cache, save_cache, share
+from common import (FEED_LINES, Dataset, Report, T, block_of, conditional_logit, demean, fit, fit_full, load_cache,
+                    save_cache, share, wald)
 from conventions import sequence
 
 MATES_H = nm.MATES_H
@@ -76,13 +78,13 @@ def page_records(ds):
                          | {p for p in window if fam_page.get(p) in ds.task_families})
                 for p in cands:
                     rows.append((n_dec, own, block_of(ts_all[k]), int(p == pg), window.get(p, 0) / FEED_LINES,
-                                 int(p in window), int(fam_page.get(p) == own), np.log1p(len(handles_on[p]))))
+                                 int(p in window), int(fam_page.get(p) == own), np.log1p(len(handles_on[p])), h))
                 n_dec += 1
         handles_on[pg].add(h)
     c = list(zip(*rows))
     return dict(decision=np.array(c[0]), family=np.array(c[1]), block=np.array(c[2]), y=np.array(c[3], float),
                 share=np.array(c[4]), visible=np.array(c[5]), own=np.array(c[6]), log_handles=np.array(c[7]),
-                n_decisions=n_dec)
+                handle=np.array(c[8]), n_decisions=n_dec)
 
 
 def fe(*arrays):
@@ -90,37 +92,75 @@ def fe(*arrays):
     return np.array(['|'.join(map(str, t)) for t in zip(*arrays)])
 
 
+CONTRASTS = {'page vs out of view': [1, 0, -1, 0], 'feed vs out of view': [0, 1, -1, 0],
+             'own task vs other tasks, in the feed': [0, 1, 0, -1]}
+
+
+def checks(X, y, groups, handle, tb):
+    """On the task x 3 h specification: the covariance for the Wald tests of
+    the contrasts that the text relies on, and the two-way clustered standard
+    errors (handle and task x 3 h)."""
+    b, cov, _ = fit_full(X, y, groups, cluster=handle)
+    pad = lambda c: list(c) + [0] * (len(b) - len(c))
+    out = {name: wald(b, cov, pad(c)) for name, c in CONTRASTS.items()}
+    _, cov2, _ = fit_full(X, y, groups, cluster=(handle, tb))
+    return dict(wald=out, se_twoway=np.sqrt(np.diag(cov2)))
+
+
 def fit_forms(r):
     m = np.all(~np.isnan(r['X']), axis=1)
     X, y = [r['X'][m, j] for j in range(4)], r['y'][m]
     conv, tb = r['convention'][m], fe(r['family'][m], r['block'][m])
     out = dict(n=int(m.sum()))
-    out['b0'], out['se0'], out['r2_0'] = fit(X, y, (conv,))
-    out['b1'], out['se1'], out['r2_1'] = fit(X, y, (conv, tb))
-    out['bx'], out['sex'], out['r2_x'] = fit(X, y, (fe(conv, tb),))
+    handle = r['handle'][m]
+    out['b0'], out['se0'], out['r2_0'] = fit(X, y, (conv,), cluster=handle)
+    out['b1'], out['se1'], out['r2_1'] = fit(X, y, (conv, tb), cluster=handle)
+    out['bx'], out['sex'], out['r2_x'] = fit(X, y, (fe(conv, tb),), cluster=handle)
+    out.update(checks(X, y, (conv, tb), handle, tb))
     return out
 
 
 def fit_names(r):
-    X = np.column_stack([r['page'], r['feed'], r['out'], r['other']])
+    """A newcomer whose first page had fewer than two earlier task-mates keeps
+    its record with the page share at zero and an indicator (fifth column)."""
+    X = np.column_stack([r['page0'], r['feed'], r['out'], r['other'], r['no_page']])
     m = np.all(~np.isnan(X), axis=1)
-    cols, y = [X[m, j] for j in range(4)], r['y'][m]
+    cols, y = [X[m, j] for j in range(5)], r['y'][m]
     feat, tb, handle = r['feature'][m], fe(r['family'][m], r['block'][m]), r['handle'][m]
     out = dict(n=int(m.sum()))
     out['b0'], out['se0'], out['r2_0'] = fit(cols, y, (feat,), cluster=handle)
     out['b1'], out['se1'], out['r2_1'] = fit(cols, y, (feat, tb), cluster=handle)
+    # feature x task intercepts added: absorbs a prompt that favours one feature in one task
+    out['b2'], out['se2'], out['r2_2'] = fit(cols, y, (fe(feat, r['family'][m]), tb), cluster=handle)
+    b2, cov2, _ = fit_full(cols, y, (fe(feat, r['family'][m]), tb), cluster=handle)
+    out['wald2'] = {name: wald(b2, cov2, list(c) + [0] * (len(b2) - len(c))) for name, c in CONTRASTS.items()}
+    # feature x block intercepts as well: absorbs a drift of the feature across the whole wiki
+    out['b3'], out['se3'], out['r2_3'] = fit(cols, y, (fe(feat, r['family'][m]), fe(feat, r['block'][m]), tb), cluster=handle)
+    out.update(checks(cols, y, (feat, tb), handle, tb))
     return out
 
 
 def fit_pages(r):
+    """Within-arrival estimator of Eq. (regpages): the regressors, interactions
+    included, and the outcome are demeaned within the arrival, which is the
+    same as an intercept per arrival. That intercept nests the task family and
+    the three-hour block of the arrival, so there is one specification; it is
+    stored under both keys for the tables."""
     own = r['own'] == 1
-    R = np.column_stack([r['y'], r['share'], r['visible'], r['own'], r['log_handles']])
+    R = np.column_stack([r['y'], r['share'] * own, r['share'] * (~own), r['visible'] * own, r['own'],
+                         r['log_handles']])
     D = demean(R, r['decision'])
-    cols = [D[:, 1] * own, D[:, 1] * (~own), D[:, 2] * own, D[:, 3], D[:, 4]]
-    tb = fe(r['family'], r['block'])
-    out = dict(n=len(r['y']), n_decisions=r['n_decisions'])
-    out['b0'], out['se0'], out['r2_0'] = fit(cols, D[:, 0])
-    out['b1'], out['se1'], out['r2_1'] = fit(cols, D[:, 0], (tb,))
+    cols = [D[:, j] for j in range(1, 6)]
+    out = dict(n=len(r['y']), n_decisions=r['n_decisions'], nested=True)
+    out['b0'], out['se0'], out['r2_0'] = fit(cols, D[:, 0], cluster=r['handle'])
+    out['b1'], out['se1'], out['r2_1'] = out['b0'], out['se0'], out['r2_0']
+    b, cov, _ = fit_full(cols, D[:, 0], cluster=r['handle'])
+    out['wald'] = {'own task vs other task, share of the feed': wald(b, cov, [1, -1, 0, 0, 0])}
+    _, cov2, _ = fit_full(cols, D[:, 0], cluster=(r['handle'], fe(r['family'], r['block'])))
+    out['se_twoway'] = np.sqrt(np.diag(cov2))
+    # the textbook model for a choice among alternatives: conditional logit within the arrival
+    bl, covl, r2l = conditional_logit(R[:, 1:], r['y'], r['decision'], cluster=r['handle'])
+    out['clogit'] = dict(b=bl, se=np.sqrt(np.diag(covl)), pseudo_r2=r2l)
     return out
 
 
@@ -141,11 +181,12 @@ def name_windows(ds, feats):
             o_feed = [j for j in others if j in g['feed']]
             o_out = [j for j in others if j not in g['feed'] and j not in g['authors']]
             for t, v in feats.items():
-                rec.append((t, fam[i], g['block'], i, v[i], share(v, g['on_page'], 2), share(v, g['in_feed'], 2),
-                            share(v, g['out_of_view'], 2)))
+                on_page = share(v, g['on_page'], 2)
+                rec.append((t, fam[i], g['block'], i, v[i], np.nan_to_num(on_page), share(v, g['in_feed'], 2),
+                            share(v, g['out_of_view'], 2), float(np.isnan(on_page))))
                 rec2.append((t, fam[i], g['block'], i, v[i], share(v, o_feed, 3), share(v, o_out, 3)))
         res = {}
-        for key, rows, k in (('same', rec, 3), ('other', rec2, 2)):
+        for key, rows, k in (('same', rec, 4), ('other', rec2, 2)):
             c = list(zip(*rows))
             X = np.column_stack([np.array(x, float) for x in c[5:]])
             m = np.all(~np.isnan(X), axis=1)
@@ -170,17 +211,32 @@ def main(full=False):
     groups = nm.exposure_groups(ds)
     name_fit = fit_names(nm.records(ds, feats, groups))
     form_fit = fit_forms(form_records(ds, forms['keep']))
-    labels = dict(pages=['feed share, own-task page', 'feed share, other-task page', 'visible at all, own-task page',
-                         'own-task page', 'log handles already there'],
-                  names=['same task, authors of the page', 'same task, in the feed', 'same task, out of view',
-                         'other tasks, in the feed'],
-                  forms=['on the page', 'same task, in the feed', 'same task, out of view', 'other tasks, in the feed'])
+    labels = dict(pages=['share of the feed, own task', 'share of the feed, other task', 'in the feed, own task',
+                         'own task', 'log(1 + handles on the page)'],
+                  names=['share among page authors, own task', 'share in the feed, own task',
+                         'share out of view, own task', 'share in the feed, other tasks',
+                         'first page without earlier task-mates'],
+                  forms=['share on the page', 'share in the feed, own task', 'share out of view, own task',
+                         'share in the feed, other tasks'])
     for key, res, unit in (('pages', pages, 'candidates'), ('names', name_fit, 'records'), ('forms', form_fit, 'first uses')):
         extra = f', {res["n_decisions"]} decisions' if key == 'pages' else ''
-        say(f'{key}: {res["n"]} {unit}{extra}; R2 {res["r2_0"]:.3f} (baseline FE), {res["r2_1"]:.3f} (+ task x 3 h FE)')
+        say(f'{key}: {res["n"]} {unit}{extra}; R2 {res["r2_0"]:.3f} (baseline intercepts), {res["r2_1"]:.3f} (+ task x 3 h)'
+            + (' [the arrival intercept nests task x 3 h: one specification]' if res.get('nested') else ''))
         for j, lab in enumerate(labels[key]):
             say(f'  {lab:32} {res["b0"][j]:7.3f} +- {res["se0"][j]:.3f} (se)   + task x 3 h: {res["b1"][j]:7.3f} '
                 f'+- {res["se1"][j]:.3f} (se), 95% half-width {1.96 * res["se1"][j]:.2f}')
+    say(f'names, feature x task + task x 3 h intercepts (R2 {name_fit["r2_2"]:.2f}): '
+        + ', '.join(f'{b:.2f} +- {s:.2f}' for b, s in zip(name_fit['b2'], name_fit['se2'])))
+    say(f'names, feature x task + feature x 3 h + task x 3 h intercepts (R2 {name_fit["r2_3"]:.2f}): '
+        + ', '.join(f'{b:.2f} +- {s:.2f}' for b, s in zip(name_fit['b3'], name_fit['se3'])))
+    for name, (stat, p) in name_fit['wald2'].items():
+        say(f'names with feature x task intercepts, Wald {name}: chi2 {stat:.1f}, p {p:.2g}')
+    for key, res in (('pages', pages), ('names', name_fit), ('forms', form_fit)):
+        for name, (stat, p) in res['wald'].items():
+            say(f'{key}, Wald {name}: chi2 {stat:.1f}, p {p:.2g}')
+        say(f'{key}, two-way clustered se (handle, task x 3 h): ' + ', '.join(f'{x:.3f}' for x in res['se_twoway']))
+    say('pages, conditional logit (clustered by handle), pseudo-R2 %.2f: ' % pages['clogit']['pseudo_r2']
+        + ', '.join(f'{b:.2f} +- {s:.2f}' for b, s in zip(pages['clogit']['b'], pages['clogit']['se'])))
     say(f'forms, fully interacted convention x task x 3 h FE (R2 {form_fit["r2_x"]:.2f}): '
         + ', '.join(f'{b:.2f} +- {s:.2f}' for b, s in zip(form_fit['bx'], form_fit['sex'])))
     out = dict(pages=pages, names=name_fit, forms=form_fit, labels=labels, n_features=len(feats))

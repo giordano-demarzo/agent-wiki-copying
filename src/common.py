@@ -148,10 +148,12 @@ def share(values, members, kmin):
     return values[members].mean() if len(members) >= kmin else np.nan
 
 
-def fit(columns, y, groups=(), cluster=None):
+def fit_full(columns, y, groups=(), cluster=None):
     """Least squares with an intercept and fixed effects for every level of
     each grouping variable. Returns the coefficients of `columns`, their
-    standard errors (clustered by `cluster` if given) and the R^2."""
+    covariance matrix (clustered by `cluster` if given; a tuple of two
+    clustering variables gives the two-way estimator of Cameron, Gelbach and
+    Miller) and the R^2."""
     X = [np.ones(len(y))] + list(columns)
     for g in groups:
         for level in np.unique(g)[1:]:
@@ -160,18 +162,81 @@ def fit(columns, y, groups=(), cluster=None):
     XtXi = np.linalg.pinv(X.T @ X)
     b = XtXi @ X.T @ y
     u = y - X @ b
-    if cluster is None:
-        cov = u @ u / (len(y) - X.shape[1]) * XtXi
-    else:
+
+    def meat(c):
         M = np.zeros((X.shape[1],) * 2)
-        for level in np.unique(cluster):
-            m = cluster == level
+        for level in np.unique(c):
+            m = c == level
             sc = X[m].T @ u[m]
             M += np.outer(sc, sc)
-        cov = XtXi @ M @ XtXi
+        return M
+    if cluster is None:
+        cov = u @ u / (len(y) - X.shape[1]) * XtXi
+    elif isinstance(cluster, tuple):
+        both = np.array([f'{a}|{c}' for a, c in zip(*cluster)])
+        cov = XtXi @ (meat(cluster[0]) + meat(cluster[1]) - meat(both)) @ XtXi
+    else:
+        cov = XtXi @ meat(cluster) @ XtXi
     r2 = 1 - u @ u / ((y - y.mean()) @ (y - y.mean()))
     k = len(columns)
-    return b[1:1 + k], np.sqrt(np.diag(cov))[1:1 + k], r2
+    return b[1:1 + k], cov[1:1 + k, 1:1 + k], r2
+
+
+def fit(columns, y, groups=(), cluster=None):
+    """As fit_full, returning standard errors instead of the covariance."""
+    b, cov, r2 = fit_full(columns, y, groups, cluster)
+    return b, np.sqrt(np.diag(cov)), r2
+
+
+def wald(b, cov, contrast):
+    """Wald test of contrast' b = 0: the statistic (chi-square, 1 df) and its p-value."""
+    from scipy.stats import chi2
+    c = np.array(contrast, float)
+    stat = float((c @ b) ** 2 / (c @ cov @ c))
+    return stat, float(chi2.sf(stat, 1))
+
+
+def conditional_logit(X, y, group, cluster=None):
+    """McFadden's conditional logit: within each group one alternative is
+    chosen, P(j) proportional to exp(x_j b). Returns b, the covariance (the
+    sandwich with scores summed by `cluster`, or the inverse Hessian) and
+    McFadden's pseudo-R^2."""
+    from scipy.optimize import minimize
+    order = np.argsort(group, kind='stable')
+    X, y, group = X[order], y[order], group[order]
+    cluster = None if cluster is None else cluster[order]
+    starts = np.r_[0, np.flatnonzero(np.diff(group)) + 1, len(group)]
+    sizes = np.diff(starts)
+    gid = np.repeat(np.arange(len(sizes)), sizes)
+
+    def probs(b):
+        eta = X @ b
+        eta -= np.repeat(np.maximum.reduceat(eta, starts[:-1]), sizes)
+        e = np.exp(eta)
+        return e / np.repeat(np.add.reduceat(e, starts[:-1]), sizes)
+
+    def nll(b):
+        return -np.sum(y * np.log(probs(b)))
+
+    def grad(b):
+        return -X.T @ (y - probs(b))
+    b = minimize(nll, np.zeros(X.shape[1]), jac=grad, method='BFGS').x
+    p = probs(b)
+    xbar = np.repeat(np.add.reduceat(X * p[:, None], starts[:-1], axis=0), sizes, axis=0)
+    Xc = X - xbar
+    H = (Xc * p[:, None]).T @ Xc
+    Hi = np.linalg.pinv(H)
+    if cluster is None:
+        cov = Hi
+    else:
+        S = np.zeros_like(Hi)
+        scores = X * (y - p)[:, None]
+        for level in np.unique(cluster):
+            sc = scores[cluster == level].sum(0)
+            S += np.outer(sc, sc)
+        cov = Hi @ S @ Hi
+    ll0 = -np.sum(y * np.log(np.repeat(1 / sizes, sizes)))
+    return b, cov, 1 - nll(b) / ll0
 
 
 def demean(X, groups):

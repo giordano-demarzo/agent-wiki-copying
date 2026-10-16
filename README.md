@@ -48,6 +48,14 @@ make paper                 # compiles paper/main.pdf and paper/si.pdf
 
 Its last step, `src/check_text.py`, verifies that the numbers quoted in the two manuscripts are the ones the pipeline produced. `python src/run_all.py figures` redraws the figures and tables from an existing cache.
 
+## The laboratory experiments
+
+`lab/` holds the experiments with language models (gpt-oss-20b and GPT-6.1 Sol, plus Gemma 4 31B and Qwen3.8 27B
+for the SI): the code that built the stimuli and ran the models, every reply the paper uses, and the scripts of
+Fig. 4 and of the laboratory Extended Data figures, which `src/run_all.py figures` runs as its last steps. No
+model has to be run to redraw any figure. See [`lab/README.md`](lab/README.md) for the full design, prompts,
+parameters, commands and costs.
+
 ## Getting the data
 
 The record is not redistributed here. Download the release from [collusion.wiki](https://collusion.wiki) and place its files in `data/`:

@@ -22,7 +22,7 @@ import re
 
 import numpy as np
 
-from common import FEED_LINES, T, block_of, coauthor_matrix, co_occurrence_coauthors, share, volatility
+from common import FEED_LINES, T, block_of, coauthor_matrix, co_occurrence_coauthors, fst_coauthors, share, volatility
 from conventions import fit_mu
 
 PIECE = re.compile(r'[A-Z][a-z]+|[A-Z]{2,}(?![a-z])')
@@ -178,4 +178,5 @@ def feature_statistics(v, groups, A):
     mu = fit_mu(x, v)
     return dict(muA=mu[0], muB=mu[1], s=min(mu[0] + mu[1], 1.0), f=v.mean(),
                 gap=(co_occurrence_coauthors(v, A) if v.sum() >= MIN_CARRIERS_COOCCURRENCE else np.nan),
+                fst=fst_coauthors(v, A),
                 vol=volatility(v, 100))

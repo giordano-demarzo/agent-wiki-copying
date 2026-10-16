@@ -97,6 +97,10 @@ CONV = {
     # 'cache / cached copy' was removed: 'cached' is a participle ("table cached") and 'cache' a noun or verb, not two forms of one meaning
 }
 
+# pairs whose uses are not a choice between two forms: almost every '&' of the record (177 of 181 in the
+# uses that take it) is inside a category name quoted from a statistics site, such as 'Visual & Performing Arts'
+NOT_A_CHOICE = {'& / and': 'category names'}
+
 FEED_USES = 30   # the feed exposure is the last 30 uses by other handles
 
 
@@ -197,6 +201,8 @@ def candidates(ds):
             interval = profile_interval(share, took_a)
         fails = [why for why, bad in (('uses', len(idx) < MIN_USES), ('pages', n_pages < MIN_PAGES),
                                       ('minority', not minority >= MIN_MINORITY)) if bad]
+        if name in NOT_A_CHOICE:
+            fails.append(NOT_A_CHOICE[name])
         rows[name] = dict(cls=cls, uses=len(idx), n_pages=n_pages, minority=minority, mu=mu,
                           s_interval=interval, fails=fails, kept=not fails,
                           n_handles=len({label[i] for i in idx}))

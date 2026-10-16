@@ -6,7 +6,8 @@ from matplotlib.colors import TwoSlopeNorm
 import model as md
 from common import ccdf, load_cache, wilson
 from fig3_rule import binned_forms
-from style import (AMBER, CLASS_COLOR, GREY, INDIGO, INK, MODEL, MOSS, ROSE, SLATE, panel, plt, save, use)
+from style import (AMBER, CLASS_COLOR, GREY, INDIGO, INK, MODEL, MOSS, NAME_BROWN, NAME_DARK, NAME_LIGHT, ROSE, SLATE, panel, plt,
+                   save, use)
 
 FOUR = [GREY, SLATE, INK, AMBER]
 
@@ -162,7 +163,7 @@ def fig_names_visibility():
     win = load_cache('identification.pkl')['windows']
     fig, axes = plt.subplots(1, 2, figsize=(5.4, 2.1), gridspec_kw=dict(width_ratios=[1.3, 1]))
     plt.subplots_adjust(wspace=0.45)
-    cols = {1.5: INDIGO, 3: MOSS, 6: AMBER}
+    cols = {1.5: NAME_LIGHT, 3: NAME_BROWN, 6: NAME_DARK}
     ax = axes[0]
     panel(ax, 'a')
     ax.set_title('predecessors of the same task', fontsize=5.8, color=SLATE)
@@ -344,7 +345,7 @@ def fig_family():
     ax = axes[0]
     panel(ax, 'a')
     bars = [(f['conflict'][c], CLASS_COLOR[c][0]) for c in ('coined', 'semantic', 'habit')]
-    bars += [(f['conflict']['pooled'], INK), (n['conflict'], AMBER)]
+    bars += [(f['conflict']['pooled'], INK), (n['conflict'], NAME_BROWN)]
     xs = [0, 1, 2, 3, 4.5]
     for x, ((p, lo, hi, _), color) in zip(xs, bars):
         ax.bar(x, p, color=color, width=0.8)
@@ -361,7 +362,7 @@ def fig_family():
     bf, sf, _ = f['joint']
     bn, sn = n['joint']
     for label, b, se, off in (('forms', bf, sf, 0), ('names', bn, sn, 4)):
-        for j, color in enumerate([INK, AMBER, SLATE]):
+        for j, color in enumerate([INK, SLATE, GREY]):
             ax.bar(off + j, b[j], color=color, width=0.75)
             ax.errorbar(off + j, b[j], yerr=1.96 * se[j], fmt='none', ecolor=INK, capsize=1.5, lw=0.7)
         ax.text(off + 1, 0.95, label, ha='center', va='bottom', fontsize=6, color=SLATE)
@@ -373,7 +374,7 @@ def fig_family():
     ax.set_ylabel('fitted coefficient')
     ax = axes[2]
     panel(ax, 'c')
-    for lab, color, marker in [('task says A', INK, 'o'), ('task says B', AMBER, 's')]:
+    for lab, color, marker in [('task says A', INK, 'o'), ('task says B', SLATE, 's')]:
         xs, ps, lo, hi = binned_forms(f['split'][lab.replace('task', 'family')])
         errline(ax, xs, ps, lo, hi, fmt=f'{marker}-', color=color, ms=3, label=lab)
     ax.plot([0, 1], [0, 1], color=GREY, lw=0.6, ls=':')

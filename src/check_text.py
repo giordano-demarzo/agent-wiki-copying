@@ -111,6 +111,7 @@ def expected_values():
     v['usage'] = np.mean(list(forms['usage'].values())); v['usage_range'] = (min(forms['usage'].values()), max(forms['usage'].values()))
     v['kept_full'] = len(forms_full['keep'])
     # identification
+    _idf = load_cache('identification.pkl')['forms']; v['forms_n'] = _idf['n']; v['forms_r2'] = [_idf['r2_0'], _idf['r2_1'], _idf['r2_x']]
     p, n, f = ident['pages'], ident['names'], ident['forms']
     v['n_records'], v['n_first'], v['n_cand'], v['n_dec'] = n['n'], f['n'], p['n'], p['n_decisions']
     v['own_vis_ratio'] = p['b1'][0] / p['b1'][1]; v['r2'] = (f['r2_1'], n['r2_1'], p['r2_1']); v['fx'] = list(f['bx'])
@@ -183,13 +184,11 @@ def checks(v):
         (M, r'The agents wrote on (\d+) task pages', [v['task_pages']]),
         (M, r'took between (\d+)\\% and (\d+)\\% of its edits, against (\d+)\\% to (\d+)\\% had the edits been spread evenly',
          [round(100 * x) for x in v['top_late'] + v['even_late']]),
-        (M, r'The network of the ([\d{,}]+) handles that edited a task page in common', [v['giant']]),
-        (M, r'([\d{,}]+) of the ([\d{,}]+) form a single network of co-authorship', [v['giant'], v['handles']]),
-        (M, r'The (\d+) handles that share no task page with anyone and (\d+) handles in (\d+) small components', [v['isolated'], v['small'], v['n_small']]),
+        # the co-authorship network (network.py) is no longer in the main text; its numbers are checked if the sentence returns
         # where to write
         (M, r'(\w+) out of (\w+) appends went to a page still in the last hundred lines', [round(10 * float(v['in_window'])), 10]),
         (M, r'\$p_c=(0\.\d+)\$', [v['c']]),
-        (M, r'chosen (\w+) times less readily than a page of one', [round(v['own_vis_ratio'])]),
+        # 'chosen N times less readily than a page of one's own task' left the main text with the draft of 16 Oct (own_vis_ratio still in the cache)
         # how to sign
         (M, r'runs from (0\.\d+) to (0\.\d+) across the 16 name features, against (0\.\d+) to (0\.\d+) across the conventions',
          [*v['s_features'], *v['s_range']]),
@@ -206,7 +205,7 @@ def checks(v):
         # the model
         (M, r'The model has ([\d{,}]+) identical agents', [v['agents']]),
         (M, r'over the (\d\.\d) days that hold the central', [v['days']]),
-        (M, r'percentile over (\d+) runs', [200]),
+        (M, r'percentile of (\d+) simulated runs', [200]),
         (M, r'percentiles over (\d+) runs and the five values', [md.RUNS]),
         # SI: S1
         (S, r'median of (\d\.\d)~h among the (\d+) handles', [v['span_h'], v['n_span']]),
@@ -276,6 +275,7 @@ def checks(v):
         (S, r'a geometric mean of (\d\.\d) in the model against (\d\.\d) observed, and is noisy convention by convention, with a correlation of (0\.\d+)', [v['pc_gap'][1], v['pc_gap'][2], v['pc_gap'][0]]),
         (S, r'with a correlation of (0\.\d+), and is close in level, (\d\.\d) in the model against (\d\.\d) on average', [v['pc_vol'][0], v['pc_vol'][1], v['pc_vol'][2]]),
         # SI: S2 and S8
+        (S, r'([\d,]+) first uses of the (\d+) conventions; standard errors clustered by handle; \$R\^2\$ of (0\.\d+), (0\.\d+) and (0\.\d+)', [v['forms_n'], v['kept'], *v['forms_r2']]),
         (S, r'the feed carries most, (0\.\d+), the authors of the first page (0\.\d+), the task-mates out of view (0\.\d+) and other tasks (0\.\d+); the coefficient of the task-mates out of view is larger than in the population, where it is (0\.\d+)', [v['full_names'][1], v['full_names'][0], v['full_names'][2], v['full_names'][3], v['out_pop']]),
         (S, r'to \$(-?0\.\d+) \\pm 0\.\d+\$ on the page, \$(0\.\d+) \\pm 0\.\d+\$ in the feed and \$(-0\.\d+) \\pm 0\.\d+\$ out of view', v['n2'][:3]),
         (S, r'in which the task-mates in the feed carry \$(0\.\d+) \\pm (0\.\d+)\$ and those out of view \$(0\.\d+) \\pm (0\.\d+)\$ \(([\d,]+) records', list(v['joint'])),

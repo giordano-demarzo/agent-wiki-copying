@@ -18,7 +18,7 @@ import sys
 
 import numpy as np
 
-from common import Dataset, Report, T, block_of, co_occurrence, save_cache, volatility, wilson
+from common import Dataset, Report, T, block_of, co_occurrence, fst, save_cache, volatility, wilson
 from conventions import CLASSES, CONV, FEED_USES, MIN_IN_VIEW, candidates, exposure, sequence
 
 N_SHUFFLES = 50
@@ -116,6 +116,7 @@ def axis_statistics(ds, name, mu):
     return dict(name=name, cls=CONV[name][0], s=min(s, 1.0), muA=mu[0], muB=mu[1], f=a.mean(),
                 n_first=len(first), minority_uses=int(minority_uses),
                 gap=co_occurrence(pages, a) if minority_uses >= MIN_MINORITY_USES else np.nan,
+                fst=fst(pages, a),
                 vol=volatility(a[first], VOL_BLOCK) if len(first) >= MIN_FIRST_USES else np.nan,
                 vol_all=volatility(a, VOL_BLOCK),
                 dev=max(abs(a.mean() - mu[0] / s), 1e-3) if s > 0 else np.nan)

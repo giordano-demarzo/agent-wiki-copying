@@ -10,7 +10,7 @@ import numpy as np
 
 from analysis_forms import responses
 from common import Dataset, Report, save_cache
-from conventions import CONV, MIN_MINORITY, MIN_PAGES, MIN_USES, candidates
+from conventions import CONV, MIN_MINORITY, MIN_PAGES, MIN_USES, candidates, NOT_A_CHOICE
 from identification import fit_forms, form_records
 
 GRID = [(u, MIN_MINORITY, MIN_PAGES) for u in (50, 100, 200)] + \
@@ -27,7 +27,8 @@ def main():
     say = Report('SI: the convention selection rule')
     ds = Dataset()
     rows = candidates(ds)
-    union = [n for n in CONV if rows[n]['uses'] >= 50 and rows[n]['minority'] > 0]
+    # the same candidates under every rule: '& / and' is a quotation, not a choice (conventions.NOT_A_CHOICE)
+    union = [n for n in CONV if rows[n]['uses'] >= 50 and rows[n]['minority'] > 0 and n not in NOT_A_CHOICE]
     rec = form_records(ds, union)
     out = []
     for uses, minority, pages in GRID:

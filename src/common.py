@@ -282,6 +282,34 @@ def co_occurrence_coauthors(x, coauthors):
     return both[coauthors].mean() / both[other].mean() if both[other].mean() > 0 else np.nan
 
 
+def fst(groups, x):
+    """Pairwise F_ST of a 0/1 trait among groups: the excess agreement of two
+    uses in the same group over two uses in different groups, scaled by the
+    room for it, [P(same | same) - P(same | diff)] / [1 - P(same | diff)].
+    It is 0 with no group structure and 1 when every group is uniform."""
+    groups, x = np.asarray(groups), np.asarray(x, float)
+    same = groups[:, None] == groups[None, :]
+    return _fst(x, same)
+
+
+def fst_coauthors(x, coauthors):
+    """The same for a 0/1 feature of handles: pairs that co-authored a task
+    page against pairs that did not."""
+    return _fst(np.asarray(x, float), coauthors)
+
+
+def _fst(x, same):
+    same = same.copy()
+    np.fill_diagonal(same, False)
+    diff = ~same
+    np.fill_diagonal(diff, False)
+    if not same.any() or not diff.any():
+        return np.nan
+    agree = x[:, None] * x[None, :] + (1 - x)[:, None] * (1 - x)[None, :]
+    p_diff = agree[diff].mean()
+    return (agree[same].mean() - p_diff) / (1 - p_diff) if p_diff < 1 else np.nan
+
+
 def coauthor_matrix(page_sets, n):
     """n x n boolean matrix: True if two handles wrote on a common page."""
     A = np.zeros((n, n), bool)

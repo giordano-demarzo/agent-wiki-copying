@@ -1,8 +1,13 @@
 """One palette and one set of rcParams for every figure.
 
-The data are always black, the model is always teal, a second empirical
-series is amber, references are light grey, and the three convention classes
-are indigo, moss and rose.
+Every colour has one role across the paper:
+    black          the record
+    teal           the copy model and its theory
+    browns         names (dark, mid and light for the record, the binned means and the model)
+    indigo, moss, rose   the three classes of conventions: coined names, near-synonyms, habits of style
+    vermilion      gpt-oss-20b in the laboratory
+    amber          GPT-6.1 Sol in the laboratory
+    slate, grey    secondary series, text and references
 """
 import matplotlib
 
@@ -22,7 +27,11 @@ DATA, MODEL, GREY_REF = INK, TEAL, GREY
 CLASS_COLOR = {'coined': (INDIGO, 'coined names'),
                'semantic': (MOSS, 'near-synonyms'),
                'habit': (ROSE, 'habits of style')}
-NAME_BROWN = '#8c5a1e'   # binned empirical name features in Figure 4
+NAME_BROWN = '#8c5a1e'   # names: binned empirical name features
+NAME_DARK = '#4f3210'    # names: a darker shade for a third series
+NAME_LIGHT = '#c49a6c'   # names: the copy model
+OSS = '#c8573e'          # gpt-oss-20b (vermilion)
+SOL = AMBER              # GPT-6.1 Sol
 
 RC = {'font.size': 7.5, 'axes.titlesize': 6.4, 'axes.labelsize': 7.4,
       'legend.fontsize': 6, 'xtick.labelsize': 6.6, 'ytick.labelsize': 6.6,

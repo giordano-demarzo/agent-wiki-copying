@@ -1,0 +1,4 @@
+# only needed to rerun the experiments with language models (redrawing the figures needs only ../requirements.txt)
+openai>=1.40
+openpyxl>=3.1
+vllm==0.19.1   # to serve gpt-oss-20b locally

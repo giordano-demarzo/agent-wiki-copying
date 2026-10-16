@@ -11,7 +11,7 @@ import numpy as np
 
 import names as nm
 from common import Dataset, Report, T, load_cache, save_cache
-from style import AMBER, CLASS_COLOR, INDIGO, INK, SLATE, panel, plt, save, use
+from style import AMBER, CLASS_COLOR, INDIGO, INK, NAME_BROWN, NAME_DARK, NAME_LIGHT, SLATE, panel, plt, save, use
 
 H = 6
 TOP = 5
@@ -78,7 +78,7 @@ def main():
              'date stamp': d['features']['date'],
              'role word': nm.indicators(ds, [p for p in generic if p not in nm.AFFILIATION]),
              'task-specific word': nm.indicators(ds, specific)}
-    color = {'affiliation stamp': AMBER, 'date stamp': SLATE, 'role word': INDIGO, 'task-specific word': INK}
+    color = {'affiliation stamp': NAME_DARK, 'date stamp': NAME_BROWN, 'role word': NAME_LIGHT, 'task-specific word': SLATE}
     n = len(ds.handles) // BLOCK * BLOCK
     x = np.arange(n // BLOCK)
     days = [ds.birth[ds.handles[i + BLOCK // 2]].strftime('%d Jun') for i in range(0, n, BLOCK)]

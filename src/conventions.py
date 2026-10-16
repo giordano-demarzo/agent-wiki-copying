@@ -66,7 +66,8 @@ CONV = {
     'pre-signal / presignal': ('habit', rx(r'pre-signal'), rx(r'\bpresignal\b')),
     'no-show / noshow': ('habit', rx(r'no-show'), rx(r'\bnoshow\b')),
     '1,234 / 1234': ('habit', rx(r'\b\d{1,3}(?:,\d{3})+\b', 0), rx(r'\b\d{5,}\b', 0)),
-    'HH:MM:SS / HH:MM': ('habit', rx(r'\b\d{1,2}:\d{2}:\d{2}\b', 0), rx(r'\b\d{1,2}:\d{2}\b(?!:)', 0)),
+    # an HH:MM time must not be part of a longer time: '17:12:36' is one HH:MM:SS, not also an HH:MM ('12:36')
+    'HH:MM:SS / HH:MM': ('habit', rx(r'\b\d{1,2}:\d{2}:\d{2}\b', 0), rx(r'(?<![:\d])\b\d{1,2}:\d{2}\b(?!:\d)', 0)),
     'we / I': ('habit', rx(r'\b[Ww]e\b', 0), rx(r'\bI\b', 0)),
     'UTC / Z': ('habit', rx(r'\d\d:\d\d(?::\d\d)? ?UTC\b', 0), rx(r'\d\d:\d\d(?::\d\d)?Z\b', 0)),
     "bold ** / '''": ('habit', rx(r'\*\*[^*\n]+\*\*', 0), rx(r"'''[^'\n]+'''", 0)),
@@ -95,6 +96,10 @@ CONV = {
     'ID / id': ('habit', rx(r'\bIDs?\b', 0), rx(r'\bids?\b', 0)),
     # 'cache / cached copy' was removed: 'cached' is a participle ("table cached") and 'cache' a noun or verb, not two forms of one meaning
 }
+
+# pairs whose uses are not a choice between two forms: almost every '&' of the record (177 of 181 in the
+# uses that take it) is inside a category name quoted from a statistics site, such as 'Visual & Performing Arts'
+NOT_A_CHOICE = {'& / and': 'category names'}
 
 FEED_USES = 30   # the feed exposure is the last 30 uses by other handles
 
@@ -196,6 +201,8 @@ def candidates(ds):
             interval = profile_interval(share, took_a)
         fails = [why for why, bad in (('uses', len(idx) < MIN_USES), ('pages', n_pages < MIN_PAGES),
                                       ('minority', not minority >= MIN_MINORITY)) if bad]
+        if name in NOT_A_CHOICE:
+            fails.append(NOT_A_CHOICE[name])
         rows[name] = dict(cls=cls, uses=len(idx), n_pages=n_pages, minority=minority, mu=mu,
                           s_interval=interval, fails=fails, kept=not fails,
                           n_handles=len({label[i] for i in idx}))

@@ -11,10 +11,11 @@ number quoted in the paper and the SI, in the order the steps produce them).
 """
 import importlib
 import os
+import subprocess
 import sys
 import time
 
-from common import RESULTS
+from common import RESULTS, ROOT
 
 ANALYSIS = [
     ('build_dataset', 'parse the release into cache/data.pkl'),
@@ -33,10 +34,11 @@ ANALYSIS = [
 ]
 FULL = [('analysis_forms', 'how to write, all handles'), ('identification', 'the regressions, all handles')]
 FIGURES = [
-    ('fig1_setting', 'Figure 1'),
-    ('fig2_collective', 'Figure 2'),
-    ('fig3_rule', 'Figure 3'),
-    ('fig4_model', 'Figure 4'),
+    ('fig1_episode', 'Figure 1'),
+    ('fig2_collective', 'Extended Data Fig. 1'),
+    ('fig3_rule', 'the response curves of the record (numbers for the text)'),
+    ('fig2_wild_lab', 'Figure 2, record and laboratory'),
+    ('fig4_model', 'Figure 3, with the analytical results, and the SI consistency figure'),
     ('si_figures', 'the SI figures'),
     ('si_tables', 'Table 1 and the SI tables'),
     ('check_text', 'the numbers quoted in the manuscripts against the cache'),
@@ -47,6 +49,22 @@ def step(module, what, **kw):
     t0 = time.time()
     print(f'\n----- {module}: {what} -----', flush=True)
     importlib.import_module(module).main(**kw)
+    print(f'      ({time.time() - t0:.0f} s)', flush=True)
+
+
+# the figures built on the laboratory experiments (lab/; their data are in lab/data/)
+LAB_FIGURES = [
+    ('fig4_checking.py', 'Figure 4'),
+    ('ed_checking_models.py', 'Extended Data: checking in GPT-6.1 Sol and in the record before the correction'),
+    ('model_beta.py', 'the copy model with S-shaped copying (cache/model_beta.pkl)'),
+    ('ed_model_beta.py', 'Extended Data: S-shaped copying'),
+]
+
+
+def lab_step(script, what):
+    t0 = time.time()
+    print(f'\n----- lab/{script}: {what} -----', flush=True)
+    subprocess.run([sys.executable, script], cwd=os.path.join(ROOT, 'lab'), check=True)
     print(f'      ({time.time() - t0:.0f} s)', flush=True)
 
 
@@ -61,6 +79,8 @@ def main(only_figures=False):
             step(module, what, full=True)
     for module, what in FIGURES:
         step(module, what)
+    for script, what in LAB_FIGURES:
+        lab_step(script, what)
     print(f'\nDone. Numbers in results/numbers.txt, figures in paper/figs/, tables in paper/tables/.')
 
 

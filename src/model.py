@@ -29,7 +29,7 @@ import collections
 
 import numpy as np
 
-from common import FEED_LINES, co_occurrence, co_occurrence_coauthors, coauthor_matrix, volatility
+from common import FEED_LINES, co_occurrence, co_occurrence_coauthors, coauthor_matrix, fst, fst_coauthors, volatility
 
 S_GRID = (0.0, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
 DIRECTIONS = (0.15, 0.3, 0.5, 0.7, 0.85)   # the range of pi = mu_A / s of the conventions
@@ -44,8 +44,16 @@ def parameters(pages, usage):
                 span_h=inp['span_h'], window=inp['arrival_window'], usage=usage)
 
 
+def respond(rho, beta):
+    """The copying response: rho itself (beta = 0, the model), or the S-shaped
+    f_beta of the SI test of linearity, which runs from 0 to 1 like rho."""
+    if beta == 0:
+        return rho
+    return (np.tanh(beta * (rho - 0.5)) + np.tanh(beta / 2)) / (2 * np.tanh(beta / 2))
+
+
 def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback='feed', empty_page='feed',
-        usage=None):
+        usage=None, beta=0.0):
     """One run. `conventions` maps a name to (mu_A, mu_B).
 
     Options used by the robustness checks of the SI:
@@ -54,7 +62,8 @@ def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback=
                   or 'all' (uniform among all existing pages);
       fallback    'feed' (the model) or 'last30' (the last 30 uses anywhere);
       empty_page  'feed' (the model) or 'half' (rho = 1/2 on a page with no uses);
-      usage       overrides the usage rate.
+      usage       overrides the usage rate;
+      beta        S-shaped copying, respond(rho, beta) in place of rho.
     """
     rng = np.random.default_rng(seed)
     conventions = conventions or {}
@@ -98,7 +107,7 @@ def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback=
                 in_feed = [f for _, f in list(recent[k])[-30:]]
             src = uses[k][pg] if (uses[k][pg] or empty_page == 'half') else in_feed
             rho = np.mean(src) if len(src) else 0.5
-            form = int(rng.random() < mu_a + (1 - mu_a - mu_b) * rho)
+            form = int(rng.random() < mu_a + (1 - mu_a - mu_b) * respond(rho, beta))
             uses[k][pg].append(form)
             record[k].append((pg, h, form))
             recent[k].append((e, form))
@@ -110,14 +119,14 @@ def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback=
                 handles_per_page=np.array([len(set(v)) for v in authors.values()]))
 
 
-def names(result, mu, rng):
+def names(result, mu, rng, beta=0.0):
     """Replay one name feature through a run: each agent, in order of arrival,
     decides it from the agents it could see at its first edit."""
     v = np.zeros(result['n'])
     for h in range(result['n']):
         s = result['seen'][h]
         rho = v[s].mean() if len(s) else 0.5
-        v[h] = rng.random() < mu[0] + (1 - mu[0] - mu[1]) * rho
+        v[h] = rng.random() < mu[0] + (1 - mu[0] - mu[1]) * respond(rho, beta)
     return v
 
 
@@ -125,19 +134,19 @@ def form_statistics(rec):
     """Co-occurrence of the minority form, volatility on each agent's first use
     and on all uses, and final share of A, for the uses of one convention."""
     if not rec:
-        return dict(gap=np.nan, vol=np.nan, vol_all=np.nan, final=np.nan)
+        return dict(gap=np.nan, fst=np.nan, vol=np.nan, vol_all=np.nan, final=np.nan)
     pages, agents, a = (np.array(x) for x in zip(*rec))
     seen, first = set(), []
     for k, h in enumerate(agents):
         if h not in seen:
             seen.add(h)
             first.append(k)
-    return dict(gap=co_occurrence(pages, a), vol=volatility(a[first], 50), vol_all=volatility(a, 50),
+    return dict(gap=co_occurrence(pages, a), fst=fst(pages, a), vol=volatility(a[first], 50), vol_all=volatility(a, 50),
                 final=a.mean())
 
 
 def name_statistics(v, A):
-    return dict(gap=co_occurrence_coauthors(v, A), vol=volatility(v, 100), final=v.mean())
+    return dict(gap=co_occurrence_coauthors(v, A), fst=fst_coauthors(v, A), vol=volatility(v, 100), final=v.mean())
 
 
 def page_statistics(result):
@@ -155,7 +164,7 @@ def _grid_run(args):
     out = {('pages',): page_statistics(r)}
     for key, mu in grid.items():
         out[('form',) + key] = form_statistics(r['record'][key])
-        out[('name',) + key] = name_statistics(names(r, mu, rng), A)
+        out[('name',) + key] = name_statistics(names(r, mu, rng, options.get('beta', 0.0)), A)
     return out
 
 

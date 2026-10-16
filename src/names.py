@@ -22,7 +22,7 @@ import re
 
 import numpy as np
 
-from common import FEED_LINES, T, block_of, coauthor_matrix, co_occurrence_coauthors, share, volatility
+from common import FEED_LINES, T, block_of, coauthor_matrix, co_occurrence_coauthors, fst_coauthors, share, volatility
 from conventions import fit_mu
 
 PIECE = re.compile(r'[A-Z][a-z]+|[A-Z]{2,}(?![a-z])')
@@ -173,8 +173,10 @@ def feature_statistics(v, groups, A):
     """Prior strength (base probabilities fitted on the share among the
     task-mates in view), co-occurrence among co-authors, volatility over blocks
     of 100 newborns, and the overall share, for one 0/1 feature of handles."""
-    x = np.array([share(v, g['in_view'], MIN_GROUP) if in_sample(g) else np.nan for g in groups])
+    # the prior of a feature is fitted on the share among the task-mates in the feed, as the model reads it
+    x = np.array([share(v, g['in_feed_any'], MIN_GROUP) if in_sample(g) else np.nan for g in groups])
     mu = fit_mu(x, v)
     return dict(muA=mu[0], muB=mu[1], s=min(mu[0] + mu[1], 1.0), f=v.mean(),
                 gap=(co_occurrence_coauthors(v, A) if v.sum() >= MIN_CARRIERS_COOCCURRENCE else np.nan),
+                fst=fst_coauthors(v, A),
                 vol=volatility(v, 100))

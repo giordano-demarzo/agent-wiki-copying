@@ -196,6 +196,15 @@ def wald(b, cov, contrast):
     return stat, float(chi2.sf(stat, 1))
 
 
+def contrast(b, cov, c):
+    """The contrast c' b with its standard error and two-sided Wald p-value,
+    from the full covariance of the coefficients."""
+    from scipy.stats import norm
+    c = np.array(list(c) + [0] * (len(b) - len(c)), float)
+    est, se = float(c @ b), float(np.sqrt(c @ cov @ c))
+    return dict(est=est, se=se, lo=est - 1.96 * se, hi=est + 1.96 * se, p=float(2 * norm.sf(abs(est) / se)))
+
+
 def conditional_logit(X, y, group, cluster=None):
     """McFadden's conditional logit: within each group one alternative is
     chosen, P(j) proportional to exp(x_j b). Returns b, the covariance (the

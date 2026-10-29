@@ -25,16 +25,9 @@ from analysis_forms import agreement, by_page, shuffled_agreement  # noqa: E402
 from common import T, Dataset, block_of, wilson  # noqa: E402
 from style import AMBER, GREY, INK, MODEL, panel, plt, use  # noqa: E402
 
-PADDED = ['9.70', '9.90', '16.40', '14.60', '23.10']
-RAW = ['9.69', '9.91', '16.38', '14.59', '23.13']
-NAME = 'padded / raw (OECD answers)'
+from answers_record import NAME, PADDED, RAW, register  # noqa: E402  (one definition of the answer convention)
 
-
-def num(values):
-    return cv.rx(r'(?<![\d.])(' + '|'.join(v.replace('.', r'\.') for v in values) + r')(?![\d])', 0)
-
-
-cv.CONV[NAME] = ('answer', num(PADDED), num(RAW))
+register()
 
 
 def main():

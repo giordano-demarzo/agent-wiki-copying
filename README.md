@@ -26,7 +26,7 @@ Visibility identifies copying: exposure that had scrolled out of view, or that b
 
 ## Reproduce everything
 
-Every figure, table and number of the manuscript (`paper/main.tex`) and of the Supplementary Information (`paper/si.tex`) is produced by the code in `src/` from the data release.
+Every figure, table and number of the manuscript (`paper/main.tex`), of the Extended Data (`paper/extended_data.tex`) and of the Supplementary Information (`paper/si.tex`) is produced by the code in `src/` from the data release.
 
 ```bash
 git clone https://github.com/giordano-demarzo/agent-wiki-copying.git
@@ -35,13 +35,13 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 python src/run_all.py      # about five minutes on 8 cores
-make paper                 # compiles paper/main.pdf and paper/si.pdf
+make paper                 # compiles paper/main.pdf, paper/extended_data.pdf and paper/si.pdf
 ```
 
 `src/run_all.py` writes
 
 - `cache/` intermediate pickles, all regenerated from `data/`;
-- `paper/figs/` the four figures of the paper, the three Extended Data figures and the SI figures, as the PDFs the manuscripts include;
+- `paper/figs/` the four figures of the paper, the five Extended Data figures and the three SI figures, as the PDFs the manuscripts include;
 - `paper/tables/` Table 1 and the SI tables, as LaTeX fragments the manuscripts input;
 - `figures/` PNG previews of every figure;
 - `results/numbers.txt` every number quoted in the paper and the SI.
@@ -91,14 +91,19 @@ Every step is a module with a `main()`; `run_all.py` runs them in this order. Ea
 | `analysis_pages.py` | where to write: response, windows, creation rate, attachment | `pages.pkl` |
 | `analysis_names.py` | how to sign: pieces, features, exposure records, prior strengths | `names.pkl` |
 | `analysis_forms.py` | how to write: selection, patchwork, response, conflicts, usage rate | `forms.pkl` |
+| `answers_record.py` | the OECD answers in the record: the wrong consensus, its correction, the switches | `answers_record.pkl` |
 | `identification.py` | the regressions of Table 1 and the windows of the visibility test | `identification.pkl` |
 | `run_model.py` | every run of the model, for Figure 4 and Sections S3, S6 and S7 | `model.pkl` |
 | `si_population.py`, `si_names.py`, `si_forms.py` | Sections S1, S4 and S5 | `si_*.pkl` |
 | `analysis_forms.py --full`, `identification.py --full` | the robustness check on all 3,099 handles (S2) | `*_full.pkl` |
 | `fig1_setting.py` … `fig4_model.py` | Figures 1 to 4 | `paper/figs/` |
-| `si_figures.py` | the Extended Data and SI figures | `paper/figs/` |
+| `ed_patchwork.py` | Extended Data Fig. 1b: the patchwork against two permutation nulls | `ed_patchwork.pkl` |
+| `si_lab.py` | SI S7: the laboratory experiments counted from the stored replies, and their tables | `si_lab.pkl`, `paper/tables/` |
+| `ed_figures.py` | Extended Data Figs. 1 to 3 (Fig. 4 is drawn by `fig4_model.py`, Fig. 5 by `lab/ed_checking_models.py`) | `paper/figs/` |
+| `si_figures.py` | the SI figures | `paper/figs/` |
 | `si_tables.py` | Table 1 and the SI tables | `paper/tables/` |
 | `check_text.py` | the numbers quoted in `paper/*.tex` against the cache | |
+| `audit_checkpoints.py` | the sample sizes of the paper against the previous draft (run by hand) | `reports/checkpoints.md` |
 
 The definitions the paper relies on live in one place each: the population in `common.Dataset`, the selection rule of the conventions in the constants at the top of `conventions.py`, the classification of name pieces and the exposure groups of a newcomer in `names.py`, and the model in `model.py`. Computation is separated from presentation: the figure modules only read the cache.
 
@@ -112,6 +117,7 @@ agent-wiki-copying/
 ├── paper/            # main.tex, si.tex, and the figs/ and tables/ they include
 ├── figures/          # PNG previews
 ├── results/          # numbers.txt
+├── reports/          # audit, figure mapping, validation and decision log of the ED/SI revision
 ├── assets/           # figure icons and README artwork
 ├── Makefile          # analysis, figures and paper targets
 └── requirements.txt  # Python dependencies

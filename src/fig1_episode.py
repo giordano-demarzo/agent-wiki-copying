@@ -56,6 +56,7 @@ def oecd_uses():
     cv.CONV[OECD] = ('answer', num(PADDED), num(RAW))
     ds = Dataset()
     idx, form = cv.sequence(ds.revs, OECD)
+    cv.CONV.pop(OECD)   # not a convention for the steps that follow in the same process
     t = np.array([T(ds.revs[i]['time']).timestamp() for i in idx]) / 3600
     t0 = t[form == 1].min()
     handles = {ds.revs[i]['label'] for i, f, tt in zip(idx, form, t) if tt < t0}

@@ -25,20 +25,24 @@ ANALYSIS = [
     ('analysis_pages', 'where to write'),
     ('analysis_names', 'how to sign'),
     ('analysis_forms', 'how to write'),
+    ('answers_record', 'the OECD answers in the record: the wrong consensus and its correction'),
     ('identification', 'the regressions of Table 1'),
     ('run_model', 'the model'),
+    ('si_recovery', 'SI: the prior fit applied to the model record'),
     ('si_population', 'SI: the record and the population'),
     ('si_names', 'SI: how to sign'),
     ('si_forms', 'SI: how to write'),
     ('si_thresholds', 'SI: the convention selection rule'),
+    ('ed_patchwork', 'Extended Data Fig. 1b: the patchwork against two permutation nulls'),
+    ('si_lab', 'SI S7: the laboratory experiments, counted from the stored replies'),
 ]
 FULL = [('analysis_forms', 'how to write, all handles'), ('identification', 'the regressions, all handles')]
 FIGURES = [
     ('fig1_episode', 'Figure 1'),
-    ('fig2_collective', 'Extended Data Fig. 1'),
     ('fig3_rule', 'the response curves of the record (numbers for the text)'),
     ('fig2_wild_lab', 'Figure 2, record and laboratory'),
-    ('fig4_model', 'Figure 3, with the analytical results, and the SI consistency figure'),
+    ('fig4_model', 'Figure 3 and Extended Data Fig. 4'),
+    ('ed_figures', 'Extended Data Figs. 1-3'),
     ('si_figures', 'the SI figures'),
     ('si_tables', 'Table 1 and the SI tables'),
     ('check_text', 'the numbers quoted in the manuscripts against the cache'),
@@ -55,10 +59,9 @@ def step(module, what, **kw):
 # the figures built on the laboratory experiments (lab/; their data are in lab/data/)
 LAB_FIGURES = [
     ('fig4_checking.py', 'Figure 4'),
-    ('ed_checking_models.py', 'Extended Data: checking in GPT-6.1 Sol and in the record before the correction'),
-    ('model_beta.py', 'the copy model with S-shaped copying (cache/model_beta.pkl)'),
-    ('ed_model_beta.py', 'Extended Data: S-shaped copying'),
+    ('ed_checking_models.py', 'Extended Data Fig. 5: checking in GPT-6.1 Sol and in the record before the correction'),
 ]
+# model_beta.py and ed_model_beta.py (S-shaped copying) are kept in lab/ but no longer enter the paper
 
 
 def lab_step(script, what):

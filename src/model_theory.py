@@ -32,7 +32,7 @@ is picked by later edits Poisson(1 - c) times, so a page is the total progeny
 of a Galton-Watson process, Borel distributed with mean 1/c:
 P(k) = exp(-mu k) (mu k)^(k-1) / k!, mu = 1 - c.
 
-    python model_theory.py      -> lab/plots/model_theory.png, cache/model_theory.pkl
+    python model_theory.py      -> cache/model_theory.pkl (the exact moments on 20 copy graphs, used by fig4_model.py)
 """
 import collections
 import sys
@@ -45,6 +45,8 @@ import model as md
 from common import FEED_LINES, load_cache, save_cache
 
 GRAPHS = 20
+# the prior-strength axis of the theory: finer than the simulation grid, same ends
+S_FINE = tuple(np.round(np.concatenate([np.arange(0.02, 0.1, 0.02), np.arange(0.1, 1.0001, 0.05)]), 3))
 
 
 def copy_graph(par, seed, lines=FEED_LINES):
@@ -125,28 +127,56 @@ def statistics(m, C, pi, sel, block):
 
 def folded_quantiles(mus, sds, qs=(0.1, 0.5, 0.9)):
     """Quantiles of |X| for X an equal mixture of Gaussians N(mu, sd)."""
-    grid = np.logspace(-5, 0.3, 4000)
+    top = max(2.0, 1.5 * np.max(np.abs(mus) + 5 * np.asarray(sds)))
+    grid = np.logspace(-5, np.log10(top), 6000)
     cdf = np.mean([stats.norm.cdf(grid, mu, sd) - stats.norm.cdf(-grid, mu, sd) for mu, sd in zip(mus, sds)], 0)
     return [np.interp(q, cdf, grid) for q in qs]
 
 
-def theory(par, graphs=GRAPHS):
+def _theory_graph(args):
+    """One copy graph: (f - pi, sd of f, volatility, pi) for every kind, s and direction."""
+    par, seed, s_grid = args
+    g = copy_graph(par, seed)
     out = {}
-    G = [copy_graph(par, 1000 + g) for g in range(graphs)]
     for kind in ('form', 'name'):
-        res = collections.defaultdict(list)
-        for g in G:
-            W = weights(g['uses'] if kind == 'form' else g['names'])
-            sel = g['first'] if kind == 'form' else np.arange(len(W))
-            block = 50 if kind == 'form' else 100
-            for s in md.S_GRID:
-                for p in md.DIRECTIONS:
-                    m, C = moments(W, s, p)
-                    f, sd, vol = statistics(m, C, p, sel, block)
-                    res[s].append((f - p, sd, vol))
-        out[kind] = {s: np.array(v) for s, v in res.items()}
-        print(kind, 'uses per graph', np.mean([len(g['uses' if kind == 'form' else 'names']) for g in G]))
+        W = weights(g['uses'] if kind == 'form' else g['names'])
+        sel = g['first'] if kind == 'form' else np.arange(len(W))
+        block = 50 if kind == 'form' else 100
+        res = {}
+        for s in s_grid:
+            res[s] = [(f - p, sd, vol, p) for p in md.DIRECTIONS
+                      for f, sd, vol in [statistics(*moments(W, s, p), p, sel, block)]]
+        out[kind] = res
     return out
+
+
+def theory(par, graphs=GRAPHS, s_grid=S_FINE, pool=None):
+    """The exact moments on `graphs` copy graphs: kind -> s -> array over graphs and
+    directions of (f - pi, sd of f, volatility, pi)."""
+    jobs = [(par, 1000 + g, tuple(s_grid)) for g in range(graphs)]
+    parts = pool.map(_theory_graph, jobs) if pool is not None else [_theory_graph(j) for j in jobs]
+    out = {'s_grid': tuple(s_grid)}
+    for kind in ('form', 'name'):
+        out[kind] = {s: np.array([row for part in parts for row in part[kind][s]]) for s in s_grid}
+    return out
+
+
+def normalized_quantiles(th, kinds, N, qs=(0.1, 0.5, 0.9)):
+    """Quantiles of |f - pi| / sqrt(pi (1 - pi) / N), the distance from the prior in
+    units of the fluctuation of N independent choices, pooled over graphs and
+    directions (Gaussian final share), along the s grid of the theory. `kinds` is
+    one kind or several, pooled; N maps each kind to its number of uses."""
+    kinds = [kinds] if isinstance(kinds, str) else list(kinds)
+    out = []
+    for s in th['s_grid']:
+        mus, sds = [], []
+        for kind in kinds:
+            r = th[kind][s]
+            sig0 = np.sqrt(r[:, 3] * (1 - r[:, 3]) / N[kind])
+            mus.append(r[:, 0] / sig0)
+            sds.append(np.maximum(r[:, 1], 1e-9) / sig0)
+        out.append(folded_quantiles(np.concatenate(mus), np.concatenate(sds), qs))
+    return np.array(th['s_grid']), np.array(out)
 
 
 def graph_constants(par, graphs=10):
@@ -197,7 +227,7 @@ def borel_ccdf(c, kmax=400):
 
 def curves(th, kind):
     dist, vol = [], []
-    for s in md.S_GRID:
+    for s in th['s_grid']:
         r = th[kind][s]
         dist.append(folded_quantiles(r[:, 0], np.maximum(r[:, 1], 1e-9)))
         vol.append(np.nanmedian(r[:, 2]))
@@ -205,38 +235,26 @@ def curves(th, kind):
 
 
 def main():
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from style import GREY, INK, MODEL, plt, use
-    use()
+    """Computes the exact moments on GRAPHS copy graphs and saves cache/model_theory.pkl,
+    then prints the normalized distance against the simulation at the grid points."""
+    import multiprocessing
+    import os
     mod = load_cache('model.pkl')
     par, sw = mod['par'], mod['main']
-    th = theory(par)
+    with multiprocessing.Pool(min(8, os.cpu_count() or 1)) as pool:
+        th = theory(par, pool=pool)
     save_cache('model_theory.pkl', th)
-    fig, axes = plt.subplots(1, 2, figsize=(5.2, 2.4))
-    plt.subplots_adjust(wspace=0.4)
-    for kind, col in (('form', MODEL), ('name', '#c49a6c')):
-        dist, vol = curves(th, kind)
-        m, lo, hi = md.curve(sw, kind, 'vol')
-        axes[0].plot(md.S_GRID, m, '-', color=col, lw=1.3)
-        axes[0].fill_between(md.S_GRID, lo, hi, color=col, alpha=0.18, lw=0)
-        axes[0].plot(md.S_GRID, vol, 'o--', color=col, mec=INK, mew=0.4, ms=3, lw=0.8)
-        m, lo, hi = md.distance_curve(sw, kind)
-        axes[1].plot(md.S_GRID, m, '-', color=col, lw=1.3, label=f'simulation, {kind}s')
-        axes[1].fill_between(md.S_GRID, lo, hi, color=col, alpha=0.18, lw=0)
-        axes[1].plot(md.S_GRID, dist[:, 1], 'o--', color=col, mec=INK, mew=0.4, ms=3, lw=0.8, label=f'exact moments, {kind}s')
-        axes[1].plot(md.S_GRID, dist[:, 0], ':', color=col, lw=0.7)
-        axes[1].plot(md.S_GRID, dist[:, 2], ':', color=col, lw=0.7)
-        print(kind, 'vol theory', np.round(vol, 2))
-        print(kind, 'vol sim   ', np.round(md.curve(sw, kind, 'vol')[0], 2))
-        print(kind, 'dist theory', np.round(dist[:, 1], 4))
-        print(kind, 'dist sim   ', np.round(md.distance_curve(sw, kind)[0], 4))
-    axes[0].axhline(1, color=GREY, lw=0.6, ls=':')
-    axes[0].set(xlabel='prior strength, $s$', ylabel='volatility over time')
-    axes[1].set(xlabel='prior strength, $s$', ylabel='distance from the prior', yscale='log', ylim=(8e-4, 1.5))
-    axes[1].legend(frameon=False, fontsize=5)
-    out = Path(__file__).resolve().parents[2] / 'lab' / 'plots' / 'model_theory.png'
-    fig.savefig(out, dpi=220, bbox_inches='tight')
-    print('wrote', out)
+    N = {'form': round(par['n_agents'] * par['edits'] * par['usage']), 'name': par['n_agents']}
+    for kind in ('form', 'name'):
+        s_th, q = normalized_quantiles(th, kind, N)
+        print(f'{kind}: normalized distance from the prior, median (theory / simulation)')
+        for s in md.S_GRID:
+            if s == 0:
+                continue
+            sim = np.concatenate([np.abs(sw[(kind, s, p)]['final'] - p) / np.sqrt(p * (1 - p) / N[kind])
+                                  for p in md.DIRECTIONS])
+            j = np.argmin(np.abs(s_th - s))
+            print(f'  s={s:<5} {q[j, 1]:6.2f} / {np.median(sim):6.2f}')
 
 
 if __name__ == '__main__':

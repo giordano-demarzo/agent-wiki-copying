@@ -101,7 +101,7 @@ def responses(ds, keep):
     return ({c: np.array(v) for c, v in by_class.items()}, versus_feed, versus_own)
 
 
-def axis_statistics(ds, name, mu):
+def axis_statistics(ds, name, mu, mu_floor=None):
     """What Fig. 4 places on the prior-strength axis for one convention."""
     idx, form = sequence(ds.revs, name)
     a = (form == 0).astype(float)
@@ -113,7 +113,9 @@ def axis_statistics(ds, name, mu):
             first.append(k)
     s = mu[0] + mu[1]
     minority_uses = min(a.sum(), len(a) - a.sum())
+    mf = mu if mu_floor is None else mu_floor
     return dict(name=name, cls=CONV[name][0], s=min(s, 1.0), muA=mu[0], muB=mu[1], f=a.mean(),
+                muA_floor=mf[0], muB_floor=mf[1], s_floor=min(mf[0] + mf[1], 1.0),
                 n_first=len(first), minority_uses=int(minority_uses),
                 gap=co_occurrence(pages, a) if minority_uses >= MIN_MINORITY_USES else np.nan,
                 fst=fst(pages, a),
@@ -184,7 +186,11 @@ def main(full=False):
         f'(from {min(usage.values()):.2f}, {min(usage, key=usage.get)}, to {max(usage.values()):.2f}, '
         f'{max(usage, key=usage.get)})')
 
-    axis = [axis_statistics(ds, n, rows[n]['mu']) for n in keep]
+    axis = [axis_statistics(ds, n, rows[n]['mu'], rows[n]['mu_floor']) for n in keep]
+    for n in keep:
+        if rows[n]['floored']:
+            say(f'  {n}: a prior at zero (mu_A {rows[n]["mu"][0]:.3f}, mu_B {rows[n]["mu"][1]:.3f}) replaced for the distance from the prior by its '
+                f'95% upper bound: mu_A {rows[n]["mu_floor"][0]:.4f}, mu_B {rows[n]["mu_floor"][1]:.4f}, s {sum(rows[n]["mu_floor"]):.3f}')
     say(f'on the prior-strength axis: {sum(np.isfinite(e["gap"]) for e in axis)} conventions in Fig. 4b '
         f'(at least {MIN_MINORITY_USES} minority uses), {sum(np.isfinite(e["vol"]) for e in axis)} in Fig. 4c '
         f'(at least {MIN_FIRST_USES} first uses)')

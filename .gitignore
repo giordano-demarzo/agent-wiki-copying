@@ -23,6 +23,8 @@ paper/*.out
 paper/*.synctex.gz
 paper/*.bbl
 paper/*.blg
+paper/*.fdb_latexmk
+paper/*.fls
 
 __pycache__/
 *.pyc

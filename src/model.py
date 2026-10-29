@@ -32,6 +32,7 @@ import numpy as np
 from common import FEED_LINES, co_occurrence, co_occurrence_coauthors, coauthor_matrix, fst, fst_coauthors, volatility
 
 S_GRID = (0.0, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)
+S_LOG = tuple(float(x) for x in np.round(10 ** np.arange(-1.75, 0.01, 0.25), 4))   # quarter-decades, Fig. 3b
 DIRECTIONS = (0.15, 0.3, 0.5, 0.7, 0.85)   # the range of pi = mu_A / s of the conventions
 RUNS = 50
 ARRIVAL_SEED = 12345
@@ -78,6 +79,7 @@ def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback=
     seen = [None] * n                            # agents in view at the first edit
     uses = {k: collections.defaultdict(list) for k in conventions}   # page -> forms (1 = A)
     record = {k: [] for k in conventions}        # (page, agent, form) in order
+    when = {k: [] for k in conventions}          # the edit number of each use, for the refit of the SI
     recent = {k: collections.deque() for k in conventions}           # (edit number, form), newest last
     next_page = 0
     for e, (_, h) in enumerate(events):
@@ -110,11 +112,12 @@ def run(par, seed, conventions=None, lines=FEED_LINES, choice='lines', fallback=
             form = int(rng.random() < mu_a + (1 - mu_a - mu_b) * respond(rho, beta))
             uses[k][pg].append(form)
             record[k].append((pg, h, form))
+            when[k].append(e)
             recent[k].append((e, form))
         authors[pg].append(h)
         feed.insert(0, (pg, h))
         del feed[1000:]
-    return dict(n=n, seen=seen, record=record,
+    return dict(n=n, seen=seen, record=record, when=when,
                 page_agents=[set(v) for v in authors.values()],
                 handles_per_page=np.array([len(set(v)) for v in authors.values()]))
 
@@ -157,7 +160,9 @@ def page_statistics(result):
 
 def _grid_run(args):
     par, seed, options = args
-    grid = {(s, p): (s * p, s * (1 - p)) for s in S_GRID for p in DIRECTIONS}
+    options = dict(options)
+    s_grid = options.pop('s_grid', S_GRID)
+    grid = {(s, p): (s * p, s * (1 - p)) for s in s_grid for p in DIRECTIONS}
     r = run(par, seed, conventions=grid, **options)
     A = coauthor_matrix(r['page_agents'], r['n'])
     rng = np.random.default_rng(500 + seed)
@@ -190,7 +195,8 @@ def collect(results):
 
 
 def sweep(par, pool, runs=RUNS, **options):
-    """The prior-strength axis: every (s, pi) of the grid, for forms and names."""
+    """The prior-strength axis: every (s, pi) of the grid, for forms and names;
+    `s_grid` in the options replaces S_GRID (Fig. 3b uses S_LOG)."""
     return collect(pool.map(_grid_run, [(par, seed, options) for seed in range(runs)]))
 
 

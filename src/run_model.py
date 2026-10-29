@@ -52,6 +52,7 @@ def main():
                 f'{fmt([np.median(w[k]) for k in ("p10", "p20", "p40")])}, largest page {np.median(w["max"]):.0f}')
 
         out['main'] = md.sweep(par, pool)
+        out['fig3'] = md.sweep(par, pool, s_grid=md.S_LOG)     # the quarter-decade grid of Fig. 3b
         out['usage'] = {u: md.sweep(par, pool, usage=u) for u in (0.5, 0.1)}
         out['last30'] = md.sweep(par, pool, fallback='last30')
         out['half'] = md.sweep(par, pool, empty_page='half')

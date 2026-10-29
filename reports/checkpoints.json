@@ -1,0 +1,198 @@
+[
+ {
+  "quantity": "revisions in the release",
+  "found": 14591,
+  "draft": 14591,
+  "status": "ok"
+ },
+ {
+  "quantity": "pages in the release",
+  "found": 4579,
+  "draft": 4579,
+  "status": "ok"
+ },
+ {
+  "quantity": "edits after cleaning",
+  "found": 13661,
+  "draft": 13661,
+  "status": "ok"
+ },
+ {
+  "quantity": "handles after cleaning",
+  "found": 3099,
+  "draft": 3099,
+  "status": "ok"
+ },
+ {
+  "quantity": "handles of the population",
+  "found": 1201,
+  "draft": 1201,
+  "status": "ok"
+ },
+ {
+  "quantity": "edits of the population",
+  "found": 5929,
+  "draft": 5929,
+  "status": "ok"
+ },
+ {
+  "quantity": "task pages",
+  "found": 679,
+  "draft": 679,
+  "status": "ok"
+ },
+ {
+  "quantity": "edits on task pages",
+  "found": 3807,
+  "draft": 3807,
+  "status": "ok"
+ },
+ {
+  "quantity": "task families",
+  "found": 41,
+  "draft": 41,
+  "status": "ok"
+ },
+ {
+  "quantity": "arrivals",
+  "found": 2612,
+  "draft": 2612,
+  "status": "ok"
+ },
+ {
+  "quantity": "arrivals that create",
+  "found": 679,
+  "draft": 679,
+  "status": "ok"
+ },
+ {
+  "quantity": "arrivals that append",
+  "found": 1933,
+  "draft": 1933,
+  "status": "ok"
+ },
+ {
+  "quantity": "Fig. 2a candidates",
+  "found": 95342,
+  "draft": 95342,
+  "status": "ok"
+ },
+ {
+  "quantity": "Table 1 page candidates",
+  "found": 87349,
+  "draft": 89855,
+  "status": "DIFFERENT"
+ },
+ {
+  "quantity": "Table 1 page decisions",
+  "found": 1894,
+  "draft": 1933,
+  "status": "DIFFERENT"
+ },
+ {
+  "quantity": "page appends left out (chosen page not a candidate)",
+  "found": 39,
+  "draft": null,
+  "status": "ok"
+ },
+ {
+  "quantity": "Fig. 2b records",
+  "found": 15776,
+  "draft": 15776,
+  "status": "ok"
+ },
+ {
+  "quantity": "Table 1 name records",
+  "found": 9728,
+  "draft": 9728,
+  "status": "ok"
+ },
+ {
+  "quantity": "Fig. 2c first uses",
+  "found": 2679,
+  "draft": 2679,
+  "status": "ok"
+ },
+ {
+  "quantity": "Table 1 form first uses",
+  "found": 1052,
+  "draft": 1052,
+  "status": "ok"
+ },
+ {
+  "quantity": "candidate conventions",
+  "found": 52,
+  "draft": 52,
+  "status": "ok"
+ },
+ {
+  "quantity": "kept conventions",
+  "found": 16,
+  "draft": 16,
+  "status": "ok"
+ },
+ {
+  "quantity": "OECD uses",
+  "found": 325,
+  "draft": 325,
+  "status": "ok"
+ },
+ {
+  "quantity": "OECD pages",
+  "found": 97,
+  "draft": 97,
+  "status": "ok"
+ },
+ {
+  "quantity": "OECD handles",
+  "found": 125,
+  "draft": 125,
+  "status": "ok"
+ },
+ {
+  "quantity": "padded uses after the first",
+  "found": 159,
+  "draft": 159,
+  "status": "ok"
+ },
+ {
+  "quantity": "chain decisions",
+  "found": 2400,
+  "draft": 2400,
+  "status": "ok"
+ },
+ {
+  "quantity": "Fig. 4a agents per point",
+  "found": [
+   100
+  ],
+  "draft": 100,
+  "status": "ok"
+ },
+ {
+  "quantity": "Fig. 4b agents per point (20 notes)",
+  "found": [
+   125
+  ],
+  "draft": 125,
+  "status": "ok"
+ },
+ {
+  "quantity": "Fig. 4b countries",
+  "found": [
+   "Czech Republic",
+   "Hungary",
+   "Poland",
+   "Slovak Republic",
+   "Slovenia"
+  ],
+  "draft": null,
+  "status": "ok"
+ },
+ {
+  "quantity": "family conflicts (forms)",
+  "found": 204,
+  "draft": 212,
+  "status": "DIFFERENT"
+ }
+]

@@ -138,12 +138,12 @@ def table_identification():
     write_table('si_table_reg_pages.tex', lines)
 
     n, w = d['names'], d['windows']
-    lines = ['\\begin{tabular}{lccccccc}', '\\toprule',
-             'regressor & feature & + task $\\times$ 3\\,h & + feature $\\times$ task & + feature $\\times$ 3\\,h & 1.5 h & 3 h & 6 h \\\\', '\\midrule']
+    lines = ['\\begin{tabular}{lcccccccc}', '\\toprule',
+             'regressor & feature & + task $\\times$ 3\\,h & + feature $\\times$ task & + feature $\\times$ 3\\,h & 1.5 h & 3 h & 6 h & 12 h \\\\', '\\midrule']
     for j, lab in enumerate(d['labels']['names']):
         cells = [f'${n["b0"][j]:.2f} \\pm {n["se0"][j]:.2f}$', f'${n["b1"][j]:.2f} \\pm {n["se1"][j]:.2f}$',
                  f'${n["b2"][j]:.2f} \\pm {n["se2"][j]:.2f}$', f'${n["b3"][j]:.2f} \\pm {n["se3"][j]:.2f}$']
-        cells += [f'${w[h]["same"]["b"][j]:.2f} \\pm {w[h]["same"]["se"][j]:.2f}$' if j < 3 else '' for h in (1.5, 3, 6)]
+        cells += [f'${w[h]["same"]["b"][j]:.2f} \\pm {w[h]["same"]["se"][j]:.2f}$' if j < 3 else '' for h in (1.5, 3, 6, 12)]
         lines.append(f'{lab} & ' + ' & '.join(cells) + ' \\\\')
     lines += ['\\bottomrule', '\\end{tabular}']
     write_table('si_table_reg_names.tex', lines)
@@ -157,6 +157,22 @@ def table_identification():
                      f'${f["bx"][j]:.2f} \\pm {f["sex"][j]:.2f}$ \\\\')
     lines += ['\\bottomrule', '\\end{tabular}']
     write_table('si_table_reg_forms.tex', lines)
+
+    # the other analysis choices: Table 1 (task x 3 h) under each alternative
+    sens = d['sensitivity']
+    cell = lambda r, j: f'${r["b"][j]:.2f} \\pm {r["se"][j]:.2f}$'
+    lines = ['\\begin{tabular}{lcccccccccc}', '\\toprule',
+             ' & \\multicolumn{5}{c}{names} & \\multicolumn{5}{c}{forms} \\\\',
+             '\\cmidrule(lr){2-6}\\cmidrule(lr){7-11}',
+             'choice & page & feed & out of view & other tasks & $n$ & page & feed & out of view & other tasks & $n$ \\\\',
+             '\\midrule']
+    for lab, r in sens.items():
+        row = [('as in Table 1' if lab == 'main' else lab)]
+        for key in ('names', 'forms'):
+            row += ([cell(r[key], j) for j in range(4)] + [f'{r[key]["n"]:,}']) if r[key] is not None else ['--'] * 5
+        lines.append(' & '.join(row) + ' \\\\')
+    lines += ['\\bottomrule', '\\end{tabular}']
+    write_table('si_table_choices.tex', lines)
 
     # the contrasts the text relies on, tested directly
     lines = ['\\begin{tabular}{llrrl}', '\\toprule', 'choice & contrast & difference & $\\chi^2$ & $p$ \\\\', '\\midrule']
@@ -202,9 +218,46 @@ def table_thresholds():
     write_table('si_table_thresholds.tex', lines)
 
 
+def table_habit():
+    """SI: the habit of repeating one's own form, and the fit of the priors on first uses."""
+    conv = load_cache('si_prior.pkl')['conventions']
+    lines = ['\\begin{tabular}{llrrrrrrrc}', '\\toprule',
+             'convention & class & uses & first & $N_\\mathrm{eff}$ & repeats own form & rule & share A, first & share A, later'
+             ' & $s$, all uses / first uses (95\\% interval) \\\\', '\\midrule']
+    for n, c in conv.items():
+        iv = c['s_first_interval']
+        lines.append(f'{tex(n)} & {CLASS_NAME[c["cls"]]} & {c["uses"]:,} & {c["first"]:.2f} & {c["n_eff"]:.0f} & '
+                     f'{c["repeat"]:.2f} & {c["predicted"]:.2f} & {c["f_first"]:.2f} & {c["f_later"]:.2f} & '
+                     f'{c["s_all"]:.2f} / {c["s_first"]:.2f} ({iv[1]:.2f}--{iv[2]:.2f}) \\\\')
+    lines += ['\\bottomrule', '\\end{tabular}']
+    write_table('si_table_habit.tex', lines)
+
+
+def table_samples():
+    """SI: the unit, eligibility rule and size of each record analysis."""
+    pages, names, forms = load_cache('pages.pkl'), load_cache('names.pkl'), load_cache('forms.pkl')
+    d = load_cache('identification.pkl')
+    n_view = int((~np.isnan(names['records']['view'])).sum())
+    n_first = sum(len(v) for v in forms['by_class'].values())
+    rows = [('Fig.~2a, where to write', 'candidate page of an append', 'every distinct page in the last 100 feed lines', f'{len(pages["response"]):,}'),
+            ('Table~1A, where to write', 'candidate page of an arrival', 'task pages in the last 100 feed lines and earlier pages of the own task; '
+             f'{d["pages"]["n_decisions"]:,} arrivals ({d["pages"].get("n_outside", 0)} appends whose chosen page is not a candidate left out)', f'{d["pages"]["n"]:,}'),
+            ('Fig.~2b, how to sign', 'newcomer $\\times$ name feature', 'complete feed; at least two task-mates in the feed', f'{n_view:,}'),
+            ('Table~1B, how to sign', 'newcomer $\\times$ name feature', 'at least two handles in each of the feed, out-of-view and other-task groups; '
+             'page share set to zero and flagged when missing', f'{d["names"]["n"]:,}'),
+            ('Fig.~2c, how to write', 'first use of a convention', 'at least three earlier instances on the page', f'{n_first:,}'),
+            ('Table~1C, how to write', 'first use of a convention', 'at least two earlier uses in each of the four groups', f'{d["forms"]["n"]:,}')]
+    lines = ['\\begin{tabular}{lp{3.2cm}p{6.2cm}r}', '\\toprule', 'analysis & unit & eligible when & $n$ \\\\', '\\midrule']
+    lines += [' & '.join(r) + ' \\\\' for r in rows]
+    lines += ['\\bottomrule', '\\end{tabular}']
+    write_table('si_table_samples.tex', lines)
+
+
 def main():
+    table_samples()
     table_regressions()
     table_thresholds()
+    table_habit()
     table_families()
     table_pieces()
     table_conventions()

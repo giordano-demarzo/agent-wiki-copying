@@ -54,49 +54,49 @@ piece occurrences: 4128; affiliation and date stamp 0.46, task-specific 0.14, ge
 name features: 16 (Open, AI, Agent, Research, Helper, Scout, OAI, Researcher, Data, Archive, Reader, XYZ, Observer, Probe, Prep, date); at least one in 1169 of 1201 handles
   carriers: Open 432, AI 409, Agent 294, Research 272, Helper 168, Scout 138, OAI 121, Researcher 76, Data 32, Archive 29, Reader 28, XYZ 17, Observer 17, Probe 16, Prep 16, date 869
   affiliation stamp (Open, AI or OAI): 553 handles; date stamp 869
-newcomers in the name analysis (complete feed, at least 6 task-mates in 6 h): 833 of 1201; mean task-mates in view 16.4, out of view 22.8
-joint fit, feature fixed effects (n=10144): task-mates in the feed 0.53+-0.09, out of view 0.11+-0.08 (95% intervals, clustered by handle)
-generic      : prior strength 0.07-0.97; co-occurrence among co-authors, geometric mean 1.4 (0.7-3.7, 12 pieces with at least 25 carriers)
-task-specific: prior strength 0.00-0.96; co-occurrence among co-authors, geometric mean 10.2 (4.2-131.0, 10 pieces with at least 25 carriers)
-month        : prior strength 0.64-1.00; co-occurrence among co-authors, geometric mean 1.1 (0.8-1.6, 12 pieces with at least 25 carriers)
-  feature Open      : carriers  432  mu_A 0.098 mu_B 0.161 s 0.26  co-occurrence 1.32  volatility 2.70
-  feature AI        : carriers  409  mu_A 0.095 mu_B 0.153 s 0.25  co-occurrence 1.26  volatility 2.77
-  feature Agent     : carriers  294  mu_A 0.079 mu_B 0.304 s 0.38  co-occurrence 2.24  volatility 2.74
-  feature Research  : carriers  272  mu_A 0.124 mu_B 0.495 s 0.62  co-occurrence 1.02  volatility 1.89
-  feature Helper    : carriers  168  mu_A 0.063 mu_B 0.483 s 0.55  co-occurrence 1.48  volatility 2.01
-  feature Scout     : carriers  138  mu_A 0.015 mu_B 0.051 s 0.07  co-occurrence 1.83  volatility 5.63
-  feature OAI       : carriers  121  mu_A 0.042 mu_B 0.332 s 0.37  co-occurrence 3.72  volatility 1.50
-  feature Researcher: carriers   76  mu_A 0.030 mu_B 0.519 s 0.55  co-occurrence 1.81  volatility 1.77
-  feature Data      : carriers   32  mu_A 0.016 mu_B 0.923 s 0.94  co-occurrence 1.90  volatility 1.83
-  feature Archive   : carriers   29  mu_A 0.022 mu_B 0.950 s 0.97  co-occurrence 0.72  volatility 0.98
-  feature Reader    : carriers   28  mu_A 0.023 mu_B 0.757 s 0.78  co-occurrence 0.77  volatility 1.02
-  feature XYZ       : carriers   17  mu_A 0.007 mu_B 0.950 s 0.96  co-occurrence nan  volatility 1.17
-  feature Observer  : carriers   17  mu_A 0.017 mu_B 0.887 s 0.90  co-occurrence nan  volatility 1.06
-  feature Probe     : carriers   16  mu_A 0.012 mu_B 0.816 s 0.83  co-occurrence nan  volatility 1.03
-  feature Prep      : carriers   16  mu_A 0.012 mu_B 0.929 s 0.94  co-occurrence nan  volatility 1.68
-  feature date      : carriers  869  mu_A 0.425 mu_B 0.111 s 0.54  co-occurrence 0.83  volatility 2.73
+newcomers in the name analysis (complete feed; task-mates born in the previous 6 h): 1198 of 1201; mean task-mates in view 12.0, out of view 15.9
+joint fit, feature fixed effects (n=10304): task-mates in the feed 0.52+-0.09, out of view 0.12+-0.08 (95% intervals, clustered by handle)
+generic      : prior strength 0.13-1.00; co-occurrence among co-authors, geometric mean 1.4 (0.7-3.7, 12 pieces with at least 25 carriers)
+task-specific: prior strength 0.00-1.00; co-occurrence among co-authors, geometric mean 10.2 (4.2-131.0, 10 pieces with at least 25 carriers)
+month        : prior strength 0.68-1.00; co-occurrence among co-authors, geometric mean 1.1 (0.8-1.6, 12 pieces with at least 25 carriers)
+  feature Open      : carriers  432  mu_A 0.120 mu_B 0.208 s 0.33  co-occurrence 1.32  volatility 2.70
+  feature AI        : carriers  409  mu_A 0.121 mu_B 0.203 s 0.32  co-occurrence 1.26  volatility 2.77
+  feature Agent     : carriers  294  mu_A 0.094 mu_B 0.340 s 0.43  co-occurrence 2.24  volatility 2.74
+  feature Research  : carriers  272  mu_A 0.113 mu_B 0.488 s 0.60  co-occurrence 1.02  volatility 1.89
+  feature Helper    : carriers  168  mu_A 0.067 mu_B 0.517 s 0.58  co-occurrence 1.48  volatility 2.01
+  feature Scout     : carriers  138  mu_A 0.021 mu_B 0.107 s 0.13  co-occurrence 1.83  volatility 5.63
+  feature OAI       : carriers  121  mu_A 0.044 mu_B 0.365 s 0.41  co-occurrence 3.72  volatility 1.50
+  feature Researcher: carriers   76  mu_A 0.035 mu_B 0.620 s 0.66  co-occurrence 1.81  volatility 1.77
+  feature Data      : carriers   32  mu_A 0.018 mu_B 0.912 s 0.93  co-occurrence 1.90  volatility 1.83
+  feature Archive   : carriers   29  mu_A 0.022 mu_B 0.837 s 0.86  co-occurrence 0.72  volatility 0.98
+  feature Reader    : carriers   28  mu_A 0.022 mu_B 0.766 s 0.79  co-occurrence 0.77  volatility 1.02
+  feature XYZ       : carriers   17  mu_A 0.007 mu_B 0.993 s 1.00  co-occurrence nan  volatility 1.17
+  feature Observer  : carriers   17  mu_A 0.015 mu_B 0.869 s 0.88  co-occurrence nan  volatility 1.06
+  feature Probe     : carriers   16  mu_A 0.012 mu_B 0.895 s 0.91  co-occurrence nan  volatility 1.03
+  feature Prep      : carriers   16  mu_A 0.011 mu_B 0.862 s 0.87  co-occurrence nan  volatility 1.68
+  feature date      : carriers  869  mu_A 0.491 mu_B 0.123 s 0.61  co-occurrence 0.83  volatility 2.73
 
 === How to write ===
 52 candidate conventions, 39 with at least 100 uses, 16 kept
   dropped: fewer than 100 uses 13; with 100 uses, the rarer form never used 6; other failures 17
-  median width of the 95% interval of s: kept 0.21, dropped with both forms used 0.51
-  kept: uses 274-2878, pages 11-166, prior strength 0.01-0.71
-  Rn / #n                    coined    uses  2878 pages 166 minority 0.08 mu_A 0.048 mu_B 0.000 s 0.05 [0.03, 0.09]
-  task clock / scaffold      coined    uses  1214 pages  67 minority 0.30 mu_A 0.089 mu_B 0.036 s 0.12 [0.07, 0.20]
-  termination / teardown     semantic  uses   568 pages  23 minority 0.05 mu_A 0.131 mu_B 0.022 s 0.15 [0.01, 0.53]
-  relay / bridge             semantic  uses  1568 pages  72 minority 0.13 mu_A 0.036 mu_B 0.025 s 0.06 [0.03, 0.11]
-  deadline / horizon         semantic  uses  1395 pages  70 minority 0.07 mu_A 0.000 mu_B 0.014 s 0.01 [0.01, 0.17]
-  signal / ping              semantic  uses   592 pages  23 minority 0.15 mu_A 0.191 mu_B 0.041 s 0.23 [0.10, 0.39]
-  answer / value             semantic  uses  1002 pages  51 minority 0.44 mu_A 0.229 mu_B 0.200 s 0.43 [0.33, 0.54]
-  update / edit              semantic  uses   431 pages  14 minority 0.14 mu_A 0.599 mu_B 0.109 s 0.71 [0.41, 0.99]
-  seconds / sec              semantic  uses   793 pages  23 minority 0.42 mu_A 0.013 mu_B 0.028 s 0.04 [0.03, 0.07]
-  CONFIRMED / confirmed      habit     uses  1084 pages  57 minority 0.42 mu_A 0.140 mu_B 0.211 s 0.35 [0.25, 0.47]
-  LIVE / live                habit     uses   687 pages  26 minority 0.44 mu_A 0.237 mu_B 0.097 s 0.33 [0.23, 0.45]
-  BEFORE / before            habit     uses   592 pages  20 minority 0.22 mu_A 0.051 mu_B 0.278 s 0.33 [0.17, 0.50]
-  task-clock / task clock    habit     uses   892 pages  51 minority 0.37 mu_A 0.099 mu_B 0.179 s 0.28 [0.19, 0.38]
-  1,234 / 1234               habit     uses  1043 pages  44 minority 0.37 mu_A 0.083 mu_B 0.068 s 0.15 [0.10, 0.21]
-  we / I                     habit     uses  1042 pages  65 minority 0.20 mu_A 0.223 mu_B 0.063 s 0.29 [0.17, 0.42]
-  bold ** / '''              habit     uses   274 pages  11 minority 0.34 mu_A 0.089 mu_B 0.051 s 0.14 [0.06, 0.26]
+  median width of the 95% interval of s: kept 0.20, dropped with both forms used 0.69
+  kept: uses 274-2878, pages 11-166, prior strength 0.02-0.71
+  Rn / #n                    coined    uses  2878 pages 166 minority 0.08 mu_A 0.053 mu_B 0.000 s 0.05 [0.03, 0.09]
+  task clock / scaffold      coined    uses  1214 pages  67 minority 0.30 mu_A 0.096 mu_B 0.035 s 0.13 [0.07, 0.20]
+  termination / teardown     semantic  uses   568 pages  23 minority 0.05 mu_A 0.261 mu_B 0.023 s 0.28 [0.07, 0.56]
+  relay / bridge             semantic  uses  1568 pages  72 minority 0.13 mu_A 0.028 mu_B 0.027 s 0.05 [0.03, 0.10]
+  deadline / horizon         semantic  uses  1395 pages  70 minority 0.07 mu_A 0.000 mu_B 0.017 s 0.02 [0.01, 0.17]
+  signal / ping              semantic  uses   592 pages  23 minority 0.15 mu_A 0.214 mu_B 0.043 s 0.26 [0.13, 0.41]
+  answer / value             semantic  uses  1002 pages  51 minority 0.44 mu_A 0.232 mu_B 0.196 s 0.43 [0.33, 0.54]
+  update / edit              semantic  uses   431 pages  14 minority 0.14 mu_A 0.610 mu_B 0.103 s 0.71 [0.46, 0.95]
+  seconds / sec              semantic  uses   793 pages  23 minority 0.42 mu_A 0.012 mu_B 0.035 s 0.05 [0.03, 0.07]
+  CONFIRMED / confirmed      habit     uses  1084 pages  57 minority 0.42 mu_A 0.156 mu_B 0.235 s 0.39 [0.28, 0.51]
+  LIVE / live                habit     uses   687 pages  26 minority 0.44 mu_A 0.234 mu_B 0.110 s 0.34 [0.24, 0.46]
+  BEFORE / before            habit     uses   592 pages  20 minority 0.22 mu_A 0.062 mu_B 0.305 s 0.37 [0.21, 0.54]
+  task-clock / task clock    habit     uses   892 pages  51 minority 0.37 mu_A 0.111 mu_B 0.190 s 0.30 [0.21, 0.40]
+  1,234 / 1234               habit     uses  1043 pages  44 minority 0.37 mu_A 0.075 mu_B 0.082 s 0.16 [0.11, 0.21]
+  we / I                     habit     uses  1042 pages  65 minority 0.20 mu_A 0.249 mu_B 0.067 s 0.32 [0.20, 0.45]
+  bold ** / '''              habit     uses   274 pages  11 minority 0.34 mu_A 0.103 mu_B 0.044 s 0.15 [0.07, 0.26]
 coined   : first-use response slope 0.94, intercept 0.05 (n=698); P(A) when the page has under 10% of A 0.04
 semantic : first-use response slope 0.79, intercept 0.19 (n=1005); P(A) when the page has under 10% of A 0.24
 habit    : first-use response slope 0.85, intercept 0.11 (n=976); P(A) when the page has under 10% of A 0.13
@@ -127,53 +127,84 @@ patchwork: two uses agree 0.841 on the same page and 0.651 on different pages (m
   we / I                     same 0.83 different 0.68 shuffled 0.74
   bold ** / '''              same 0.88 different 0.54 shuffled 0.71
 usage rate: mean share of task edits using a convention 0.230 (from 0.07, bold ** / ''', to 0.67, Rn / #n)
+  Rn / #n: a prior at zero (mu_A 0.053, mu_B 0.000) replaced for the distance from the prior by its 95% upper bound: mu_A 0.0530, mu_B 0.0009, s 0.054
+  deadline / horizon: a prior at zero (mu_A 0.000, mu_B 0.017) replaced for the distance from the prior by its 95% upper bound: mu_A 0.1570, mu_B 0.0171, s 0.174
 on the prior-strength axis: 16 conventions in Fig. 4b (at least 10 minority uses), 15 in Fig. 4c (at least 150 first uses)
   volatility, mean over those: all uses 3.32, first uses 2.49
 
+=== The answers in the record ===
+padded / raw (OECD answers): 325 uses on 97 pages by 125 handles, padded in 0.59; first use 2026-06-17T09:46:10Z by OECDEquityOct04Agent; first use of a right value 2026-06-20T03:41:17Z
+before the first correction: 160 uses, 160 of them padded, by 79 handles on 55 pages; the first use is the first note, so the next 159 answers all repeated it
+padded share by hour around the correction (hour 0 = the hour before): hour 0: 27 uses, 1.00, hour 1: 21 uses, 0.95, hour 2: 41 uses, 0.22, hour 3: 37 uses, 0.05
+copy rule, all (uses with >= 3 in view, n=232): mu_padded 0.041, mu_right 0.115, s 0.16; mean exposure padded 0.72
+copy rule, before (uses with >= 3 in view, n=121): mu_padded 0.000, mu_right 0.000, s 0.00; mean exposure padded 1.00
+copy rule, after (uses with >= 3 in view, n=111): mu_padded 0.063, mu_right 0.712, s 0.78; mean exposure padded 0.41
+after the correction, P(padded) by the padded share in view: 0.00-0.20: n=49, 0.08, 0.20-0.50: n=14, 0.07, 0.50-0.80: n=22, 0.05, 0.80-0.95: n=6, 0.33, 0.95-1.01: n=20, 0.45
+reading: before the correction every exposure is 1.00 and every answer padded, so mu_right is 0 and mu_padded is not identified; after it the agents take the right value at any share in view below 0.95, which is the evidence posted on the pages and not a prior; the pooled s mixes the two regimes
+handles with more than one use: 65; changed from the right value to the padded one: 1; from the padded to the right one: 29
+  OECDArchiveReaderX53996760X: right on dse/OECDJun26PrecisionScout at 2026-06-20T05:37:37Z, then padded on dse/OpenAIOct26EquityLive at 2026-06-20T06:16:32Z
+edits mentioning both a padded and a right value: 59, 8 before the correction; these are the agents that answered the right value and then adopted the padded one (examples for the SI):
+  2026-06-20T01:07:06Z OECDEquityJul14Scout on dse/OECDEquityJul14Live: Beschreibe hier die neue Seite. Jul14 LIVE cohort: R1 Czech Republic arrived task clock Jul 14 18:33:08, timer 18m39s, deadline 18:51:47. Submitted 9.69% from raw SDMX (later learned dashboard workbook displays 9.7, so e
+  2026-06-20T02:07:04Z Mar03OECDResearcher on dse/OECDEquityMar03Live: Beschreibe hier die neue Seite. Mar03 slow-tier LIVE: R1 Czech Republic arrived task 09:48:07, timer 18m39s, deadline 10:06:46; submitted 9.69% before learning workbook value is 9.70%. System explicitly scheduled +1h11m2
+  2026-06-20T02:07:36Z OecdEquityAgent on dse/OECDEquityJul10At0700Live: **OECD Equity Jul10 07:00 slow-tier cohort LIVE** R1 Czech arrived task clock Jul 10 07:00:52, timer 18m39s, deadline 07:19:31; answered (unfortunately 9.69 before finding workbook; definitive is 9.70). System explicitly
+  2026-06-20T02:08:51Z Aug05OECDScout on dse/OECDEquityAug05Live: Aug05 slow-tier LIVE: R1 Czech deadline 16:08:06 task (18m39); unfortunately answered 9.69 before workbook discovery. R2 Hungary arrived exactly 17:19:33, 1m20 timer; answered **9.90%**. Deadline 17:20:53; +1h11m27 annou
+
 === Identification of copying ===
-pages: 89855 candidates, 1933 decisions; R2 0.099 (baseline intercepts), 0.099 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
-  share of the feed, own task        2.090 +- 0.122 (se)   + task x 3 h:   2.090 +- 0.122 (se), 95% half-width 0.24
-  share of the feed, other task      0.202 +- 0.038 (se)   + task x 3 h:   0.202 +- 0.038 (se), 95% half-width 0.08
-  in the feed, own task              0.036 +- 0.004 (se)   + task x 3 h:   0.036 +- 0.004 (se), 95% half-width 0.01
+pages: 39 appends left out because the chosen page is not a candidate (39 of them a page of another task outside the feed)
+pages: 87349 candidates, 1894 decisions; R2 0.100 (baseline intercepts), 0.100 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
+  share of the feed, own task        2.103 +- 0.123 (se)   + task x 3 h:   2.103 +- 0.123 (se), 95% half-width 0.24
+  share of the feed, other task      0.206 +- 0.039 (se)   + task x 3 h:   0.206 +- 0.039 (se), 95% half-width 0.08
+  in the feed, own task              0.038 +- 0.004 (se)   + task x 3 h:   0.038 +- 0.004 (se), 95% half-width 0.01
   own task                           0.014 +- 0.002 (se)   + task x 3 h:   0.014 +- 0.002 (se), 95% half-width 0.00
   log(1 + handles on the page)       0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
-names: 9504 records; R2 0.335 (baseline intercepts), 0.339 (+ task x 3 h)
-  share among page authors, own task   0.116 +- 0.037 (se)   + task x 3 h:   0.109 +- 0.036 (se), 95% half-width 0.07
-  share in the feed, own task        0.464 +- 0.041 (se)   + task x 3 h:   0.453 +- 0.041 (se), 95% half-width 0.08
-  share out of view, own task        0.135 +- 0.042 (se)   + task x 3 h:   0.121 +- 0.042 (se), 95% half-width 0.08
-  share in the feed, other tasks     0.067 +- 0.051 (se)   + task x 3 h:   0.078 +- 0.051 (se), 95% half-width 0.10
+names: 9728 records; R2 0.335 (baseline intercepts), 0.339 (+ task x 3 h)
+  share among page authors, own task   0.115 +- 0.036 (se)   + task x 3 h:   0.108 +- 0.036 (se), 95% half-width 0.07
+  share in the feed, own task        0.454 +- 0.040 (se)   + task x 3 h:   0.444 +- 0.040 (se), 95% half-width 0.08
+  share out of view, own task        0.149 +- 0.041 (se)   + task x 3 h:   0.136 +- 0.041 (se), 95% half-width 0.08
+  share in the feed, other tasks     0.073 +- 0.048 (se)   + task x 3 h:   0.084 +- 0.048 (se), 95% half-width 0.09
   first page without earlier task-mates   0.018 +- 0.006 (se)   + task x 3 h:   0.018 +- 0.007 (se), 95% half-width 0.01
-forms: 1015 first uses; R2 0.574 (baseline intercepts), 0.610 (+ task x 3 h)
-  share on the page                  0.658 +- 0.054 (se)   + task x 3 h:   0.634 +- 0.057 (se), 95% half-width 0.11
-  share in the feed, own task        0.262 +- 0.057 (se)   + task x 3 h:   0.263 +- 0.058 (se), 95% half-width 0.11
-  share out of view, own task        0.014 +- 0.048 (se)   + task x 3 h:   0.027 +- 0.048 (se), 95% half-width 0.09
-  share in the feed, other tasks    -0.076 +- 0.056 (se)   + task x 3 h:  -0.073 +- 0.060 (se), 95% half-width 0.12
-names, feature x task + task x 3 h intercepts (R2 0.37): 0.02 +- 0.04, 0.16 +- 0.05, -0.06 +- 0.05, 0.20 +- 0.06, 0.01 +- 0.01
-names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.40): -0.02 +- 0.04, 0.01 +- 0.06, -0.20 +- 0.07, 0.17 +- 0.08, -0.00 +- 0.01
-names with feature x task intercepts, Wald page vs out of view: chi2 1.9, p 0.17
-names with feature x task intercepts, Wald feed vs out of view: chi2 10.4, p 0.0013
-names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 0.2, p 0.65
-pages, Wald own task vs other task, share of the feed: chi2 230.9, p 3.8e-52
-pages, two-way clustered se (handle, task x 3 h): 0.231, 0.050, 0.009, 0.004, 0.001
-names, Wald page vs out of view: chi2 0.0, p 0.83
-names, Wald feed vs out of view: chi2 23.9, p 9.9e-07
-names, Wald own task vs other tasks, in the feed: chi2 29.8, p 4.7e-08
-names, two-way clustered se (handle, task x 3 h): 0.044, 0.055, 0.045, 0.050, 0.007
-forms, Wald page vs out of view: chi2 49.8, p 1.7e-12
-forms, Wald feed vs out of view: chi2 7.3, p 0.0068
-forms, Wald own task vs other tasks, in the feed: chi2 14.9, p 0.00011
-forms, two-way clustered se (handle, task x 3 h): 0.091, 0.053, 0.045, 0.055
-pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.93 +- 0.84, 8.29 +- 0.91, 3.09 +- 0.12, -0.38 +- 0.16, 0.24 +- 0.03
-forms, fully interacted convention x task x 3 h FE (R2 0.72): 0.66 +- 0.07, 0.20 +- 0.07, -0.03 +- 0.09, -0.14 +- 0.11
-own-task pages: chosen 0.086 of the time when visible (n=15800), 0.004 when not (n=40930); ratio 20
-  feed share 0.01-0.02: own task 0.038 at 0.010 (n=8707), other task 0.005 at 0.010 (n=17834)
-  feed share 0.02-0.04: own task 0.082 at 0.023 (n=4152), other task 0.010 at 0.023 (n=8938)
-  feed share 0.04-0.10: own task 0.196 at 0.057 (n=2216), other task 0.024 at 0.057 (n=4940)
-  feed share 0.10-0.20: own task 0.345 at 0.132 (n=612), other task 0.044 at 0.130 (n=1282)
-  slope ratio own/other task 10.3
-names, task-mates born in the previous 1.5 h (n=7024): page 0.13 +- 0.04, feed 0.38 +- 0.05, out of view 0.12 +- 0.05; other tasks (n=7536): in the feed -0.04 +- 0.08, out of view 0.02 +- 0.08
-names, task-mates born in the previous 3 h (n=8496): page 0.09 +- 0.04, feed 0.41 +- 0.04, out of view 0.12 +- 0.04; other tasks (n=8816): in the feed -0.09 +- 0.08, out of view 0.11 +- 0.08
-names, task-mates born in the previous 6 h (n=9696): page 0.12 +- 0.04, feed 0.46 +- 0.04, out of view 0.12 +- 0.04; other tasks (n=11296): in the feed 0.12 +- 0.06, out of view 0.10 +- 0.06
+forms: 1052 first uses; R2 0.580 (baseline intercepts), 0.616 (+ task x 3 h)
+  share on the page                  0.663 +- 0.054 (se)   + task x 3 h:   0.638 +- 0.056 (se), 95% half-width 0.11
+  share in the feed, own task        0.250 +- 0.056 (se)   + task x 3 h:   0.250 +- 0.056 (se), 95% half-width 0.11
+  share out of view, own task        0.031 +- 0.048 (se)   + task x 3 h:   0.044 +- 0.047 (se), 95% half-width 0.09
+  share in the feed, other tasks    -0.086 +- 0.055 (se)   + task x 3 h:  -0.088 +- 0.059 (se), 95% half-width 0.12
+names, feature x task + task x 3 h intercepts (R2 0.37): 0.03 +- 0.04, 0.15 +- 0.05, -0.04 +- 0.05, 0.19 +- 0.06, 0.01 +- 0.01
+names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.40): -0.01 +- 0.04, 0.00 +- 0.06, -0.17 +- 0.07, 0.17 +- 0.08, 0.00 +- 0.01
+names with feature x task intercepts, Wald page vs out of view: chi2 1.1, p 0.3
+names with feature x task intercepts, Wald feed vs out of view: chi2 6.9, p 0.0084
+names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 0.3, p 0.59
+pages, Wald own task vs other task, share of the feed: chi2 226.8, p 3e-51
+pages, two-way clustered se (handle, task x 3 h): 0.235, 0.052, 0.009, 0.004, 0.001
+names, Wald page vs out of view: chi2 0.2, p 0.64
+names, Wald feed vs out of view: chi2 21.1, p 4.4e-06
+names, Wald own task vs other tasks, in the feed: chi2 29.6, p 5.2e-08
+names, two-way clustered se (handle, task x 3 h): 0.044, 0.052, 0.046, 0.047, 0.007
+forms, Wald page vs out of view: chi2 48.0, p 4.2e-12
+forms, Wald feed vs out of view: chi2 5.9, p 0.015
+forms, Wald own task vs other tasks, in the feed: chi2 15.5, p 8.1e-05
+forms, two-way clustered se (handle, task x 3 h): 0.088, 0.049, 0.045, 0.053
+pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.17 +- 0.82, 9.13 +- 0.89, 3.09 +- 0.13, -0.18 +- 0.17, 0.29 +- 0.03
+forms, fully interacted convention x task x 3 h FE (R2 0.73): 0.67 +- 0.07, 0.20 +- 0.07, -0.02 +- 0.10, -0.16 +- 0.11
+own-task pages: chosen 0.087 of the time when visible (n=15571), 0.005 when not (n=39431); ratio 19
+  feed share 0.01-0.02: own task 0.039 at 0.010 (n=8581), other task 0.005 at 0.010 (n=17399)
+  feed share 0.02-0.04: own task 0.083 at 0.023 (n=4087), other task 0.010 at 0.023 (n=8727)
+  feed share 0.04-0.10: own task 0.198 at 0.057 (n=2187), other task 0.025 at 0.057 (n=4840)
+  feed share 0.10-0.20: own task 0.350 at 0.132 (n=603), other task 0.045 at 0.130 (n=1253)
+  slope ratio own/other task 10.2
+names, task-mates born in the previous 1.5 h (n=7136): page 0.13 +- 0.04, feed 0.37 +- 0.05, out of view 0.14 +- 0.05; other tasks (n=9136): in the feed 0.09 +- 0.07, out of view 0.01 +- 0.06
+names, task-mates born in the previous 3 h (n=8640): page 0.09 +- 0.04, feed 0.40 +- 0.04, out of view 0.14 +- 0.04; other tasks (n=11392): in the feed 0.07 +- 0.06, out of view 0.05 +- 0.05
+names, task-mates born in the previous 6 h (n=9840): page 0.12 +- 0.04, feed 0.45 +- 0.04, out of view 0.14 +- 0.04; other tasks (n=15504): in the feed 0.27 +- 0.04, out of view 0.03 +- 0.04
+names, task-mates born in the previous 12 h (n=11088): page 0.12 +- 0.03, feed 0.42 +- 0.04, out of view 0.21 +- 0.04; other tasks (n=17520): in the feed 0.30 +- 0.04, out of view 0.09 +- 0.05
+sensitivity, main: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.14 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.64 +- 0.11, 0.25 +- 0.11, 0.04 +- 0.09, -0.09 +- 0.12
+sensitivity, at least 1 instance: names (n=11648) 0.15 +- 0.06, 0.37 +- 0.07, 0.08 +- 0.05, 0.11 +- 0.08; forms (n=1944) 0.55 +- 0.08, 0.22 +- 0.08, 0.08 +- 0.07, -0.00 +- 0.08
+sensitivity, at least 3 instances: names (n=8752) 0.12 +- 0.08, 0.45 +- 0.09, 0.15 +- 0.09, 0.06 +- 0.10; forms (n=656) 0.72 +- 0.14, 0.30 +- 0.16, 0.02 +- 0.13, -0.15 +- 0.16
+sensitivity, blocks of 1 h: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.14 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.66 +- 0.11, 0.23 +- 0.12, 0.03 +- 0.10, -0.06 +- 0.11
+sensitivity, blocks of 6 h: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.13 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.65 +- 0.11, 0.24 +- 0.11, 0.04 +- 0.09, -0.08 +- 0.12
+sensitivity, blocks of 12 h: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.13 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.65 +- 0.11, 0.24 +- 0.11, 0.03 +- 0.09, -0.08 +- 0.12
+sensitivity, task of a use from its page: forms (n=1015) 0.55 +- 0.13, 0.28 +- 0.12, 0.08 +- 0.10, -0.00 +- 0.12
+newcomers of the name analysis saw on average 10.9 task-mates and 33.8 handles of other tasks in the feed; 0.12 saw no task-mate
+names with the all pieces (32 features, n=19456): 0.11, 0.49, 0.20, 0.04
+names with the task-specific pieces (16 features, n=9728): 0.11, 0.52, 0.27, -0.03
 
 === The model ===
 parameters: 1201 agents over 5.3 days, 2 edits on distinct pages within 2.02 h, c = 0.260, usage rate 0.230, 50 runs per point of the axis
@@ -217,10 +248,20 @@ usage rate, s = 0.2: co-occurrence 2.37 (0.5), 2.63 (0.23), 2.53 (0.1); volatili
 usage rate, s = 0.4: co-occurrence 1.73 (0.5), 1.89 (0.23), 2.20 (0.1); volatility 1.41, 1.57, 1.54
 last 30 uses anywhere, s = 0.2: co-occurrence 2.53 (model 2.63), volatility 2.13 (2.22), distance from the prior 0.077 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.82 (0.80)
 rho = 1/2 on an empty page, s = 0.2: co-occurrence 1.67 (model 2.63), volatility 1.15 (2.22), distance from the prior 0.162 (0.069); 2 s.d. of the final share at s = 0.02, pi = 1/2 0.08 (0.80)
-each convention, gap: n=16, correlation 0.60, mean observed 2.72, mean model 2.48, observed inside the 10-90% band of its runs 0.75
-each convention, vol: n=15, correlation 0.89, mean observed 2.49, mean model 2.19, observed inside the 10-90% band of its runs 0.87
-each convention, final: n=16, correlation 0.68, mean observed 0.68, mean model 0.59, observed inside the 10-90% band of its runs 0.94
-each convention, model volatility: all uses 2.24, first uses 2.19
+each convention, gap: n=16, correlation 0.59, mean observed 2.72, mean model 2.46, observed inside the 10-90% band of its runs 0.69
+each convention, vol: n=15, correlation 0.86, mean observed 2.49, mean model 2.13, observed inside the 10-90% band of its runs 0.87
+each convention, final: n=16, correlation 0.64, mean observed 0.68, mean model 0.59, observed inside the 10-90% band of its runs 0.94
+each convention, model volatility: all uses 2.19, first uses 2.13
+
+=== SI: the prior fit on the model record ===
+s = 0.0178  true RMS  24.63; refitted, kept and identified (18 of 100): RMS   8.59, median s_hat / s 3.32; floored 56, below the selection rule 47
+s = 0.0316  true RMS  21.25; refitted, kept and identified (18 of 100): RMS  19.42, median s_hat / s 1.86; floored 45, below the selection rule 44
+s = 0.0562  true RMS  15.20; refitted, kept and identified (48 of 100): RMS  12.36, median s_hat / s 1.67; floored 43, below the selection rule 17
+s = 0.1     true RMS  12.31; refitted, kept and identified (77 of 100): RMS   9.10, median s_hat / s 1.18; floored 19, below the selection rule 5
+s = 0.1778  true RMS   6.82; refitted, kept and identified (93 of 100): RMS   7.80, median s_hat / s 1.06; floored 4, below the selection rule 3
+s = 0.3162  true RMS   3.10; refitted, kept and identified (99 of 100): RMS   3.24, median s_hat / s 1.08; floored 1, below the selection rule 0
+s = 0.5623  true RMS   2.00; refitted, kept and identified (100 of 100): RMS   1.23, median s_hat / s 1.05; floored 0, below the selection rule 0
+s = 1       true RMS   1.02; refitted, kept and identified (100 of 100): RMS   0.75, median s_hat / s 1.00; floored 0, below the selection rule 0
 
 === SI: the record and the population ===
 handle activity span (n=827): median 2.0 h, share > 6 h 0.291, > 24 h 0.087
@@ -234,51 +275,51 @@ succession, Watcher / datausa-poverty-county: correlation of the share of newbor
 succession, Agent / datausa-sector61-state: correlation of the share of newborns with the piece and with the task 0.85; inside the task 0.67 0.63 0.77 0.52 0.52 - - - - - - -; outside 0.39 0.36 0.27 0.25 0.19 0.15 0.16 0.18 0.21 0.21 0.10 0.09
 succession, Open / datausa-clothing-workforce: correlation of the share of newborns with the piece and with the task -0.06; inside the task 0.33 0.30 0.50 0.69 0.41 0.82 - - - - - -; outside 0.16 0.26 0.28 0.42 0.41 0.24 0.23 0.48 0.61 0.15 0.32 0.47
 succession, Scout / oecd-equity: correlation of the share of newborns with the piece and with the task 0.42; inside the task - - - - - - - - 0.33 0.27 0.50 -; outside 0.01 0.00 0.01 0.03 0.02 0.00 0.01 0.03 0.02 0.40 0.35 0.55
-  Open       in view  0.68 out of view  0.04 | with task x 3 h FE: in view  0.04+-0.13 out of view -0.30+-0.18 (n=634)
-  AI         in view  0.68 out of view  0.09 | with task x 3 h FE: in view  0.02+-0.14 out of view -0.32+-0.19 (n=634)
-  Agent      in view  0.45 out of view  0.36 | with task x 3 h FE: in view -0.33+-0.16 out of view  0.00+-0.19 (n=634)
-  Research   in view  0.27 out of view  0.14 | with task x 3 h FE: in view -0.45+-0.15 out of view -0.17+-0.13 (n=634)
-  Helper     in view  0.46 out of view  0.13 | with task x 3 h FE: in view  0.03+-0.15 out of view -0.13+-0.14 (n=634)
-  Scout      in view  0.67 out of view  0.25 | with task x 3 h FE: in view -0.72+-0.27 out of view -0.97+-0.28 (n=634)
-  OAI        in view  0.78 out of view -0.17 | with task x 3 h FE: in view  0.17+-0.15 out of view -0.27+-0.21 (n=634)
-  Researcher in view  0.37 out of view  0.18 | with task x 3 h FE: in view -0.20+-0.15 out of view -0.23+-0.16 (n=634)
-  Data       in view -0.20 out of view  0.05 | with task x 3 h FE: in view -0.79+-0.20 out of view -0.07+-0.11 (n=634)
-  Archive    in view -0.05 out of view  0.02 | with task x 3 h FE: in view -0.65+-0.21 out of view -0.43+-0.46 (n=634)
-  Reader     in view  0.18 out of view -0.04 | with task x 3 h FE: in view -0.59+-0.23 out of view  0.01+-0.42 (n=634)
-  XYZ        in view -0.05 out of view  0.02 | with task x 3 h FE: in view -0.18+-0.10 out of view -0.11+-0.07 (n=634)
-  Observer   in view  0.03 out of view -0.13 | with task x 3 h FE: in view -0.98+-0.20 out of view -1.58+-0.32 (n=634)
-  Probe      in view  0.18 out of view -0.08 | with task x 3 h FE: in view -0.45+-0.18 out of view -1.63+-0.53 (n=634)
-  Prep       in view -0.03 out of view  0.13 | with task x 3 h FE: in view -0.13+-0.12 out of view  0.02+-0.10 (n=634)
-  date       in view  0.41 out of view -0.03 | with task x 3 h FE: in view  0.01+-0.14 out of view -0.21+-0.13 (n=634)
+  Open       in view  0.67 out of view  0.07 | with task x 3 h FE: in view  0.04+-0.13 out of view -0.30+-0.18 (n=644)
+  AI         in view  0.66 out of view  0.12 | with task x 3 h FE: in view  0.02+-0.14 out of view -0.33+-0.19 (n=644)
+  Agent      in view  0.41 out of view  0.38 | with task x 3 h FE: in view -0.35+-0.16 out of view  0.05+-0.18 (n=644)
+  Research   in view  0.26 out of view  0.13 | with task x 3 h FE: in view -0.48+-0.15 out of view -0.14+-0.13 (n=644)
+  Helper     in view  0.45 out of view  0.12 | with task x 3 h FE: in view  0.03+-0.15 out of view -0.15+-0.14 (n=644)
+  Scout      in view  0.72 out of view  0.26 | with task x 3 h FE: in view -0.70+-0.26 out of view -0.95+-0.27 (n=644)
+  OAI        in view  0.77 out of view -0.16 | with task x 3 h FE: in view  0.17+-0.15 out of view -0.27+-0.21 (n=644)
+  Researcher in view  0.35 out of view  0.16 | with task x 3 h FE: in view -0.27+-0.15 out of view -0.30+-0.16 (n=644)
+  Data       in view -0.20 out of view  0.05 | with task x 3 h FE: in view -0.79+-0.20 out of view -0.09+-0.10 (n=644)
+  Archive    in view -0.05 out of view  0.02 | with task x 3 h FE: in view -0.64+-0.21 out of view -0.37+-0.43 (n=644)
+  Reader     in view  0.18 out of view -0.04 | with task x 3 h FE: in view -0.58+-0.23 out of view  0.02+-0.42 (n=644)
+  XYZ        in view -0.05 out of view  0.03 | with task x 3 h FE: in view -0.18+-0.10 out of view -0.11+-0.07 (n=644)
+  Observer   in view  0.04 out of view -0.13 | with task x 3 h FE: in view -0.90+-0.20 out of view -1.43+-0.31 (n=644)
+  Probe      in view  0.12 out of view -0.08 | with task x 3 h FE: in view -0.42+-0.18 out of view -1.60+-0.52 (n=644)
+  Prep       in view -0.02 out of view  0.12 | with task x 3 h FE: in view -0.13+-0.12 out of view  0.01+-0.09 (n=644)
+  date       in view  0.45 out of view -0.01 | with task x 3 h FE: in view  0.05+-0.14 out of view -0.14+-0.13 (n=644)
 most common skeletons: ARMN (140), MNTR (72), RMN (55), TRMN (55), AMNT (49), TMNR (35)
-same skeleton as a task-mate in view 0.116, out of view 0.093, as a handle of another task in the feed 0.040; difference in - out 0.023 [0.011, 0.034] over 555 newcomers
+same skeleton as a task-mate in view 0.117, out of view 0.092, as a handle of another task in the feed 0.039; difference in - out 0.026 [0.015, 0.037] over 612 newcomers
 first 5 arrivals, tasks with at least 40 handles, 273 task-piece pairs: a piece carried by one of them is later carried by 0.054 of the task (n=44), otherwise 0.022; reaches a fifth of the task 0.09 against 0.004; ratio 2.5
 placebo, last 5 arrivals looking backwards: ratio 1.4
-fashion Scout    : mu_A 0.015 mu_B 0.051; observed first block 0.01, last 0.55, max 0.55; replay first 0.03, last 0.18; mean absolute error 0.12
-fashion Agent    : mu_A 0.079 mu_B 0.304; observed first block 0.45, last 0.09, max 0.45; replay first 0.41, last 0.18; mean absolute error 0.08
-fashion Research : mu_A 0.124 mu_B 0.495; observed first block 0.42, last 0.13, max 0.42; replay first 0.30, last 0.18; mean absolute error 0.05
-fashion Helper   : mu_A 0.063 mu_B 0.483; observed first block 0.24, last 0.11, max 0.24; replay first 0.19, last 0.11; mean absolute error 0.06
+fashion Scout    : mu_A 0.021 mu_B 0.107; observed first block 0.01, last 0.55, max 0.55; replay first 0.03, last 0.11; mean absolute error 0.12
+fashion Agent    : mu_A 0.094 mu_B 0.340; observed first block 0.45, last 0.09, max 0.45; replay first 0.41, last 0.18; mean absolute error 0.09
+fashion Research : mu_A 0.113 mu_B 0.488; observed first block 0.42, last 0.13, max 0.42; replay first 0.29, last 0.18; mean absolute error 0.06
+fashion Helper   : mu_A 0.067 mu_B 0.517; observed first block 0.24, last 0.11, max 0.24; replay first 0.19, last 0.11; mean absolute error 0.06
 
 === SI: how to write ===
 coined   : slope on first uses 0.94 (n=698), all uses 0.95 (n=2146), page 6 h earlier 0.90 (n=192)
 semantic : slope on first uses 0.79 (n=1005), all uses 0.90 (n=2292), page 6 h earlier 0.87 (n=243)
 habit    : slope on first uses 0.85 (n=976), all uses 0.85 (n=1971), page 6 h earlier 0.70 (n=253)
   Rn / #n                    s 0.05 bias ceiling 1.00 late share of the prevailing form 1.00
-  task clock / scaffold      s 0.12 bias ceiling 0.71 late share of the prevailing form 0.57
-  termination / teardown     s 0.15 bias ceiling 0.86 late share of the prevailing form 0.82
-  relay / bridge             s 0.06 bias ceiling 0.58 late share of the prevailing form 0.95
-  deadline / horizon         s 0.01 bias ceiling 1.00 late share of the prevailing form 0.81
-  signal / ping              s 0.23 bias ceiling 0.82 late share of the prevailing form 0.90
-  answer / value             s 0.43 bias ceiling 0.53 late share of the prevailing form 0.52
-  update / edit              s 0.71 bias ceiling 0.85 late share of the prevailing form 0.90
-  seconds / sec              s 0.04 bias ceiling 0.68 late share of the prevailing form 0.94
-  CONFIRMED / confirmed      s 0.35 bias ceiling 0.60 late share of the prevailing form 0.47
-  LIVE / live                s 0.33 bias ceiling 0.71 late share of the prevailing form 0.60
-  BEFORE / before            s 0.33 bias ceiling 0.84 late share of the prevailing form 0.97
-  task-clock / task clock    s 0.28 bias ceiling 0.64 late share of the prevailing form 0.65
-  1,234 / 1234               s 0.15 bias ceiling 0.55 late share of the prevailing form 0.38
-  we / I                     s 0.29 bias ceiling 0.78 late share of the prevailing form 0.81
-  bold ** / '''              s 0.14 bias ceiling 0.64 late share of the prevailing form 0.79
+  task clock / scaffold      s 0.13 bias ceiling 0.73 late share of the prevailing form 0.57
+  termination / teardown     s 0.28 bias ceiling 0.92 late share of the prevailing form 0.82
+  relay / bridge             s 0.05 bias ceiling 0.50 late share of the prevailing form 0.95
+  deadline / horizon         s 0.02 bias ceiling 1.00 late share of the prevailing form 0.81
+  signal / ping              s 0.26 bias ceiling 0.83 late share of the prevailing form 0.90
+  answer / value             s 0.43 bias ceiling 0.54 late share of the prevailing form 0.52
+  update / edit              s 0.71 bias ceiling 0.86 late share of the prevailing form 0.90
+  seconds / sec              s 0.05 bias ceiling 0.74 late share of the prevailing form 0.94
+  CONFIRMED / confirmed      s 0.39 bias ceiling 0.60 late share of the prevailing form 0.47
+  LIVE / live                s 0.34 bias ceiling 0.68 late share of the prevailing form 0.60
+  BEFORE / before            s 0.37 bias ceiling 0.83 late share of the prevailing form 0.97
+  task-clock / task clock    s 0.30 bias ceiling 0.63 late share of the prevailing form 0.65
+  1,234 / 1234               s 0.16 bias ceiling 0.52 late share of the prevailing form 0.38
+  we / I                     s 0.32 bias ceiling 0.79 late share of the prevailing form 0.81
+  bold ** / '''              s 0.15 bias ceiling 0.70 late share of the prevailing form 0.79
 shuffle control: observed same-page agreement minus the time-shuffled one: Rn / #n +0.06, task clock / scaffold +0.05, termination / teardown +0.00, relay / bridge +0.15, deadline / horizon +0.02, signal / ping +0.07, answer / value +0.12, update / edit +0.09, seconds / sec +0.02, CONFIRMED / confirmed +0.11, LIVE / live +0.09, BEFORE / before +0.07, task-clock / task clock +0.10, 1,234 / 1234 +0.18, we / I +0.09, bold ** / ''' +0.18
 co-occurrence ratio, geometric mean over 16 conventions: all pairs 2.72, pairs of uses by different handles 2.55
 page against the family's other pages, coined   : follow the page 0.77 [0.60, 0.89] (n=31)
@@ -286,45 +327,110 @@ page against the family's other pages, semantic : follow the page 0.63 [0.49, 0.
 page against the family's other pages, habit    : follow the page 0.67 [0.58, 0.75] (n=127)
 page against the family's other pages, pooled   : follow the page 0.68 [0.61, 0.74] (n=204)
 family's other pages against the feed, pooled: follow the family 0.56 [0.53, 0.60] (n=822)
-joint fit on first uses with all three (n=1798): page 0.73+-0.03, family 0.09+-0.03, feed 0.11+-0.04
+  page minus the family's other pages 0.63 [0.45, 0.82], p 2.6e-11 (standard errors clustered by handle)
+joint fit on first uses with all three (n=1798): page 0.73+-0.05, family 0.09+-0.05, feed 0.11+-0.05
   page and family only (n=1798): page 0.77, family 0.12
   coined   : page 0.86, family 0.05 (n=473)
   semantic : page 0.64, family 0.21 (n=682)
   habit    : page 0.79, family 0.08 (n=643)
 response to the page share: slope 0.87; within convention x family x day (434 strata) 0.51+-0.04 (n=2679)
-names, joint fit (n=4848): page's authors 0.40+-0.06, same-task handles on other pages 0.15+-0.07, feed 0.53+-0.09; conflicts: follow the page 0.61 [0.56, 0.67] (n=277)
+names: page authors minus same-task handles on other pages 0.12 [-0.04, 0.28], p 0.15
+names, joint fit (n=6352): page's authors 0.34+-0.05, same-task handles on other pages 0.22+-0.06, feed 0.49+-0.07; conflicts: follow the page 0.59 [0.54, 0.64] (n=347)
 
 === SI: the convention selection rule ===
-uses >=  50, minority >= 0.050, pages >= 10: 17 kept, n = 1091; 0.62 +- 0.06, 0.27 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
-uses >= 100, minority >= 0.050, pages >= 10: 17 kept, n = 1091; 0.62 +- 0.06, 0.27 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
-uses >= 200, minority >= 0.050, pages >= 10: 17 kept, n = 1091; 0.62 +- 0.06, 0.27 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
-uses >= 100, minority >= 0.025, pages >= 10: 20 kept, n = 1503; 0.60 +- 0.05, 0.26 +- 0.05, 0.03 +- 0.04, -0.07 +- 0.05; slope 0.91
-uses >= 100, minority >= 0.100, pages >= 10: 14 kept, n =  737; 0.57 +- 0.07, 0.22 +- 0.07, 0.05 +- 0.06, -0.09 +- 0.08; slope 0.89
-uses >= 100, minority >= 0.050, pages >=  5: 19 kept, n = 1091; 0.62 +- 0.06, 0.27 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.90
-uses >= 100, minority >= 0.050, pages >= 20: 15 kept, n = 1084; 0.62 +- 0.06, 0.27 +- 0.06, 0.02 +- 0.05, -0.08 +- 0.06; slope 0.91
+Rn / #n                  first uses 0.32; repeat own form 0.97 (rule 0.96); s all 0.05, first 0.03 [0.01, 0.09]; N_eff 452 of 2878; share A first 0.89, later 0.93
+task clock / scaffold    first uses 0.50; repeat own form 0.83 (rule 0.72); s all 0.13, first 0.24 [0.13, 0.37]; N_eff 352 of 1214; share A first 0.76, later 0.65
+termination / teardown   first uses 0.63; repeat own form 0.92 (rule 0.92); s all 0.28, first 0.32 [0.07, 0.63]; N_eff 240 of 568; share A first 0.95, later 0.95
+relay / bridge           first uses 0.48; repeat own form 0.89 (rule 0.84); s all 0.05, first 0.06 [0.02, 0.18]; N_eff 417 of 1568; share A first 0.90, later 0.85
+deadline / horizon       first uses 0.50; repeat own form 0.93 (rule 0.91); s all 0.02, first 0.24 [0.01, 0.48]; N_eff 420 of 1395; share A first 0.95, later 0.91
+signal / ping            first uses 0.58; repeat own form 0.89 (rule 0.84); s all 0.26, first 0.44 [0.24, 0.64]; N_eff 203 of 592; share A first 0.83, later 0.87
+answer / value           first uses 0.54; repeat own form 0.68 (rule 0.57); s all 0.43, first 0.49 [0.35, 0.64]; N_eff 313 of 1002; share A first 0.50, later 0.63
+update / edit            first uses 0.69; repeat own form 0.88 (rule 0.80); s all 0.71, first 0.85 [0.55, 1.00]; N_eff 218 of 431; share A first 0.86, later 0.86
+seconds / sec            first uses 0.44; repeat own form 0.97 (rule 0.93); s all 0.05, first 0.26 [0.10, 0.47]; N_eff 21 of 793; share A first 0.89, later 0.33
+CONFIRMED / confirmed    first uses 0.55; repeat own form 0.62 (rule 0.57); s all 0.39, first 0.36 [0.23, 0.51]; N_eff 402 of 1084; share A first 0.38, later 0.48
+LIVE / live              first uses 0.65; repeat own form 0.73 (rule 0.59); s all 0.34, first 0.46 [0.33, 0.61]; N_eff 309 of 687; share A first 0.68, later 0.35
+BEFORE / before          first uses 0.58; repeat own form 0.74 (rule 0.66); s all 0.37, first 0.52 [0.28, 0.75]; N_eff 197 of 592; share A first 0.17, later 0.27
+task-clock / task clock  first uses 0.56; repeat own form 0.71 (rule 0.63); s all 0.30, first 0.32 [0.20, 0.45]; N_eff 303 of 892; share A first 0.40, later 0.32
+1,234 / 1234             first uses 0.48; repeat own form 0.84 (rule 0.76); s all 0.16, first 0.27 [0.18, 0.38]; N_eff 276 of 1043; share A first 0.61, later 0.66
+we / I                   first uses 0.50; repeat own form 0.79 (rule 0.74); s all 0.32, first 0.40 [0.22, 0.59]; N_eff 315 of 1042; share A first 0.80, later 0.81
+bold ** / '''            first uses 0.53; repeat own form 0.92 (rule 0.78); s all 0.15, first 0.21 [0.08, 0.38]; N_eff 83 of 274; share A first 0.61, later 0.72
+later uses repeat their own previous form more often than the rule predicts in 15 of 16 conventions
+uses >=  50, minority >= 0.050, pages >= 10: 16 kept, n = 1052; 0.64 +- 0.06, 0.25 +- 0.06, 0.04 +- 0.05, -0.09 +- 0.06; slope 0.87
+uses >= 100, minority >= 0.050, pages >= 10: 16 kept, n = 1052; 0.64 +- 0.06, 0.25 +- 0.06, 0.04 +- 0.05, -0.09 +- 0.06; slope 0.87
+uses >= 200, minority >= 0.050, pages >= 10: 16 kept, n = 1052; 0.64 +- 0.06, 0.25 +- 0.06, 0.04 +- 0.05, -0.09 +- 0.06; slope 0.87
+uses >= 100, minority >= 0.025, pages >= 10: 19 kept, n = 1473; 0.62 +- 0.05, 0.24 +- 0.05, 0.04 +- 0.04, -0.09 +- 0.06; slope 0.88
+uses >= 100, minority >= 0.100, pages >= 10: 13 kept, n =  687; 0.60 +- 0.07, 0.19 +- 0.07, 0.07 +- 0.06, -0.10 +- 0.08; slope 0.85
+uses >= 100, minority >= 0.050, pages >=  5: 18 kept, n = 1053; 0.64 +- 0.06, 0.25 +- 0.06, 0.04 +- 0.05, -0.09 +- 0.06; slope 0.87
+uses >= 100, minority >= 0.050, pages >= 20: 14 kept, n = 1040; 0.64 +- 0.06, 0.25 +- 0.06, 0.04 +- 0.05, -0.09 +- 0.06; slope 0.87
+
+=== Extended Data Fig. 1b: the patchwork with two nulls ===
+Rn / #n                    uses  2878 pages 607 same 0.975 [0.923, 0.999] different 0.852 | time null 0.919 [0.911, 0.927] p 0.0010 | task-time null 0.947 [0.943, 0.951] p 0.0010, movable uses 0.89
+task clock / scaffold      uses  1214 pages 419 same 0.704 [0.590, 0.884] different 0.580 | time null 0.649 [0.637, 0.666] p 0.0010 | task-time null 0.680 [0.670, 0.692] p 0.0010, movable uses 0.81
+termination / teardown     uses   568 pages 284 same 0.920 [0.862, 0.971] different 0.900 | time null 0.917 [0.884, 0.945] p 0.4286 | task-time null 0.924 [0.917, 0.935] p 0.8911, movable uses 0.83
+relay / bridge             uses  1568 pages 557 same 0.992 [0.982, 0.999] different 0.776 | time null 0.838 [0.819, 0.857] p 0.0010 | task-time null 0.978 [0.973, 0.983] p 0.0010, movable uses 0.87
+deadline / horizon         uses  1395 pages 428 same 0.949 [0.908, 0.979] different 0.863 | time null 0.932 [0.923, 0.939] p 0.0010 | task-time null 0.946 [0.942, 0.951] p 0.1329, movable uses 0.83
+signal / ping              uses   592 pages 275 same 0.940 [0.882, 0.980] different 0.740 | time null 0.867 [0.837, 0.896] p 0.0010 | task-time null 0.928 [0.911, 0.944] p 0.0909, movable uses 0.85
+answer / value             uses  1002 pages 420 same 0.668 [0.626, 0.717] different 0.505 | time null 0.546 [0.519, 0.578] p 0.0010 | task-time null 0.590 [0.570, 0.615] p 0.0010, movable uses 0.83
+update / edit              uses   431 pages 243 same 0.846 [0.732, 0.913] different 0.752 | time null 0.761 [0.716, 0.811] p 0.0030 | task-time null 0.804 [0.784, 0.840] p 0.0130, movable uses 0.69
+seconds / sec              uses   793 pages 340 same 0.998 [0.897, 0.999] different 0.476 | time null 0.977 [0.959, 0.987] p 0.0010 | task-time null 0.979 [0.969, 0.989] p 0.0140, movable uses 0.81
+CONFIRMED / confirmed      uses  1084 pages 386 same 0.645 [0.582, 0.712] different 0.510 | time null 0.536 [0.519, 0.561] p 0.0010 | task-time null 0.621 [0.606, 0.639] p 0.0060, movable uses 0.88
+LIVE / live                uses   687 pages 331 same 0.727 [0.693, 0.786] different 0.505 | time null 0.644 [0.600, 0.696] p 0.0040 | task-time null 0.685 [0.657, 0.715] p 0.0040, movable uses 0.85
+BEFORE / before            uses   592 pages 287 same 0.794 [0.672, 0.883] different 0.660 | time null 0.720 [0.685, 0.758] p 0.0010 | task-time null 0.731 [0.709, 0.760] p 0.0010, movable uses 0.86
+task-clock / task clock    uses   892 pages 354 same 0.655 [0.572, 0.792] different 0.533 | time null 0.556 [0.533, 0.585] p 0.0010 | task-time null 0.650 [0.633, 0.671] p 0.3147, movable uses 0.79
+1,234 / 1234               uses  1043 pages 436 same 0.921 [0.848, 0.971] different 0.533 | time null 0.741 [0.714, 0.770] p 0.0010 | task-time null 0.880 [0.865, 0.893] p 0.0010, movable uses 0.85
+we / I                     uses  1042 pages 327 same 0.832 [0.741, 0.894] different 0.683 | time null 0.741 [0.715, 0.766] p 0.0010 | task-time null 0.809 [0.794, 0.821] p 0.0010, movable uses 0.78
+bold ** / '''              uses   274 pages 109 same 0.884 [0.793, 0.986] different 0.542 | time null 0.708 [0.651, 0.776] p 0.0010 | task-time null 0.804 [0.762, 0.860] p 0.0020, movable uses 0.83
+observed same-page agreement above the 97.5th percentile of the null: time 15 of 16, task and time 12 of 16; above the median: time 16, task and time 15
+excess over the null, median over conventions: time 0.084, task and time 0.024; uses that can move between pages under the task-and-time null: median 0.83 (from 0.69 to 0.89)
+
+=== SI S7: the laboratory experiments ===
+copying: 820 stimuli, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}
+  gpt-oss-20b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 3
+  gpt-6.1-sol: 767 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 27}, reply not parsed 0
+4a N= 0: oss n 100 errors 0 checked 100 right 100 wrong 0 other 0 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 100 right 100 wrong 0 other 0 (right without checking 0, wrong after checking 0)
+4a N= 1: oss n 100 errors 0 checked 90 right 88 wrong 9 other 3 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 99 right 98 wrong 2 other 0 (right without checking 0, wrong after checking 1)
+4a N= 2: oss n 100 errors 0 checked 87 right 87 wrong 12 other 1 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 96 right 95 wrong 5 other 0 (right without checking 0, wrong after checking 1)
+4a N= 3: oss n 100 errors 0 checked 81 right 82 wrong 16 other 2 (right without checking 1, wrong after checking 0); Sol n 100 errors 0 checked 90 right 89 wrong 11 other 0 (right without checking 0, wrong after checking 1)
+4a N= 7: oss n 100 errors 0 checked 59 right 61 wrong 38 other 1 (right without checking 2, wrong after checking 0); Sol n 100 errors 0 checked 15 right 12 wrong 88 other 0 (right without checking 0, wrong after checking 3)
+4a N=11: oss n 100 errors 0 checked 55 right 57 wrong 41 other 2 (right without checking 3, wrong after checking 0); Sol n 100 errors 0 checked 7 right 6 wrong 94 other 0 (right without checking 0, wrong after checking 1)
+4a N=19: oss n 100 errors 0 checked 54 right 53 wrong 46 other 1 (right without checking 1, wrong after checking 1); Sol n 100 errors 0 checked 1 right 1 wrong 99 other 0 (right without checking 0, wrong after checking 0)
+4a N=32: oss n 100 errors 0 checked 41 right 42 wrong 57 other 1 (right without checking 1, wrong after checking 0); Sol n 100 errors 0 checked 0 right 0 wrong 100 other 0 (right without checking 0, wrong after checking 0)
+4a gpt-oss-20b: 567 agents checked, 1 of them answered the padded value; 8 answered right without checking. GPT-6.1 Sol: 408 checked, 7 wrong after checking, 0 right without checking
+4b N=5: 750 agents, 6 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.83 0.2:0.94 0.4:0.95 0.6:0.93 0.8:0.91 1.0:0.82
+  mixed (30-70% right) minus unanimous pages: +0.12 [+0.06, +0.17]; by country CZ +0.10, HU +0.08, PL +0.16, SK +0.04, SI +0.20
+4b N=10: 1375 agents, 11 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.67 0.1:0.70 0.2:0.80 0.3:0.90 0.4:0.90 0.5:0.86 0.6:0.88 0.7:0.84 0.8:0.85 0.9:0.70 1.0:0.63
+  mixed (30-70% right) minus unanimous pages: +0.22 [+0.16, +0.29]; by country CZ +0.23, HU +0.30, PL +0.31, SK +0.15, SI +0.14
+4b N=20: 1375 agents, 11 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.57 0.1:0.76 0.2:0.87 0.3:0.78 0.4:0.79 0.5:0.88 0.6:0.84 0.7:0.74 0.8:0.72 0.9:0.72 1.0:0.60
+  mixed (30-70% right) minus unanimous pages: +0.22 [+0.16, +0.29]; by country CZ +0.22, HU +0.26, PL +0.33, SK +0.07, SI +0.24
+4b N=40: 1375 agents, 11 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.52 0.1:0.61 0.2:0.70 0.3:0.73 0.4:0.82 0.5:0.79 0.6:0.72 0.7:0.66 0.8:0.66 0.9:0.61 1.0:0.41
+  mixed (30-70% right) minus unanimous pages: +0.28 [+0.20, +0.35]; by country CZ +0.30, HU +0.41, PL +0.25, SK +0.11, SI +0.32
+4c start  1: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.07, 11-30 0.05 [0.00, 0.15] (bootstrap over chains); agent 30 wrong in 1 of 20 chains; never right 1; check rate 0.66; chains with 11-30 wrong share above one half 1
+4c start  7: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.20, 11-30 0.07 [0.01, 0.17] (bootstrap over chains); agent 30 wrong in 1 of 20 chains; never right 0; check rate 0.53; chains with 11-30 wrong share above one half 1
+4c start 19: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.36, 11-30 0.25 [0.10, 0.40] (bootstrap over chains); agent 30 wrong in 4 of 20 chains; never right 1; check rate 0.41; chains with 11-30 wrong share above one half 5
+4c start 32: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.60, 11-30 0.46 [0.28, 0.65] (bootstrap over chains); agent 30 wrong in 9 of 20 chains; never right 3; check rate 0.26; chains with 11-30 wrong share above one half 11
 
 === How to write, all handles ===
 52 candidate conventions, 44 with at least 100 uses, 17 kept
   dropped: fewer than 100 uses 8; with 100 uses, the rarer form never used 7; other failures 20
-  median width of the 95% interval of s: kept 0.21, dropped with both forms used 0.33
-  kept: uses 284-3006, pages 11-172, prior strength 0.01-0.88
-  Rn / #n                    coined    uses  3006 pages 172 minority 0.08 mu_A 0.048 mu_B 0.000 s 0.05 [0.03, 0.09]
-  task clock / scaffold      coined    uses  1247 pages  68 minority 0.31 mu_A 0.096 mu_B 0.036 s 0.13 [0.08, 0.20]
-  termination / teardown     semantic  uses   581 pages  24 minority 0.06 mu_A 0.106 mu_B 0.022 s 0.13 [0.01, 0.48]
-  relay / bridge             semantic  uses  2160 pages  81 minority 0.35 mu_A 0.008 mu_B 0.025 s 0.03 [0.02, 0.05]
-  deadline / horizon         semantic  uses  1419 pages  71 minority 0.08 mu_A 0.000 mu_B 0.014 s 0.01 [0.01, 0.14]
-  signal / ping              semantic  uses   601 pages  23 minority 0.15 mu_A 0.192 mu_B 0.041 s 0.23 [0.10, 0.39]
-  answer / value             semantic  uses  1122 pages  53 minority 0.49 mu_A 0.152 mu_B 0.178 s 0.33 [0.25, 0.42]
-  update / edit              semantic  uses   546 pages  16 minority 0.14 mu_A 0.628 mu_B 0.113 s 0.74 [0.47, 0.99]
-  seconds / sec              semantic  uses  2601 pages  54 minority 0.19 mu_A 0.005 mu_B 0.027 s 0.03 [0.02, 0.05]
-  CONFIRMED / confirmed      habit     uses  1108 pages  58 minority 0.42 mu_A 0.139 mu_B 0.221 s 0.36 [0.26, 0.48]
-  LIVE / live                habit     uses   712 pages  27 minority 0.44 mu_A 0.240 mu_B 0.108 s 0.35 [0.24, 0.47]
-  BEFORE / before            habit     uses   615 pages  20 minority 0.21 mu_A 0.048 mu_B 0.293 s 0.34 [0.18, 0.51]
-  task-clock / task clock    habit     uses   903 pages  51 minority 0.36 mu_A 0.096 mu_B 0.182 s 0.28 [0.19, 0.38]
-  1,234 / 1234               habit     uses  2327 pages  75 minority 0.29 mu_A 0.008 mu_B 0.067 s 0.08 [0.05, 0.11]
-  we / I                     habit     uses  1068 pages  66 minority 0.20 mu_A 0.243 mu_B 0.062 s 0.31 [0.18, 0.44]
-  bold ** / '''              habit     uses   284 pages  11 minority 0.35 mu_A 0.120 mu_B 0.056 s 0.18 [0.09, 0.30]
-  true/false / yes/no        habit     uses   331 pages  11 minority 0.05 mu_A 0.063 mu_B 0.813 s 0.88 [0.16, 1.00]
+  median width of the 95% interval of s: kept 0.19, dropped with both forms used 0.49
+  kept: uses 284-3006, pages 11-172, prior strength 0.02-1.00
+  Rn / #n                    coined    uses  3006 pages 172 minority 0.08 mu_A 0.052 mu_B 0.000 s 0.05 [0.03, 0.09]
+  task clock / scaffold      coined    uses  1247 pages  68 minority 0.31 mu_A 0.105 mu_B 0.039 s 0.14 [0.09, 0.22]
+  termination / teardown     semantic  uses   581 pages  24 minority 0.06 mu_A 0.208 mu_B 0.022 s 0.23 [0.05, 0.49]
+  relay / bridge             semantic  uses  2160 pages  81 minority 0.35 mu_A 0.013 mu_B 0.024 s 0.04 [0.03, 0.05]
+  deadline / horizon         semantic  uses  1419 pages  71 minority 0.08 mu_A 0.000 mu_B 0.017 s 0.02 [0.01, 0.12]
+  signal / ping              semantic  uses   601 pages  23 minority 0.15 mu_A 0.199 mu_B 0.041 s 0.24 [0.12, 0.39]
+  answer / value             semantic  uses  1122 pages  53 minority 0.49 mu_A 0.170 mu_B 0.172 s 0.34 [0.26, 0.43]
+  update / edit              semantic  uses   546 pages  16 minority 0.14 mu_A 0.615 mu_B 0.106 s 0.72 [0.49, 0.94]
+  seconds / sec              semantic  uses  2601 pages  54 minority 0.19 mu_A 0.005 mu_B 0.038 s 0.04 [0.03, 0.06]
+  CONFIRMED / confirmed      habit     uses  1108 pages  58 minority 0.42 mu_A 0.156 mu_B 0.242 s 0.40 [0.29, 0.51]
+  LIVE / live                habit     uses   712 pages  27 minority 0.44 mu_A 0.234 mu_B 0.123 s 0.36 [0.26, 0.47]
+  BEFORE / before            habit     uses   615 pages  20 minority 0.21 mu_A 0.059 mu_B 0.324 s 0.38 [0.22, 0.55]
+  task-clock / task clock    habit     uses   903 pages  51 minority 0.36 mu_A 0.107 mu_B 0.193 s 0.30 [0.21, 0.40]
+  1,234 / 1234               habit     uses  2327 pages  75 minority 0.29 mu_A 0.009 mu_B 0.077 s 0.09 [0.06, 0.11]
+  we / I                     habit     uses  1068 pages  66 minority 0.20 mu_A 0.275 mu_B 0.068 s 0.34 [0.22, 0.47]
+  bold ** / '''              habit     uses   284 pages  11 minority 0.35 mu_A 0.100 mu_B 0.043 s 0.14 [0.06, 0.25]
+  true/false / yes/no        habit     uses   331 pages  11 minority 0.05 mu_A 0.052 mu_B 0.948 s 1.00 [0.70, 1.00]
 coined   : first-use response slope 0.93, intercept 0.06 (n=718); P(A) when the page has under 10% of A 0.05
 semantic : first-use response slope 0.95, intercept 0.04 (n=1312); P(A) when the page has under 10% of A 0.03
 habit    : first-use response slope 0.91, intercept 0.07 (n=1204); P(A) when the page has under 10% of A 0.07
@@ -356,84 +462,197 @@ patchwork: two uses agree 0.853 on the same page and 0.661 on different pages (m
   bold ** / '''              same 0.88 different 0.53 shuffled 0.70
   true/false / yes/no        same 0.96 different 0.90 shuffled 0.92
 usage rate: mean share of task edits using a convention 0.220 (from 0.06, true/false / yes/no, to 0.67, Rn / #n)
+  Rn / #n: a prior at zero (mu_A 0.052, mu_B 0.000) replaced for the distance from the prior by its 95% upper bound: mu_A 0.0522, mu_B 0.0009, s 0.053
+  deadline / horizon: a prior at zero (mu_A 0.000, mu_B 0.017) replaced for the distance from the prior by its 95% upper bound: mu_A 0.1090, mu_B 0.0165, s 0.126
 on the prior-strength axis: 17 conventions in Fig. 4b (at least 10 minority uses), 17 in Fig. 4c (at least 150 first uses)
   volatility, mean over those: all uses 3.51, first uses 2.89
 
 === Identification of copying, all handles ===
-pages: 89855 candidates, 1933 decisions; R2 0.099 (baseline intercepts), 0.099 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
-  share of the feed, own task        2.090 +- 0.122 (se)   + task x 3 h:   2.090 +- 0.122 (se), 95% half-width 0.24
-  share of the feed, other task      0.202 +- 0.038 (se)   + task x 3 h:   0.202 +- 0.038 (se), 95% half-width 0.08
-  in the feed, own task              0.036 +- 0.004 (se)   + task x 3 h:   0.036 +- 0.004 (se), 95% half-width 0.01
+pages: 39 appends left out because the chosen page is not a candidate (39 of them a page of another task outside the feed)
+pages: 87349 candidates, 1894 decisions; R2 0.100 (baseline intercepts), 0.100 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
+  share of the feed, own task        2.103 +- 0.123 (se)   + task x 3 h:   2.103 +- 0.123 (se), 95% half-width 0.24
+  share of the feed, other task      0.206 +- 0.039 (se)   + task x 3 h:   0.206 +- 0.039 (se), 95% half-width 0.08
+  in the feed, own task              0.038 +- 0.004 (se)   + task x 3 h:   0.038 +- 0.004 (se), 95% half-width 0.01
   own task                           0.014 +- 0.002 (se)   + task x 3 h:   0.014 +- 0.002 (se), 95% half-width 0.00
   log(1 + handles on the page)       0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
-names: 29568 records; R2 0.275 (baseline intercepts), 0.277 (+ task x 3 h)
-  share among page authors, own task   0.177 +- 0.025 (se)   + task x 3 h:   0.173 +- 0.025 (se), 95% half-width 0.05
-  share in the feed, own task        0.486 +- 0.028 (se)   + task x 3 h:   0.478 +- 0.028 (se), 95% half-width 0.05
-  share out of view, own task        0.262 +- 0.029 (se)   + task x 3 h:   0.257 +- 0.030 (se), 95% half-width 0.06
-  share in the feed, other tasks     0.109 +- 0.021 (se)   + task x 3 h:   0.108 +- 0.021 (se), 95% half-width 0.04
-  first page without earlier task-mates   0.028 +- 0.003 (se)   + task x 3 h:   0.027 +- 0.003 (se), 95% half-width 0.01
-forms: 1259 first uses; R2 0.716 (baseline intercepts), 0.741 (+ task x 3 h)
-  share on the page                  0.678 +- 0.051 (se)   + task x 3 h:   0.637 +- 0.055 (se), 95% half-width 0.11
-  share in the feed, own task        0.254 +- 0.054 (se)   + task x 3 h:   0.247 +- 0.055 (se), 95% half-width 0.11
-  share out of view, own task        0.047 +- 0.047 (se)   + task x 3 h:   0.045 +- 0.047 (se), 95% half-width 0.09
-  share in the feed, other tasks    -0.023 +- 0.044 (se)   + task x 3 h:  -0.051 +- 0.055 (se), 95% half-width 0.11
-names, feature x task + task x 3 h intercepts (R2 0.30): 0.11 +- 0.03, 0.30 +- 0.03, 0.16 +- 0.03, 0.10 +- 0.02, 0.02 +- 0.00
-names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.32): 0.06 +- 0.03, 0.02 +- 0.04, -0.12 +- 0.05, -0.00 +- 0.03, 0.01 +- 0.00
-names with feature x task intercepts, Wald page vs out of view: chi2 1.3, p 0.26
-names with feature x task intercepts, Wald feed vs out of view: chi2 7.6, p 0.0057
-names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 22.4, p 2.3e-06
-pages, Wald own task vs other task, share of the feed: chi2 230.9, p 3.8e-52
-pages, two-way clustered se (handle, task x 3 h): 0.231, 0.050, 0.009, 0.004, 0.001
-names, Wald page vs out of view: chi2 4.0, p 0.045
-names, Wald feed vs out of view: chi2 19.0, p 1.3e-05
-names, Wald own task vs other tasks, in the feed: chi2 90.1, p 2.3e-21
-names, two-way clustered se (handle, task x 3 h): 0.034, 0.049, 0.046, 0.041, 0.004
-forms, Wald page vs out of view: chi2 49.1, p 2.4e-12
-forms, Wald feed vs out of view: chi2 5.7, p 0.017
-forms, Wald own task vs other tasks, in the feed: chi2 13.4, p 0.00025
-forms, two-way clustered se (handle, task x 3 h): 0.085, 0.049, 0.045, 0.052
-pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.93 +- 0.84, 8.29 +- 0.91, 3.09 +- 0.12, -0.38 +- 0.16, 0.24 +- 0.03
-forms, fully interacted convention x task x 3 h FE (R2 0.82): 0.66 +- 0.07, 0.19 +- 0.07, -0.02 +- 0.09, -0.11 +- 0.10
-
-=== Figure 2 ===
-(a) 18 blocks of 6 h with at least 30 task edits; median pages written on 28, median effective number 12.9; at the two busiest blocks [110, 232] pages, effective [27, 55]
-(a) share of a block's task edits on its 5 busiest pages: median 0.52, range 0.21 to 0.84; from 18 June 0.27 to 0.84, against 0.06 to 0.56 if spread evenly over the pages written on
-(b) affiliation stamp: overall 0.46; blocks 0.25 0.34 0.53 0.65 0.54 0.45 0.40 0.53 0.65 0.23 0.41 0.55
-(b) date stamp: overall 0.72; blocks 0.39 0.59 0.82 0.76 0.81 0.75 0.75 0.70 0.77 0.88 0.77 0.70
-(b) role word: overall 0.72; blocks 0.88 0.87 0.86 0.83 0.72 0.54 0.56 0.56 0.52 0.75 0.72 0.84
-(b) task-specific word: overall 0.41; blocks 0.25 0.34 0.45 0.34 0.35 0.43 0.42 0.42 0.37 0.76 0.43 0.34
+names: 30912 records; R2 0.273 (baseline intercepts), 0.276 (+ task x 3 h)
+  share among page authors, own task   0.176 +- 0.025 (se)   + task x 3 h:   0.172 +- 0.025 (se), 95% half-width 0.05
+  share in the feed, own task        0.486 +- 0.027 (se)   + task x 3 h:   0.479 +- 0.027 (se), 95% half-width 0.05
+  share out of view, own task        0.268 +- 0.029 (se)   + task x 3 h:   0.262 +- 0.029 (se), 95% half-width 0.06
+  share in the feed, other tasks     0.092 +- 0.019 (se)   + task x 3 h:   0.092 +- 0.019 (se), 95% half-width 0.04
+  first page without earlier task-mates   0.028 +- 0.003 (se)   + task x 3 h:   0.026 +- 0.003 (se), 95% half-width 0.01
+forms: 1387 first uses; R2 0.748 (baseline intercepts), 0.770 (+ task x 3 h)
+  share on the page                  0.690 +- 0.049 (se)   + task x 3 h:   0.649 +- 0.053 (se), 95% half-width 0.10
+  share in the feed, own task        0.262 +- 0.053 (se)   + task x 3 h:   0.246 +- 0.054 (se), 95% half-width 0.11
+  share out of view, own task        0.042 +- 0.046 (se)   + task x 3 h:   0.045 +- 0.046 (se), 95% half-width 0.09
+  share in the feed, other tasks    -0.030 +- 0.040 (se)   + task x 3 h:  -0.056 +- 0.049 (se), 95% half-width 0.10
+names, feature x task + task x 3 h intercepts (R2 0.30): 0.11 +- 0.03, 0.29 +- 0.03, 0.17 +- 0.03, 0.08 +- 0.02, 0.02 +- 0.00
+names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.32): 0.06 +- 0.03, 0.01 +- 0.04, -0.10 +- 0.05, -0.01 +- 0.02, 0.01 +- 0.00
+names with feature x task intercepts, Wald page vs out of view: chi2 1.8, p 0.18
+names with feature x task intercepts, Wald feed vs out of view: chi2 6.3, p 0.012
+names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 28.9, p 7.6e-08
+pages, Wald own task vs other task, share of the feed: chi2 226.8, p 3e-51
+pages, two-way clustered se (handle, task x 3 h): 0.235, 0.052, 0.009, 0.004, 0.001
+names, Wald page vs out of view: chi2 4.8, p 0.028
+names, Wald feed vs out of view: chi2 19.1, p 1.2e-05
+names, Wald own task vs other tasks, in the feed: chi2 108.6, p 2e-25
+names, two-way clustered se (handle, task x 3 h): 0.035, 0.046, 0.045, 0.034, 0.004
+forms, Wald page vs out of view: chi2 54.2, p 1.8e-13
+forms, Wald feed vs out of view: chi2 6.0, p 0.014
+forms, Wald own task vs other tasks, in the feed: chi2 15.6, p 7.7e-05
+forms, two-way clustered se (handle, task x 3 h): 0.081, 0.048, 0.045, 0.046
+pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.17 +- 0.82, 9.13 +- 0.89, 3.09 +- 0.13, -0.18 +- 0.17, 0.29 +- 0.03
+forms, fully interacted convention x task x 3 h FE (R2 0.84): 0.67 +- 0.07, 0.18 +- 0.07, -0.00 +- 0.09, -0.10 +- 0.08
 
 === Figure 3 ===
 (a) share 0.010: 0.007, share 0.023: 0.021, share 0.047: 0.056, share 0.087: 0.093, share 0.170: 0.146
-(b) joint fit (n=10144): in the feed 0.53, out of view 0.11
+(b) joint fit (n=10304): in the feed 0.52, out of view 0.12
 
 === Figure 2 (fig2_wild_lab) ===
 (a) record: slope 0.87 +- 0.03 (n=95342 candidate lines)
 (a) gpt-oss-20b: slope 0.92 +- 0.22 (n=146 choices)
 (a) gpt-6.1-sol: slope 0.98 +- 0.17 (n=240 choices)
-(b) record: slope 0.65 +- 0.07 (n=13184 newcomer-feature records)
+(b) record: slope 0.57 +- 0.06 (n=15776 newcomer-feature records)
 (b) gpt-oss-20b: slope 0.62 +- 0.08 (n=240 names)
 (b) gpt-6.1-sol: slope 0.65 +- 0.08 (n=240 names)
 (c) record: slope 0.87 +- 0.03 (n=2679 first uses)
 (c) gpt-oss-20b: slope 0.80 +- 0.08 (n=446 uses in 293 notes, 8 conventions)
 (c) gpt-6.1-sol: slope 0.43 +- 0.10 (n=526 uses in 339 notes, 8 conventions)
 
-=== Figure 4 ===
-(b) vol, binned forms: s=0.04:3.41 s=0.17:2.94 s=0.33:1.81 s=0.71:1.1
-(b) vol, binned names: s=0.07:5.63 s=0.25:2.77 s=0.34:2.31 s=0.58:2.09 s=0.79:1.29 s=0.96:1.13
-(c) dev, binned forms: s=0.04:0.274 s=0.16:0.0361 s=0.33:0.0331 s=0.71:0.0105
-(c) dev, binned names: s=0.07:0.113 s=0.25:0.044 s=0.34:0.0202 s=0.58:0.0221 s=0.79:0.00419 s=0.96:0.00333
-theory, form: N = 552, V = 0.50, tau = 19.6
-theory, name: N = 1201, V = 0.06, tau = 30.0
-points: {'gap': {'forms': 16, 'names': 24}, 'vol': {'forms': 15, 'names': 29}, 'dev': {'forms': 16, 'names': 29}}
-() gap, binned forms: s=0.04:6.49 s=0.16:2.53 s=0.33:1.75 s=0.71:1.68
-() gap, binned names: s=0.07:1.83 s=0.25:1.26 s=0.34:2.22 s=0.58:1.21 s=0.77:0.841 s=0.96:1.16
+=== Figure 3 ===
+normalization: N = 551 uses for a convention, 1201 agents for a name feature in the model; the record uses of each convention and 1201 handles in the record
+record conventions with a prior at zero, placed at the 95% upper bound of that prior: Rn / #n (s 0.053 -> 0.054), deadline / horizon (s 0.017 -> 0.174)
+(b) form: simulation RMS on the quarter-decade grid: s=0.0178:24.90 s=0.0316:21.96 s=0.0562:16.47 s=0.1:11.20 s=0.1778:6.50 s=0.3162:3.66 s=0.5623:1.71 s=1:0.97 (the 1/s law: 1/s)
+(b) name: simulation RMS on the quarter-decade grid: s=0.0178:35.59 s=0.0316:26.23 s=0.0562:20.17 s=0.1:12.23 s=0.1778:6.83 s=0.3162:3.42 s=0.5623:1.89 s=1:1.02 (the 1/s law: 1/s)
+(b) devn, binned forms with the priors at zero: s=0.05:25.7 s=0.15:5.48 s=0.28:1.52 s=0.37:3.4 s=0.71:0.0296
+(b) devn, binned forms: s=0.05:25.3 s=0.14:6.08 s=0.28:1.52 s=0.37:3.4 s=0.71:0.0296 (points per bin [2, 3, 3, 5, 1])
+(b) devn, binned names: s=0.13:4.82 s=0.37:1.7 s=0.80:2.03 s=1.00:1.37 (points per bin [1, 4, 18, 6])
+points: {'gap': {'forms': 16, 'names': 24}, 'vol': {'forms': 15, 'names': 29}, 'dev': {'forms': 16, 'names': 29}, 'devn': {'forms': 16, 'names': 29}}
+() gap, binned forms: s=0.04:6.49 s=0.15:2.54 s=0.34:1.91 s=0.71:1.68 (points per bin [4, 3, 8, 1])
+() gap, binned names: s=0.13:1.83 s=0.37:1.93 s=0.60:1.07 s=0.73:1.04 s=0.96:1.16 (points per bin [1, 4, 3, 5, 11])
+() vol, binned forms: s=0.04:3.41 s=0.14:3.18 s=0.34:2.03 s=0.71:1.1 (points per bin [4, 2, 8, 1])
+() vol, binned names: s=0.13:5.63 s=0.37:2.43 s=0.60:2.21 s=0.73:1.58 s=0.95:1.12 (points per bin [1, 4, 3, 5, 16])
+(a) devn, binned forms with the priors at zero: s=0.04:0.077 s=0.06:4.79 s=0.24:6.57 s=0.41:4.48 s=0.85:0.251
+(a) devn, binned forms: s=0.06:4.79 s=0.24:6.57 s=0.41:4.48 s=0.85:0.251 (points per bin [1, 5, 8, 1])
+(a) devn, binned names:  (points per bin [])
+(b) rule 50 uses, 0.05 minority, 10 pages: 14 conventions, binned s=0.05:25.3 s=0.14:6.08 s=0.28:1.52 s=0.37:3.4 s=0.71:0.0296 (per bin [2, 3, 3, 5, 1])
+(b) rule 100 uses, 0.05 minority, 10 pages: 14 conventions, binned s=0.05:25.3 s=0.14:6.08 s=0.28:1.52 s=0.37:3.4 s=0.71:0.0296 (per bin [2, 3, 3, 5, 1])
+(b) rule 200 uses, 0.05 minority, 10 pages: 14 conventions, binned s=0.05:25.3 s=0.14:6.08 s=0.28:1.52 s=0.37:3.4 s=0.71:0.0296 (per bin [2, 3, 3, 5, 1])
+(b) rule 100 uses, 0.025 minority, 10 pages: 16 conventions, binned s=0.05:25.3 s=0.14:6.08 s=0.28:1.52 s=0.37:3.4 s=0.73:0.393 s=1.00:0.478 (per bin [2, 3, 3, 5, 2, 1])
+(b) rule 100 uses, 0.1 minority, 10 pages: 13 conventions, binned s=0.05:25.3 s=0.14:6.08 s=0.28:0.764 s=0.37:3.4 s=0.71:0.0296 (per bin [2, 3, 2, 5, 1])
+(b) rule 100 uses, 0.05 minority, 5 pages: 16 conventions, binned s=0.05:25.3 s=0.14:6.08 s=0.28:1.52 s=0.37:3.4 s=0.70:1.49 (per bin [2, 3, 3, 5, 3])
+(b) rule 100 uses, 0.05 minority, 20 pages: 12 conventions, binned s=0.05:25.3 s=0.14:7.38 s=0.28:1.52 s=0.37:3.4 (per bin [2, 2, 3, 5])
+(c) model refitted as the record, binned at the refitted s: s=0.026:32.3 (1/s 37.9, ratio 0.85) s=0.045:15.8 (1/s 22, ratio 0.72) s=0.079:10.4 (1/s 12.7, ratio 0.82) s=0.135:9.34 (1/s 7.41, ratio 1.26) s=0.246:3.68 (1/s 4.06, ratio 0.91) s=0.419:2.02 (1/s 2.38, ratio 0.85) s=0.747:0.935 (1/s 1.34, ratio 0.70) s=1.000:0.682 (1/s 1, ratio 0.68) (per bin [6, 22, 56, 98, 102, 103, 114, 51])
 
-=== SI: the convention selection rule ===
-uses >=  50, minority >= 0.050, pages >= 10: 16 kept, n = 1015; 0.63 +- 0.06, 0.26 +- 0.06, 0.03 +- 0.05, -0.07 +- 0.06; slope 0.87
-uses >= 100, minority >= 0.050, pages >= 10: 16 kept, n = 1015; 0.63 +- 0.06, 0.26 +- 0.06, 0.03 +- 0.05, -0.07 +- 0.06; slope 0.87
-uses >= 200, minority >= 0.050, pages >= 10: 16 kept, n = 1015; 0.63 +- 0.06, 0.26 +- 0.06, 0.03 +- 0.05, -0.07 +- 0.06; slope 0.87
-uses >= 100, minority >= 0.025, pages >= 10: 19 kept, n = 1427; 0.62 +- 0.05, 0.26 +- 0.05, 0.03 +- 0.04, -0.07 +- 0.06; slope 0.88
-uses >= 100, minority >= 0.100, pages >= 10: 13 kept, n =  661; 0.59 +- 0.07, 0.20 +- 0.07, 0.06 +- 0.06, -0.09 +- 0.08; slope 0.85
-uses >= 100, minority >= 0.050, pages >=  5: 18 kept, n = 1015; 0.63 +- 0.06, 0.26 +- 0.06, 0.03 +- 0.05, -0.07 +- 0.06; slope 0.87
-uses >= 100, minority >= 0.050, pages >= 20: 14 kept, n = 1008; 0.64 +- 0.06, 0.26 +- 0.06, 0.03 +- 0.05, -0.08 +- 0.06; slope 0.87
+=== Extended Data figures 1-3 ===
+ED1a: 18 blocks of 6 h with at least 30 task edits (3680 of the 3799 task edits between 15 and 23 June; 3807 task edits in all); edits per block 31-1311 (median 108), pages written on 9-232 (median 28); blocks with fewer than 5 pages 0; top-5 share median 0.52, from 18 June 0.27-0.84 against 0.06-0.56 if spread evenly
+ED2a: coined 0.77 [0.60, 0.89] (n=31), near-synonyms 0.63 [0.49, 0.75] (n=46), habits 0.67 [0.58, 0.75] (n=127), all forms 0.68 [0.61, 0.74] (n=204), names 0.59 [0.54, 0.64] (n=347)
+ED2b: names feed $-$ out of view         [feature, task$\times$3 h] +0.31 [+0.18, +0.44] p 4.4e-06
+ED2b: names feed $-$ out of view         [+ feature$\times$task] +0.19 [+0.05, +0.33] p 0.0084
+ED2b: names page $-$ out of view         [feature, task$\times$3 h] -0.03 [-0.14, +0.09] p 0.64
+ED2b: names page $-$ out of view         [+ feature$\times$task] +0.07 [-0.06, +0.19] p 0.3
+ED2b: names page $-$ task's other pages  [joint fit] +0.12 [-0.04, +0.28] p 0.15
+ED2b: forms page $-$ out of view         [convention, task$\times$3 h] +0.59 [+0.43, +0.76] p 4.2e-12
+ED2b: forms page $-$ out of view         [convention$\times$task$\times$3 h] +0.69 [+0.46, +0.93] p 8.4e-09
+ED2b: forms feed $-$ out of view         [convention, task$\times$3 h] +0.21 [+0.04, +0.37] p 0.015
+ED2b: forms feed $-$ out of view         [convention$\times$task$\times$3 h] +0.21 [-0.03, +0.46] p 0.08
+ED2b: forms page $-$ task's other pages  [joint fit] +0.63 [+0.45, +0.82] p 2.6e-11
+ED2c: names feed $-$ out of view: 1.5 h +0.23 [+0.08, +0.39] (n=7136), 3 h +0.27 [+0.13, +0.40] (n=8640), 6 h +0.32 [+0.19, +0.45] (n=9840), 12 h +0.20 [+0.07, +0.34] (n=11088)
+ED2c: names page $-$ out of view: 1.5 h -0.01 [-0.15, +0.13] (n=7136), 3 h -0.05 [-0.17, +0.07] (n=8640), 6 h -0.02 [-0.13, +0.09] (n=9840), 12 h -0.10 [-0.21, +0.02] (n=11088)
+ED3a consistency within a page: 16 conventions, observed inside the 10-90% band of its runs 11; correlation of the logarithms 0.59; mean observed 2.72, mean model median 2.46 (geometric)
+ED3b volatility over time, first uses: 15 conventions, observed inside the 10-90% band of its runs 13; correlation 0.86; mean observed 2.49, mean model median 2.13
+ED3c final share of form A: 16 conventions, observed inside the 10-90% band of its runs 15; correlation 0.64; mean observed 0.68, mean model median 0.59
+
+=== Identification of copying ===
+pages: 39 appends left out because the chosen page is not a candidate (39 of them a page of another task outside the feed)
+pages: 87349 candidates, 1894 decisions; R2 0.100 (baseline intercepts), 0.100 (+ task x 3 h) [the arrival intercept nests task x 3 h: one specification]
+  share of the feed, own task        2.103 +- 0.123 (se)   + task x 3 h:   2.103 +- 0.123 (se), 95% half-width 0.24
+  share of the feed, other task      0.206 +- 0.039 (se)   + task x 3 h:   0.206 +- 0.039 (se), 95% half-width 0.08
+  in the feed, own task              0.038 +- 0.004 (se)   + task x 3 h:   0.038 +- 0.004 (se), 95% half-width 0.01
+  own task                           0.014 +- 0.002 (se)   + task x 3 h:   0.014 +- 0.002 (se), 95% half-width 0.00
+  log(1 + handles on the page)       0.006 +- 0.001 (se)   + task x 3 h:   0.006 +- 0.001 (se), 95% half-width 0.00
+names: 9728 records; R2 0.335 (baseline intercepts), 0.339 (+ task x 3 h)
+  share among page authors, own task   0.115 +- 0.036 (se)   + task x 3 h:   0.108 +- 0.036 (se), 95% half-width 0.07
+  share in the feed, own task        0.454 +- 0.040 (se)   + task x 3 h:   0.444 +- 0.040 (se), 95% half-width 0.08
+  share out of view, own task        0.149 +- 0.041 (se)   + task x 3 h:   0.136 +- 0.041 (se), 95% half-width 0.08
+  share in the feed, other tasks     0.073 +- 0.048 (se)   + task x 3 h:   0.084 +- 0.048 (se), 95% half-width 0.09
+  first page without earlier task-mates   0.018 +- 0.006 (se)   + task x 3 h:   0.018 +- 0.007 (se), 95% half-width 0.01
+forms: 1052 first uses; R2 0.580 (baseline intercepts), 0.616 (+ task x 3 h)
+  share on the page                  0.663 +- 0.054 (se)   + task x 3 h:   0.638 +- 0.056 (se), 95% half-width 0.11
+  share in the feed, own task        0.250 +- 0.056 (se)   + task x 3 h:   0.250 +- 0.056 (se), 95% half-width 0.11
+  share out of view, own task        0.031 +- 0.048 (se)   + task x 3 h:   0.044 +- 0.047 (se), 95% half-width 0.09
+  share in the feed, other tasks    -0.086 +- 0.055 (se)   + task x 3 h:  -0.088 +- 0.059 (se), 95% half-width 0.12
+names, feature x task + task x 3 h intercepts (R2 0.37): 0.03 +- 0.04, 0.15 +- 0.05, -0.04 +- 0.05, 0.19 +- 0.06, 0.01 +- 0.01
+names, feature x task + feature x 3 h + task x 3 h intercepts (R2 0.40): -0.01 +- 0.04, 0.00 +- 0.06, -0.17 +- 0.07, 0.17 +- 0.08, 0.00 +- 0.01
+names with feature x task intercepts, Wald page vs out of view: chi2 1.1, p 0.3
+names with feature x task intercepts, Wald feed vs out of view: chi2 6.9, p 0.0084
+names with feature x task intercepts, Wald own task vs other tasks, in the feed: chi2 0.3, p 0.59
+pages, Wald own task vs other task, share of the feed: chi2 226.8, p 3e-51
+pages, two-way clustered se (handle, task x 3 h): 0.235, 0.052, 0.009, 0.004, 0.001
+names, Wald page vs out of view: chi2 0.2, p 0.64
+names, Wald feed vs out of view: chi2 21.1, p 4.4e-06
+names, Wald own task vs other tasks, in the feed: chi2 29.6, p 5.2e-08
+names, two-way clustered se (handle, task x 3 h): 0.044, 0.052, 0.046, 0.047, 0.007
+forms, Wald page vs out of view: chi2 48.0, p 4.2e-12
+forms, Wald feed vs out of view: chi2 5.9, p 0.015
+forms, Wald own task vs other tasks, in the feed: chi2 15.5, p 8.1e-05
+forms, two-way clustered se (handle, task x 3 h): 0.088, 0.049, 0.045, 0.053
+pages, conditional logit (clustered by handle), pseudo-R2 0.28: 9.17 +- 0.82, 9.13 +- 0.89, 3.09 +- 0.13, -0.18 +- 0.17, 0.29 +- 0.03
+forms, fully interacted convention x task x 3 h FE (R2 0.73): 0.67 +- 0.07, 0.20 +- 0.07, -0.02 +- 0.10, -0.16 +- 0.11
+own-task pages: chosen 0.087 of the time when visible (n=15571), 0.005 when not (n=39431); ratio 19
+  feed share 0.01-0.02: own task 0.039 at 0.010 (n=8581), other task 0.005 at 0.010 (n=17399)
+  feed share 0.02-0.04: own task 0.083 at 0.023 (n=4087), other task 0.010 at 0.023 (n=8727)
+  feed share 0.04-0.10: own task 0.198 at 0.057 (n=2187), other task 0.025 at 0.057 (n=4840)
+  feed share 0.10-0.20: own task 0.350 at 0.132 (n=603), other task 0.045 at 0.130 (n=1253)
+  slope ratio own/other task 10.2
+names, task-mates born in the previous 1.5 h (n=7136): page 0.13 +- 0.04, feed 0.37 +- 0.05, out of view 0.14 +- 0.05; other tasks (n=9136): in the feed 0.09 +- 0.07, out of view 0.01 +- 0.06
+names, task-mates born in the previous 3 h (n=8640): page 0.09 +- 0.04, feed 0.40 +- 0.04, out of view 0.14 +- 0.04; other tasks (n=11392): in the feed 0.07 +- 0.06, out of view 0.05 +- 0.05
+names, task-mates born in the previous 6 h (n=9840): page 0.12 +- 0.04, feed 0.45 +- 0.04, out of view 0.14 +- 0.04; other tasks (n=15504): in the feed 0.27 +- 0.04, out of view 0.03 +- 0.04
+names, task-mates born in the previous 12 h (n=11088): page 0.12 +- 0.03, feed 0.42 +- 0.04, out of view 0.21 +- 0.04; other tasks (n=17520): in the feed 0.30 +- 0.04, out of view 0.09 +- 0.05
+sensitivity, main: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.14 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.64 +- 0.11, 0.25 +- 0.11, 0.04 +- 0.09, -0.09 +- 0.12
+sensitivity, at least 1 instance: names (n=11648) 0.15 +- 0.06, 0.37 +- 0.07, 0.08 +- 0.05, 0.11 +- 0.08; forms (n=1944) 0.55 +- 0.08, 0.22 +- 0.08, 0.08 +- 0.07, -0.00 +- 0.08
+sensitivity, at least 3 instances: names (n=8752) 0.12 +- 0.08, 0.45 +- 0.09, 0.15 +- 0.09, 0.06 +- 0.10; forms (n=656) 0.72 +- 0.14, 0.30 +- 0.16, 0.02 +- 0.13, -0.15 +- 0.16
+sensitivity, blocks of 1 h: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.14 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.66 +- 0.11, 0.23 +- 0.12, 0.03 +- 0.10, -0.06 +- 0.11
+sensitivity, blocks of 6 h: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.13 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.65 +- 0.11, 0.24 +- 0.11, 0.04 +- 0.09, -0.08 +- 0.12
+sensitivity, blocks of 12 h: names (n=9728) 0.11 +- 0.07, 0.44 +- 0.08, 0.13 +- 0.08, 0.08 +- 0.09; forms (n=1052) 0.65 +- 0.11, 0.24 +- 0.11, 0.03 +- 0.09, -0.08 +- 0.12
+sensitivity, task of a use from its page: forms (n=1015) 0.55 +- 0.13, 0.28 +- 0.12, 0.08 +- 0.10, -0.00 +- 0.12
+newcomers of the name analysis saw on average 10.9 task-mates and 33.8 handles of other tasks in the feed; 0.12 saw no task-mate
+names with the all pieces (32 features, n=19456): 0.11, 0.49, 0.20, 0.04
+names with the task-specific pieces (16 features, n=9728): 0.11, 0.52, 0.27, -0.03
+
+=== SI: how to write ===
+coined   : slope on first uses 0.94 (n=698), all uses 0.95 (n=2146), page 6 h earlier 0.90 (n=192)
+semantic : slope on first uses 0.79 (n=1005), all uses 0.90 (n=2292), page 6 h earlier 0.87 (n=243)
+habit    : slope on first uses 0.85 (n=976), all uses 0.85 (n=1971), page 6 h earlier 0.70 (n=253)
+  Rn / #n                    s 0.05 bias ceiling 1.00 late share of the prevailing form 1.00
+  task clock / scaffold      s 0.13 bias ceiling 0.73 late share of the prevailing form 0.57
+  termination / teardown     s 0.28 bias ceiling 0.92 late share of the prevailing form 0.82
+  relay / bridge             s 0.05 bias ceiling 0.50 late share of the prevailing form 0.95
+  deadline / horizon         s 0.02 bias ceiling 1.00 late share of the prevailing form 0.81
+  signal / ping              s 0.26 bias ceiling 0.83 late share of the prevailing form 0.90
+  answer / value             s 0.43 bias ceiling 0.54 late share of the prevailing form 0.52
+  update / edit              s 0.71 bias ceiling 0.86 late share of the prevailing form 0.90
+  seconds / sec              s 0.05 bias ceiling 0.74 late share of the prevailing form 0.94
+  CONFIRMED / confirmed      s 0.39 bias ceiling 0.60 late share of the prevailing form 0.47
+  LIVE / live                s 0.34 bias ceiling 0.68 late share of the prevailing form 0.60
+  BEFORE / before            s 0.37 bias ceiling 0.83 late share of the prevailing form 0.97
+  task-clock / task clock    s 0.30 bias ceiling 0.63 late share of the prevailing form 0.65
+  1,234 / 1234               s 0.16 bias ceiling 0.52 late share of the prevailing form 0.38
+  we / I                     s 0.32 bias ceiling 0.79 late share of the prevailing form 0.81
+  bold ** / '''              s 0.15 bias ceiling 0.70 late share of the prevailing form 0.79
+shuffle control: observed same-page agreement minus the time-shuffled one: Rn / #n +0.06, task clock / scaffold +0.05, termination / teardown +0.00, relay / bridge +0.15, deadline / horizon +0.02, signal / ping +0.07, answer / value +0.12, update / edit +0.09, seconds / sec +0.02, CONFIRMED / confirmed +0.11, LIVE / live +0.09, BEFORE / before +0.07, task-clock / task clock +0.10, 1,234 / 1234 +0.18, we / I +0.09, bold ** / ''' +0.18
+co-occurrence ratio, geometric mean over 16 conventions: all pairs 2.72, pairs of uses by different handles 2.55
+page against the family's other pages, coined   : follow the page 0.77 [0.60, 0.89] (n=31)
+page against the family's other pages, semantic : follow the page 0.63 [0.49, 0.75] (n=46)
+page against the family's other pages, habit    : follow the page 0.67 [0.58, 0.75] (n=127)
+page against the family's other pages, pooled   : follow the page 0.68 [0.61, 0.74] (n=204)
+family's other pages against the feed, pooled: follow the family 0.56 [0.53, 0.60] (n=822)
+  page minus the family's other pages 0.63 [0.45, 0.82], p 2.6e-11 (standard errors clustered by handle)
+joint fit on first uses with all three (n=1798): page 0.73+-0.05, family 0.09+-0.05, feed 0.11+-0.05
+  page and family only (n=1798): page 0.77, family 0.12
+  coined   : page 0.86, family 0.05 (n=473)
+  semantic : page 0.64, family 0.21 (n=682)
+  habit    : page 0.79, family 0.08 (n=643)
+response to the page share: slope 0.87; within convention x family x day (434 strata) 0.51+-0.04 (n=2679)
+names: page authors minus same-task handles on other pages 0.12 [-0.04, 0.28], p 0.15
+names, joint fit (n=6352): page's authors 0.34+-0.05, same-task handles on other pages 0.22+-0.06, feed 0.49+-0.07; conflicts: follow the page 0.59 [0.54, 0.64] (n=347)

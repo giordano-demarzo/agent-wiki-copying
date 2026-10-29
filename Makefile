@@ -12,9 +12,10 @@ analysis:
 figures:
 	$(PY) src/run_all.py figures
 
+# main, extended_data and si reference one another (xr-hyper): two rounds over the three
 paper:
-	cd paper && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex
-	cd paper && pdflatex -interaction=nonstopmode si.tex && pdflatex -interaction=nonstopmode si.tex
+	cd paper && for d in extended_data si main extended_data si main; do pdflatex -interaction=nonstopmode $$d.tex >/dev/null; done
+	cd paper && bibtex main >/dev/null; pdflatex -interaction=nonstopmode main.tex >/dev/null
 
 clean:
 	rm -rf cache/*.pkl cache/*.json figures/*.png results/numbers.txt

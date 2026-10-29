@@ -14,8 +14,8 @@ import collections
 import numpy as np
 
 import names as nm
-from common import Dataset, Report, T, block_of, fit, load_cache, save_cache, share, wilson
-from conventions import CLASSES, CONV, FEED_USES, MIN_IN_VIEW, exposure, sequence
+from common import Dataset, Report, T, block_of, contrast, fit, fit_full, load_cache, save_cache, share, wilson
+from conventions import CLASSES, CONV, FEED_USES, MIN_IN_VIEW, exposure, prior_exposure, sequence
 
 BLOCK = 50
 SHIFT_H = 6
@@ -33,6 +33,10 @@ def per_convention(ds, keep, fits):
         idx, form = sequence(ds.revs, name)
         took_a = (form == 0).astype(int)
         share_all, share_page = exposure(idx, form, label, page)
+        # the records the priors are fitted on (conventions.fit_prior): every use, the page with the
+        # writer's own earlier uses, or the feed when the page carries neither form
+        share_fit = prior_exposure(idx, form, label, page)
+        fit_records = np.column_stack([share_fit, took_a])[~np.isnan(share_fit)]
         first, seen = [], set()
         for k in range(len(idx)):
             if label[idx[k]] not in seen:
@@ -62,7 +66,8 @@ def per_convention(ds, keep, fits):
         out[name] = dict(cls=CONV[name][0], records=records, heat=heat,
                          late=late if prevailing else 1 - late, s=s, ceiling=max(pi, 1 - pi),
                          shifted=np.array(shifted) if shifted else np.zeros((0, 2)),
-                         all_records=np.column_stack([share_page, took_a]), n_first=len(fa))
+                         all_records=np.column_stack([share_page, took_a]), n_first=len(fa),
+                         fit_records=fit_records)
     return out
 
 
@@ -90,7 +95,7 @@ def form_family_records(ds, keep):
             fam_others = [j for j in others if family[idx[j]] == fam and page[idx[j]] != pg][:K_FAMILY]
             on_page = history.get(pg, np.zeros(2))
             rows.append((name, CONV[name][0], sh(on_page), sh(tally(fam_others)), sh(tally(others[:FEED_USES])),
-                         int(form[k] == 0), h not in seen, fam, day[i]))
+                         int(form[k] == 0), h not in seen, fam, day[i], h))
             seen.add(h)
             step = np.zeros(2)
             step[form[k]] = 1
@@ -98,7 +103,7 @@ def form_family_records(ds, keep):
     c = list(zip(*rows))
     return dict(name=np.array(c[0]), cls=np.array(c[1]), page=np.array(c[2], float), family=np.array(c[3], float),
                 feed=np.array(c[4], float), y=np.array(c[5], float), first=np.array(c[6], bool),
-                fam=np.array(c[7]), day=np.array(c[8]))
+                fam=np.array(c[7]), day=np.array(c[8]), handle=np.array(c[9]))
 
 
 def conflicts(a, b, y):
@@ -165,8 +170,12 @@ def main():
     ff = conflicts(r['family'][r['first']], r['feed'][r['first']], r['y'][r['first']])
     say(f'family\'s other pages against the feed, pooled: follow the family {ff[0]:.2f} [{ff[1]:.2f}, {ff[2]:.2f}] (n={ff[3]})')
     m = r['first'] & ~np.isnan(r['page']) & ~np.isnan(r['family']) & ~np.isnan(r['feed'])
-    b, se, _ = fit([r['page'][m], r['family'][m], r['feed'][m]], r['y'][m])
+    b, cov_j, _ = fit_full([r['page'][m], r['family'][m], r['feed'][m]], r['y'][m], cluster=r['handle'][m])
+    se = np.sqrt(np.diag(cov_j))
     n_joint = int(m.sum())
+    c_fam = contrast(b, cov_j, [1, -1, 0])
+    say(f'  page minus the family\'s other pages {c_fam["est"]:.2f} [{c_fam["lo"]:.2f}, {c_fam["hi"]:.2f}], p {c_fam["p"]:.2g} '
+        f'(standard errors clustered by handle)')
     say(f'joint fit on first uses with all three (n={m.sum()}): page {b[0]:.2f}+-{se[0]:.2f}, family '
         f'{b[1]:.2f}+-{se[1]:.2f}, feed {b[2]:.2f}+-{se[2]:.2f}')
     m2 = r['first'] & ~np.isnan(r['page']) & ~np.isnan(r['family'])
@@ -199,19 +208,24 @@ def main():
             continue
         fam_others = [j for j in g['mates'] if j not in g['authors']]
         for t, v in feats.items():
-            rows.append((v[i], share(v, list(g['authors']), 3), share(v, fam_others, 3), share(v, list(g['feed']), 3), i))
+            k = nm.MIN_GROUP
+            rows.append((v[i], share(v, list(g['authors']), k), share(v, fam_others, k), share(v, list(g['feed']), k), i))
     R = np.array(rows, float)
     m = np.all(~np.isnan(R[:, 1:4]), axis=1)
-    bn, sen, _ = fit([R[m, 1], R[m, 2], R[m, 3]], R[m, 0], cluster=R[m, 4])
+    bn, cov_n, _ = fit_full([R[m, 1], R[m, 2], R[m, 3]], R[m, 0], cluster=R[m, 4])
+    sen = np.sqrt(np.diag(cov_n))
+    c_nam = contrast(bn, cov_n, [1, -1, 0])
+    say(f'names: page authors minus same-task handles on other pages {c_nam["est"]:.2f} [{c_nam["lo"]:.2f}, {c_nam["hi"]:.2f}], '
+        f'p {c_nam["p"]:.2g}')
     cn = conflicts(R[:, 1], R[:, 2], R[:, 0])
     say(f'names, joint fit (n={m.sum()}): page\'s authors {bn[0]:.2f}+-{sen[0]:.2f}, same-task handles on other pages '
         f'{bn[1]:.2f}+-{sen[1]:.2f}, feed {bn[2]:.2f}+-{sen[2]:.2f}; conflicts: follow the page {cn[0]:.2f} '
         f'[{cn[1]:.2f}, {cn[2]:.2f}] (n={cn[3]})')
 
     save_cache('si_forms.pkl', dict(conv=conv, variants=variants, keep=keep, fits=fits,
-                                    family=dict(conflict=fam, conflict_feed=ff, joint=(b, se, n_joint),
+                                    family=dict(conflict=fam, conflict_feed=ff, joint=(b, se, n_joint), contrast=c_fam,
                                                 by_class=by_class, split=split, fe=(plain, b_fe[0], se_fe[0])),
-                                    names=dict(joint=(bn, sen), conflict=cn),
+                                    names=dict(joint=(bn, sen), conflict=cn, contrast=c_nam, n_joint=int(m.sum())),
                                     block_days=[ds.birth[ds.handles[min(i * BLOCK, len(ds.handles) - 1)]].strftime('%d %b')
                                                 for i in range(int(np.ceil(len(ds.handles) / BLOCK)))]))
     say.write()

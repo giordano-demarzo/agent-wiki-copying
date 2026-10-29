@@ -32,9 +32,7 @@ AFFILIATION = ('Open', 'AI', 'OAI')
 MIN_CARRIERS = 15        # a piece is classified if at least this many handles carry it
 TASK_SPECIFIC = 4.0      # over-representation in one task from which a piece belongs to it
 MATES_H = 6              # task-mates are the handles of the same task born in the last 6 h
-MIN_MATES = 6            # a newcomer enters the name analysis with at least this many task-mates
-MIN_GROUP = 2            # a share is computed over at least this many handles
-MIN_OTHER = 3            # ... and over at least this many for handles of other tasks
+MIN_GROUP = 2            # a share is computed over at least this many handles (or uses), for every group
 MIN_CARRIERS_COOCCURRENCE = 25   # co-occurrence among co-authors needs this many carriers
 
 
@@ -130,18 +128,17 @@ def exposure_groups(ds, mates_h=MATES_H):
 
 
 def in_sample(g):
-    """A newcomer enters the name analysis if the feed before it was complete
-    and it had at least MIN_MATES task-mates."""
-    return g['enough_feed'] and len(g['mates']) >= MIN_MATES
+    """A newcomer enters the name analysis if the feed before it was complete."""
+    return g['enough_feed']
 
 
-def records(ds, feats, groups):
+def records(ds, feats, groups, kmin=MIN_GROUP):
     """One record per newcomer in the sample and name feature: the outcome and
     the share of the feature among the task-mates on the page, in the feed only,
     out of view, among all task-mates in the feed (`view`, the black curve of
     Fig. 3b), and among other tasks in the feed.
     `page0` is the page share with zero where the first page had fewer than
-    MIN_GROUP earlier task-mates, and `no_page` marks those newcomers."""
+    `kmin` earlier task-mates, and `no_page` marks those newcomers."""
     fam = np.array([ds.first_family[h] for h in ds.handles])
     rows = []
     for i, g in enumerate(groups):
@@ -149,9 +146,9 @@ def records(ds, feats, groups):
             continue
         for t, v in feats.items():
             rows.append((t, i, fam[i], g['block'], v[i],
-                         share(v, g['on_page'], MIN_GROUP), share(v, g['in_feed'], MIN_GROUP),
-                         share(v, g['out_of_view'], MIN_GROUP), share(v, g['other_tasks'], MIN_OTHER),
-                         share(v, g['in_feed_any'], MIN_GROUP)))
+                         share(v, g['on_page'], kmin), share(v, g['in_feed'], kmin),
+                         share(v, g['out_of_view'], kmin), share(v, g['other_tasks'], kmin),
+                         share(v, g['in_feed_any'], kmin)))
     cols = list(zip(*rows))
     return dict(feature=np.array(cols[0]), handle=np.array(cols[1]), family=np.array(cols[2]),
                 block=np.array(cols[3]), y=np.array(cols[4], float), page=np.array(cols[5], float),

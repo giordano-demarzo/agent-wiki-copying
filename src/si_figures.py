@@ -76,8 +76,8 @@ def fig_population():
 def fig_pages_windows():
     d = load_cache('pages.pkl')
     mod = load_cache('model.pkl')
-    fig, axes = plt.subplots(1, 3, figsize=(7.1, 2.2))
-    plt.subplots_adjust(wspace=0.6)
+    fig, axes = plt.subplots(1, 2, figsize=(5.0, 2.2))
+    plt.subplots_adjust(wspace=0.45)
     ax = axes[0]
     panel(ax, 'a')
     for (w, v), color in zip(d['windows'].items(), FOUR):
@@ -104,20 +104,6 @@ def fig_pages_windows():
     ax.set_xlabel('handles per page, $k$')
     ax.set_ylabel('P($K \\geq k$)')
     ax.legend(frameon=False, fontsize=5.2, loc='lower left')
-    ax = axes[2]
-    panel(ax, 'c')
-    xs = np.arange(len(d['by_active']))
-    ps = np.array([b[3] for b in d['by_active']])
-    lo = np.array([b[4] for b in d['by_active']])
-    hi = np.array([b[5] for b in d['by_active']])
-    errline(ax, xs, ps, lo, hi, fmt='o', color=INK, ms=3)
-    ax.axhline(d['inputs']['c'], color=MODEL, lw=1.0, ls='--', label=f'$c = {d["inputs"]["c"]:.2f}$')
-    ax.set_xticks(xs)
-    ax.set_xticklabels([f'{a}' if b - a == 1 else (f'{a}–{b - 1}' if b < 999 else f'{a}+') for a, b, *_ in d['by_active']])
-    ax.set_ylim(0, 1)
-    ax.set_xlabel('pages of the task active in the last 24 h')
-    ax.set_ylabel('P(create a page)')
-    ax.legend(frameon=False, fontsize=5.2, loc='upper right')
     save(fig, 'figS_pages_windows')
 
 
@@ -163,13 +149,13 @@ def fig_names_visibility():
     win = load_cache('identification.pkl')['windows']
     fig, axes = plt.subplots(1, 2, figsize=(5.4, 2.1), gridspec_kw=dict(width_ratios=[1.3, 1]))
     plt.subplots_adjust(wspace=0.45)
-    cols = {1.5: NAME_LIGHT, 3: NAME_BROWN, 6: NAME_DARK}
+    cols = {1.5: NAME_LIGHT, 3: NAME_BROWN, 6: NAME_DARK, 12: INK}
     ax = axes[0]
     panel(ax, 'a')
     ax.set_title('predecessors of the same task', fontsize=5.8, color=SLATE)
-    for k, w in enumerate((1.5, 3, 6)):
+    for k, w in enumerate(cols):
         r = win[w]['same']
-        ax.errorbar(np.arange(3) + (k - 1) * 0.18, r['b'][:3], yerr=1.96 * r['se'][:3], fmt='o', color=cols[w], ms=3.4,
+        ax.errorbar(np.arange(3) + (k - 1.5) * 0.15, r['b'][:3], yerr=1.96 * r['se'][:3], fmt='o', color=cols[w], ms=3.4,
                     capsize=1.5, lw=0.8, label=f'born in the last {w:g} h')
     ax.axhline(0, color=GREY, lw=0.7)
     ax.set_xticks(range(3))
@@ -181,9 +167,9 @@ def fig_names_visibility():
     ax = axes[1]
     panel(ax, 'b')
     ax.set_title('predecessors of other tasks', fontsize=5.8, color=SLATE)
-    for k, w in enumerate((1.5, 3, 6)):
+    for k, w in enumerate(cols):
         r = win[w]['other']
-        ax.errorbar(np.arange(2) + (k - 1) * 0.18, r['b'], yerr=1.96 * r['se'], fmt='o', color=cols[w], ms=3.4,
+        ax.errorbar(np.arange(2) + (k - 1.5) * 0.15, r['b'], yerr=1.96 * r['se'], fmt='o', color=cols[w], ms=3.4,
                     capsize=1.5, lw=0.8)
     ax.axhline(0, color=GREY, lw=0.7)
     ax.set_xticks(range(2))
@@ -229,8 +215,11 @@ def fig_forms_each():
     for ax, name in zip(axes.flat, keep):
         c = d['conv'][name]
         color = CLASS_COLOR[c['cls']][0]
-        xs, ps, lo, hi = binned_forms(c['records'])
-        errline(ax, xs, ps, lo, hi, fmt='o', color=color, ms=2.4)
+        # the records the line is fitted on, and the first uses of Fig. 2c, faint
+        xs, ps, lo, hi = binned_forms(c['fit_records'])
+        errline(ax, xs, ps, lo, hi, fmt='o', color=color, ms=2.4, zorder=3)
+        xf, pf, _, _ = binned_forms(c['records'])
+        ax.plot(xf, pf, 's', color=color, ms=2.6, mfc='white', mew=0.6, alpha=0.6, zorder=2)
         mu = d['fits'][name]
         rr = np.array([0, 1])
         ax.plot(rr, mu[0] + (1 - mu[0] - mu[1]) * rr, color=color, lw=0.9)
@@ -241,11 +230,15 @@ def fig_forms_each():
         ax.set_yticks([0, 0.5, 1])
         ax.tick_params(labelsize=5.4)
         ax.set_title(name, fontsize=5.8, color=color, pad=2)
-        ax.text(0.96, 0.06, f'n = {len(c["records"])}', ha='right', va='bottom', fontsize=5, color=SLATE,
+        ax.text(0.96, 0.06, f'n = {len(c["fit_records"])}', ha='right', va='bottom', fontsize=5, color=SLATE,
                 transform=ax.transAxes)
     for ax in axes[:, 0]:
         ax.set_ylabel('P(first form)', fontsize=6.2)
-    fig.text(0.5, 0.04, 'share of the first form on the page', ha='center', fontsize=7.4)
+    axes.flat[-1].plot([], [], 'o', color=SLATE, ms=2.4, label='every use (the fit)')
+    axes.flat[-1].plot([], [], 's', color=SLATE, ms=2.6, mfc='white', mew=0.6, label='first uses (Fig. 2c)')
+    axes.flat[-1].plot([], [], '-', color=SLATE, lw=0.9, label='fitted rule')
+    axes.flat[-1].legend(frameon=False, fontsize=5.4, loc='center')
+    fig.text(0.5, 0.04, 'share of the first form in view (page, or feed if the page has none)', ha='center', fontsize=7.4)
     save(fig, 'figS_forms_each')
 
 
@@ -499,9 +492,14 @@ def fig_regressions():
 
 def main():
     use()
-    for f in (fig_population, fig_pages_windows, fig_pages_attachment, fig_names_visibility, fig_names_fashions,
-              fig_forms_each, fig_forms_heatmap, fig_forms_prior, fig_forms_controls, fig_family,
-              fig_unpredictability, fig_prior_direction, fig_perconv, fig_regressions):
+    # the three figures of the Supplementary Information; the others are kept for reference and
+    # can be drawn with SI_ALL=1 (they are not in the manuscript)
+    import os
+    figs = [fig_pages_windows, fig_pages_attachment, fig_forms_each]
+    if os.environ.get('SI_ALL'):
+        figs += [fig_population, fig_names_visibility, fig_names_fashions, fig_forms_heatmap, fig_forms_prior,
+                 fig_forms_controls, fig_family, fig_unpredictability, fig_prior_direction, fig_perconv, fig_regressions]
+    for f in figs:
         f()
 
 

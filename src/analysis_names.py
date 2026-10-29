@@ -55,7 +55,7 @@ def main():
     groups = nm.exposure_groups(ds)
     rec = nm.records(ds, feats, groups)
     in_sample = sum(nm.in_sample(g) for g in groups)
-    say(f'newcomers in the name analysis (complete feed, at least {nm.MIN_MATES} task-mates in '
+    say(f'newcomers in the name analysis (complete feed; task-mates born in the previous '
         f'{nm.MATES_H} h): {in_sample} of {n}; mean task-mates in view '
         f'{np.mean([len(g["in_view"]) for g in groups if nm.in_sample(g)]):.1f}, out of view '
         f'{np.mean([len(g["out_of_view"]) for g in groups if nm.in_sample(g)]):.1f}')

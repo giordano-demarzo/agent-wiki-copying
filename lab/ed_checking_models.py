@@ -1,7 +1,8 @@
 """Extended Data figure: Fig. 4a with GPT-6.1 Sol, and the error phase of the record.
 
-    (a) As Fig. 4a, with GPT-6.1 Sol (amber; 100 agents per point, 2 and 3 notes pooled) added to gpt-oss-20b
-        (vermilion) and the record after the first correction (black).
+    (a) As Fig. 4a, with GPT-6.1 Sol (amber) added to gpt-oss-20b (vermilion), both at every page size (100 agents
+        per point, four countries), and the record after the first correction (black; a note citing a source is a
+        proxy for checking, the laboratory counts a fetch of the workbook in the tool log).
     (b) Checking relative to the empty page against the agreeing wrong notes: the record before the first
         correction (note gives a source; bins 0, 1-3, 4+) and both laboratory models; 95% bootstrap intervals.
 Writes paper/figs/ed_checking_models.pdf and the preview figures/ed_checking_models.png.
@@ -62,33 +63,36 @@ def main():
     panel(ax, 'a')
     D = rows()
     base = [r for r in map(json.loads, open(ROOT / 'data' / 'answers' / 'check_probe_allwrong_n0_gpt-oss-20b.jsonl')) if r['country'] in C4]
-    labg = [base] + [D['record'][n] for n in NS]
-    xl = np.array((0,) + NS) + 1
-    eb(ax, xl, [[r['checked'] for r in g] for g in labg], None, fmt='s-', color=OSS, ms=3.4, lw=1.3, label='gpt-oss-20b: opens the source')
-    eb(ax, xl, [[r['is_right'] for r in g] for g in labg], None, fmt='s:', color=OSS, ms=3.4, lw=1.1, mfc='white', mew=1,
+    extra = [r for r in map(json.loads, open(ROOT / 'data' / 'answers' / 'panel_a_gpt-oss-20b.jsonl')) if not r.get('error')]
+    on = (0, 1, 2, 3, 7, 11, 19, 32)
+    oss_g = {0: base, **{n: D['record'][n] for n in NS}, **{n: [r for r in extra if r['n'] == n] for n in (2, 3, 11)}}
+    labg = [oss_g[n] for n in on]
+    xl = np.array(on) + 1
+    eb(ax, xl, [[r['checked'] for r in g] for g in labg], None, fmt='s-', color=OSS, ms=3.0, lw=1.2,
+       label='gpt-oss-20b: opens the workbook')
+    eb(ax, xl, [[r['is_right'] for r in g] for g in labg], None, fmt='s:', color=OSS, ms=3.0, lw=1.0, mfc='white', mew=0.9,
        label='gpt-oss-20b: answers right')
-    # GPT-6.1 Sol at the record's points (0, 1, 2-3 pooled, 11) and two beyond the record (19, 32)
     sol = [r for r in map(json.loads, open(ROOT / 'data' / 'answers' / 'panel_a_gpt-6.1-sol.jsonl')) if not r.get('error')]
-    sol_pts = [((0,), 0), ((1,), 1), ((2, 3), 2.3), ((11,), 11), ((19,), 19), ((32,), 32)]
-    solg = [[r for r in sol if r['n'] in ns] for ns, _ in sol_pts]
-    xs_sol = np.array([x for _, x in sol_pts]) + 1
-    eb(ax, xs_sol * 1.04, [[r['checked'] for r in g] for g in solg], None, fmt='^-', color=SOL, ms=3.4, lw=1.3,
-       label='GPT-6.1 Sol: opens the source')
-    eb(ax, xs_sol * 1.04, [[r['is_right'] for r in g] for g in solg], None, fmt='^:', color=SOL, ms=3.4, lw=1.1, mfc='white', mew=1,
+    solg = [[r for r in sol if r['n'] == n] for n in on]
+    print('(a) agents per point: gpt-oss-20b', [len(g) for g in labg], 'GPT-6.1 Sol', [len(g) for g in solg])
+    eb(ax, xl * 1.06, [[r['checked'] for r in g] for g in solg], None, fmt='^-', color=SOL, ms=3.2, lw=1.2,
+       label='GPT-6.1 Sol: opens the workbook')
+    eb(ax, xl * 1.06, [[r['is_right'] for r in g] for g in solg], None, fmt='^:', color=SOL, ms=3.2, lw=1.0, mfc='white', mew=0.9,
        label='GPT-6.1 Sol: answers right')
     bins = [(0, 1), (1, 2), (2, 5), (5, 40)]
-    xb = np.array([0, 1, 2.3, 11]) + 1
     sel = [[x for x in R if x['h'] >= 0 and x['agree'] in ('none', 'wrong') and lo <= x['n'] < hi] for lo, hi in bins]
-    eb(ax, xb, [[x['src'] for x in g] for g in sel], None, fmt='o-', color=INK, ms=3.4, lw=1.3, label='record: note gives a source')
+    xb = (np.array([np.mean([x['n'] for x in g]) for g in sel]) + 1) / 1.06
+    eb(ax, xb, [[x['src'] for x in g] for g in sel], None, fmt='o-', color=INK, ms=3.4, lw=1.3, label='record: note cites a source (proxy)')
     eb(ax, xb, [[x['right'] for x in g] for g in sel], None, fmt='o:', color=INK, ms=3.4, lw=1.1, mfc='white', mew=1,
        label='record: gives the right value')
     for lab_, k in (('source', 'src'), ('right', 'right')):
         print(f'(a) record {lab_:6} ' + ' '.join(f'{lo}-{hi - 1}:{np.mean([x[k] for x in g]):.2f}(n={len(g)})' for (lo, hi), g in zip(bins, sel)))
-    print('(a) lab checked ' + ' '.join(f'{n}:{np.mean([r["checked"] for r in g]):.2f}' for n, g in zip((0,) + NS, labg)),
-          '| right ' + ' '.join(f'{n}:{np.mean([r["is_right"] for r in g]):.2f}' for n, g in zip((0,) + NS, labg)))
+    print('(a) lab checked ' + ' '.join(f'{n}:{np.mean([r["checked"] for r in g]):.2f}' for n, g in zip(on, labg)),
+          '| right ' + ' '.join(f'{n}:{np.mean([r["is_right"] for r in g]):.2f}' for n, g in zip(on, labg)))
     ax.set_xscale('log')
-    ax.set_xticks([1, 2, 3.3, 12, 20, 33])
-    ax.set_xticklabels(['0', '1', '2-3', '11', '19', '32'])
+    ax.set_xticks([1, 2, 3, 4, 8, 12, 20, 33])
+    ax.set_xticklabels(['0', '1', '2', '3', '7', '11', '19', '32'])
+    ax.xaxis.set_minor_locator(plt.NullLocator())
     ax.xaxis.set_minor_formatter(plt.NullFormatter())
     ax.set(xlim=(0.85, 40), ylim=(0, 1.32), xlabel='notes agreeing on the wrong value', ylabel='probability')
     ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
@@ -115,16 +119,16 @@ def main():
     oss_g = {0: base, **{n: D['record'][n] for n in NS}, **{n: [r for r in oss if r['n'] == n] for n in (2, 3, 11)}}
     on = (0, 1, 2, 3, 7, 11, 19, 32)
     rel(ax, np.array(on) + 1, [[r['checked'] for r in oss_g[n]] for n in on],
-        f'gpt-oss-20b (empty page {np.mean([r["checked"] for r in base]):.2f})', fmt='s-', color=OSS, ms=3.2, lw=1.2)
+        f'gpt-oss-20b: opens the workbook (empty page {np.mean([r["checked"] for r in base]):.2f})', fmt='s-', color=OSS, ms=3.2, lw=1.2)
     sol = [r for r in map(json.loads, open(ROOT / 'data' / 'answers' / 'panel_a_gpt-6.1-sol.jsonl')) if not r.get('error')]
     sn = (0, 1, 2, 3, 7, 11, 19, 32)
     rel(ax, (np.array(sn) + 1) * 1.04, [[r['checked'] for r in sol if r['n'] == n] for n in sn],
-        f'GPT-6.1 Sol ({np.mean([r["checked"] for r in sol if r["n"] == 0]):.2f})', fmt='^-', color=SOL, ms=3.4, lw=1.2)
+        f'GPT-6.1 Sol: opens the workbook ({np.mean([r["checked"] for r in sol if r["n"] == 0]):.2f})', fmt='^-', color=SOL, ms=3.4, lw=1.2)
     pre = [x for x in R if x['h'] < 0]          # before the first correction every use gives the wrong value
     bins = [(0, 1), (1, 4), (4, 40)]
     sel = [[x for x in pre if lo <= x['n'] < hi] for lo, hi in bins]
     xb = np.array([np.mean([x['n'] for x in g]) for g in sel]) + 1
-    rel(ax, xb / 1.04, [[x['src'] for x in g] for g in sel], f'record: note gives a source ({np.mean([x["src"] for x in sel[0]]):.2f})',
+    rel(ax, xb / 1.04, [[x['src'] for x in g] for g in sel], f'record, before the correction: note cites a source ({np.mean([x["src"] for x in sel[0]]):.2f})',
         fmt='o-', color=INK, ms=3.6, lw=1.4)
     print('(a) record n per bin', [len(g) for g in sel])
     ax.axhline(1, color=GREY, lw=0.5, ls=':')
@@ -132,10 +136,10 @@ def main():
     ax.set_xticks([1, 2, 4, 8, 12, 20, 33])
     ax.set_xticklabels(['0', '1', '3', '7', '11', '19', '32'])
     ax.xaxis.set_minor_formatter(plt.NullFormatter())
-    ax.set(xlim=(0.85, 40), ylim=(0, 1.45), xlabel='notes agreeing on the wrong value',
+    ax.set(xlim=(0.85, 40), ylim=(0, 1.3), xlabel='notes agreeing on the wrong value',
            ylabel='checking, relative to the empty page')
-    ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0, 1.25])
-    ax.legend(frameon=False, fontsize=4.6, loc='upper right', handlelength=1.6)
+    ax.set_yticks([0, 0.25, 0.5, 0.75, 1.0])
+    ax.legend(frameon=False, fontsize=4.6, loc='upper right', handlelength=1.6, bbox_to_anchor=(1.0, 1.08))
 
     fig.savefig(ROOT.parent / 'figures' / 'ed_checking_models.png', dpi=220, bbox_inches='tight')
     fig.savefig(ROOT.parent / 'paper' / 'figs' / 'ed_checking_models.pdf', bbox_inches='tight')

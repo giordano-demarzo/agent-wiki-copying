@@ -106,7 +106,7 @@ def main():
         if not nm.in_sample(g):
             continue
         others = [j for j in g['feed'] if fam[j] != fam[i] and birth[i] - 6 * 3600 <= birth[j] < birth[i]]
-        if len(g['in_view']) >= 3 and len(g['out_of_view']) >= 3 and len(others) >= 3:
+        if min(len(g['in_view']), len(g['out_of_view']), len(others)) >= nm.MIN_GROUP:
             same = lambda js: np.mean([sk[j] == sk[i] for j in js])
             rows.append((same(g['in_view']), same(g['out_of_view']), same(others)))
     R = np.array(rows)

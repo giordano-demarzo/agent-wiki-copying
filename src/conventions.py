@@ -16,7 +16,7 @@ import re
 
 import numpy as np
 
-from common import URL, cache_path
+from common import FEED_LINES, URL, cache_path
 
 # the selection rule: a convention is kept if the record can measure its base
 # probabilities, which needs enough uses, both forms in real use, and pages
@@ -148,38 +148,136 @@ def exposure(idx, form, label, page, k_feed=FEED_USES):
     return np.array(share), np.array(share_page)
 
 
-def fit_mu(share, took_a):
-    """Maximum likelihood fit of P(A | rho) = mu_A + (1 - mu_A - mu_B) rho."""
-    from scipy.optimize import minimize
+def prior_exposure(idx, form, label, page, lines=FEED_LINES, first_only=False):
+    """What each use could see, as the model reads it, for the fit of the priors.
+
+    Returns, for every use, the share of form A in view: the tally of earlier
+    uses on the same page (the writer's own included), or, if the page carries
+    neither form, the uses by other handles in the last `lines` revisions of
+    the feed. NaN when fewer than MIN_IN_VIEW instances are in view, and, with
+    `first_only`, for every use but a handle's first (the SI check: later uses
+    repeat the handle's own earlier form, which the fit on all uses counts as
+    copying).
+    """
+    page_hist, met, share = {}, set(), []
+    for k, i in enumerate(idx):
+        handle, pg = label[i], page[i]
+        on_page = page_hist.get(pg, np.zeros(2))
+        if first_only and handle in met:
+            share.append(np.nan)
+        else:
+            if on_page.sum() > 0:
+                seen = on_page
+            else:
+                window = [j for j in range(k) if idx[j] >= i - lines and label[idx[j]] != handle]
+                seen = np.array([np.sum(form[window] == 0), np.sum(form[window] == 1)], float)
+            share.append(seen[0] / seen.sum() if seen.sum() >= MIN_IN_VIEW else np.nan)
+        met.add(handle)
+        step = np.zeros(2)
+        step[form[k]] = 1
+        page_hist[pg] = on_page + step
+    return np.array(share)
+
+
+# the directions tried before refining: dense near 0 and 1, where a rare form puts pi
+PI_GRID = np.unique(np.concatenate([np.geomspace(1e-4, 0.05, 25), np.linspace(0.05, 0.95, 37),
+                                    1 - np.geomspace(1e-4, 0.05, 25), [0.0, 1.0]]))
+
+
+def _nll_function(share, took_a):
     m = ~np.isnan(share)
-    if m.sum() < 30:
+    x, y = share[m], took_a[m]
+
+    def nll(s, pi):
+        p = np.clip(np.multiply.outer(np.atleast_1d(s * pi), np.ones(len(x))) + (1 - s) * x, 1e-6, 1 - 1e-6) \
+            if np.ndim(pi) else np.clip(s * pi + (1 - s) * x, 1e-6, 1 - 1e-6)
+        return -(np.log(p) * y + np.log(1 - p) * (1 - y)).sum(-1)
+    return nll, m.sum()
+
+
+def _best_pi(nll, s):
+    """The direction that maximizes the likelihood at prior strength s: the best
+    point of PI_GRID, refined between its neighbours."""
+    from scipy.optimize import minimize_scalar
+    v = nll(s, PI_GRID)
+    k = int(np.argmin(v))
+    lo, hi = PI_GRID[max(k - 1, 0)], PI_GRID[min(k + 1, len(PI_GRID) - 1)]
+    r = minimize_scalar(lambda p: nll(s, p), bounds=(lo, hi), method='bounded')
+    return (r.x, r.fun) if r.fun < v[k] else (PI_GRID[k], v[k])
+
+
+def fit_mu(share, took_a):
+    """Maximum likelihood fit of P(A | rho) = mu_A + (1 - mu_A - mu_B) rho,
+    parametrized as mu_A = s pi, mu_B = s (1 - pi) with s and pi in [0, 1]:
+    the profile over a grid of s, refined around its best point."""
+    from scipy.optimize import minimize_scalar
+    nll, n = _nll_function(share, took_a)
+    if n < 30:
         return np.array([np.nan, np.nan])
-
-    def nll(q):
-        p = np.clip(q[0] + (1 - q[0] - q[1]) * share[m], 1e-6, 1 - 1e-6)
-        return -np.sum(took_a[m] * np.log(p) + (1 - took_a[m]) * np.log(1 - p))
-
-    return minimize(nll, [0.05, 0.05], bounds=[(0, 0.95), (0, 0.95)],
-                    method='L-BFGS-B').x
+    grid = np.linspace(0, 1, 101)
+    prof = [_best_pi(nll, s)[1] for s in grid]
+    k = int(np.argmin(prof))
+    r = minimize_scalar(lambda s: _best_pi(nll, s)[1], bounds=(grid[max(k - 1, 0)], grid[min(k + 1, 100)]),
+                        method='bounded')
+    s = r.x if r.fun < prof[k] else grid[k]
+    pi = _best_pi(nll, s)[0]
+    return np.array([s * pi, s * (1 - pi)])
 
 
 def profile_interval(share, took_a, grid=np.linspace(0, 1, 101)):
     """Profile-likelihood estimate and 95% interval of the prior strength
     s = mu_A + mu_B: for every s on the grid the direction is optimised, and the
     interval is where the log-likelihood is within 1.92 of its maximum."""
-    from scipy.optimize import minimize
+    nll, _ = _nll_function(share, took_a)
+    prof = np.array([_best_pi(nll, s)[1] for s in grid])
+    ok = grid[prof <= prof.min() + 1.92]
+    return grid[prof.argmin()], ok.min(), ok.max()
+
+
+FLOOR = 1e-3   # a fitted prior below this is at the boundary: the record shows no innovation to that form
+
+
+def profile_upper(share, took_a, which, grid=np.concatenate([np.linspace(0, 0.02, 201), np.linspace(0.02, 0.95, 931)])):
+    """The 95% profile-likelihood upper bound of mu_A (which = 0) or mu_B (which = 1):
+    the largest value whose profile log-likelihood, with the other prior
+    optimised, is within 1.92 of the maximum."""
+    from scipy.optimize import minimize_scalar
     m = ~np.isnan(share)
     x, y = share[m], took_a[m]
 
-    def nll(q):
-        p = np.clip(q[0] + (1 - q[0] - q[1]) * x, 1e-6, 1 - 1e-6)
+    def nll(mu_a, mu_b):
+        p = np.clip(mu_a + (1 - mu_a - mu_b) * x, 1e-6, 1 - 1e-6)
         return -np.sum(y * np.log(p) + (1 - y) * np.log(1 - p))
 
-    prof = np.array([min(minimize(lambda a: nll([a[0] * s, (1 - a[0]) * s]), [a0],
-                                  bounds=[(0, 1)], method='L-BFGS-B').fun
-                         for a0 in (0.1, 0.5, 0.9)) for s in grid])
-    ok = grid[prof <= prof.min() + 1.92]
-    return grid[prof.argmin()], ok.min(), ok.max()
+    prof = lambda v: minimize_scalar(lambda o: nll(o, v) if which == 1 else nll(v, o), bounds=(0, 1 - v), method='bounded').fun
+    best = min(prof(v) for v in (0.0, 0.01, 0.05, 0.1))
+    ok = [v for v in grid if prof(v) <= best + 1.92]
+    return max(ok) if ok else np.nan
+
+
+def floor_mu(share, took_a, mu):
+    """The fitted priors with a prior at zero replaced by the largest value the
+    record cannot exclude (its 95% upper bound), so that pi = mu_A / s is
+    defined and the distance from the prior is a lower bound. Returns the pair
+    and whether a floor was applied."""
+    mu = np.array(mu, float)
+    floored = False
+    for which in (0, 1):
+        if np.isfinite(mu[which]) and mu[which] < FLOOR:
+            mu[which] = profile_upper(share, took_a, which)
+            floored = True
+    return mu, floored
+
+
+def fit_prior(idx, form, label, page, first_only=False):
+    """The fitted base probabilities of one convention: the pair, its profile
+    interval of s, the pair with a prior at zero floored (floor_mu), and
+    whether a floor was applied."""
+    share = prior_exposure(idx, form, label, page, first_only=first_only)
+    took_a = (form == 0).astype(float)
+    mu = fit_mu(share, took_a)
+    mu_floor, floored = floor_mu(share, took_a, mu)
+    return mu, profile_interval(share, took_a), mu_floor, floored
 
 
 def candidates(ds):
@@ -194,16 +292,15 @@ def candidates(ds):
         n_pages = sum(1 for v in per_page.values() if v >= 5)
         minority = min(np.mean(form == 0), np.mean(form == 1)) if len(idx) else np.nan
         mu, interval = np.array([np.nan, np.nan]), None
+        mu_floor, floored = mu.copy(), False
         if len(idx) >= MIN_USES and minority > 0:
-            share, _ = exposure(idx, form, label, page)
-            took_a = (form == 0).astype(float)
-            mu = fit_mu(share, took_a)
-            interval = profile_interval(share, took_a)
+            mu, interval, mu_floor, floored = fit_prior(idx, form, label, page)
         fails = [why for why, bad in (('uses', len(idx) < MIN_USES), ('pages', n_pages < MIN_PAGES),
                                       ('minority', not minority >= MIN_MINORITY)) if bad]
         if name in NOT_A_CHOICE:
             fails.append(NOT_A_CHOICE[name])
         rows[name] = dict(cls=cls, uses=len(idx), n_pages=n_pages, minority=minority, mu=mu,
+                          mu_floor=mu_floor, floored=floored,
                           s_interval=interval, fails=fails, kept=not fails,
                           n_handles=len({label[i] for i in idx}))
     return rows

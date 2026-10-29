@@ -38,7 +38,7 @@ jobs:
         run: >-
           python -c "import common, conventions, names, model, build_dataset,
           describe_population, timeline, network, analysis_pages, analysis_names,
-          analysis_forms, identification, run_model, model_theory, si_population,
+          analysis_forms, answers_record, identification, run_model, model_theory, si_population,
           si_names, si_forms, si_thresholds, fig1_episode, fig2_collective,
           fig3_rule, fig2_wild_lab, fig4_model, si_figures, si_tables, check_text,
           run_all"

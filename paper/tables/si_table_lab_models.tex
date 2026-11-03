@@ -1,0 +1,14 @@
+\begin{tabular}{l rrr rrr rrr rrr}
+\toprule
+ & \multicolumn{3}{c}{notes of the record, 32 wrong} & \multicolumn{3}{c}{20 of the record, all wrong} & \multicolumn{3}{c}{synthetic, 32 wrong} & \multicolumn{3}{c}{20 synthetic, half right} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}
+Model & checks & right & wrong$\mid$checked & checks & right & wrong$\mid$checked & checks & right & wrong$\mid$checked & checks & right & wrong$\mid$checked \\
+\midrule
+gpt-oss-20b & 41 & 42 & 0 & 69 & 69 & 0 & 62 & 62 & 0 & 88 & 94 & 0 \\
+GPT-6.1 Sol & 0 & 0 & -- & 0 & 0 & -- & 95 & 95 & 0 & 100 & 100 & 0 \\
+Gemma 4 31B & 94 & 24 & 74 & 96 & 59 & 39 & 99 & 99 & 0 & 100 & 100 & 0 \\
+Gemma 4 26B-A4B & 100 & 99 & 1 & 100 & 100 & 0 & 100 & 100 & 0 & 100 & 100 & 0 \\
+Qwen3.8 27B & 86 & 41 & 52 & 96 & 63 & 34 & 100 & 97 & 3 & 100 & 100 & 0 \\
+Ministral 3 14B & 90 & 75 & 17 & 93 & 80 & 14 & 99 & 97 & 2 & 100 & 98 & 2 \\
+\bottomrule
+\end{tabular}

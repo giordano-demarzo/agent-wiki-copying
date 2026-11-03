@@ -257,3 +257,96 @@ xlsx|workbook|power ?bi|\bPBI\b|tooltip|querydata|sdmx|\braw\b|parsed|extracted|
 |beta| = 1.68 (fitted on the names of the record) and 3.9 (GPT-6.1 Sol), and writes `cache/model_beta.pkl`;
 `ed_model_beta.py` compares it with the linear theory of `src/model_theory.py` at the effective prior strength.
 No language model is involved.
+
+## 5. Other models (Supplementary Information)
+
+`replicate.py` runs the checking experiments on any model behind an OpenAI-compatible endpoint, with the pages,
+seeds, prompt, fetch tool and scoring of the gpt-oss-20b runs; `run_replications.sh` serves each local model with
+vLLM 0.19.1 on the H100 in turn and runs it. Four designs, 2,075 (A, B) and 1,700 (P, R) agents per model:
+
+| Design | Page | Cells | Agents per cell |
+| --- | --- | --- | --- |
+| A | N of the record's notes, all giving the padded value (as Fig. 4a) | N = 0, 1, 3, 7, 11, 19, 32 | 100 (4 countries × 25) |
+| P | N template notes (the wordings of `check_probe.py`), all giving the padded value | N = 1, 3, 7, 11, 19, 32 | 100 |
+| B | 20 template notes, a fraction of them giving the right value (as Fig. 4b) | 0, 0.1, ..., 1 | 125 (5 countries × 25) |
+| R | 20 of the record's notes giving the padded value (and neither the right value nor the stored digits), a fraction of them turned right by writing the right value in place of the padded one | 0, 0.1, ..., 1 | 100 |
+
+| Model | Weights | vLLM tool parser | Notes |
+| --- | --- | --- | --- |
+| Gemma 4 31B | `google/gemma-4-31B-it` | `gemma4` | |
+| Gemma 4 26B-A4B | `google/gemma-4-26B-A4B-it` | `gemma4` | mixture of experts |
+| Qwen3.8 27B | `Qwen/Qwen3.8-27B` | `qwen3_coder`, reasoning parser `qwen3` | reasoning effort `low`; `--gdn-prefill-backend triton` |
+| Ministral 3 14B | `mistralai/Ministral-3-14B-Instruct-2512` | `mistral` | Mistral tokenizer, config and weight formats |
+| gpt-oss-20b | `openai/gpt-oss-20b` | `openai` | designs P and R (its A and B are the runs of Fig. 4) |
+
+All run at temperature 1 with up to 16,000 output tokens per turn and eight turns, 64 requests at a time, 32,768
+tokens of context. The results are in `data/answers/replicate_<model>.jsonl`; agents with an error (a server error,
+the context exceeded, or eight turns without an answer: 0-1% per model) are kept with the error and left out of the
+rates. Replies whose JSON does not parse have their answer read from the `answer` field with a pattern
+(`replicate.parse`; `rescore.py` applies it to stored runs, marking them `parsed_by: pattern`); 17 Ministral and
+2 Qwen replies have no readable answer. `si_models_checking.py` draws the Supplementary figure.
+
+```bash
+bash run_replications.sh gemma-4-31b gemma-4-26b-a4b qwen3.8-27b ministral-3-14b      # designs A and B, with pilots
+DESIGNS=PR PILOT=0 bash run_replications.sh ministral-3-14b qwen3.8-27b gemma-4-26b-a4b gemma-4-31b gpt-oss-20b
+python si_models_checking.py
+```
+
+## 6. Complete runs: parsing and retries
+
+No trial of the paper is left out for a reply that could not be read.
+
+- **Parsing.** `run.parse` (copying) reads the JSON object of a reply and, failing a strict parse, the first complete
+  object anywhere in it (a fence glued to the brace, an extra closing brace, a second block, raw line breaks inside
+  strings); it leaves every reply that parsed strictly unchanged. `replicate.parse` (answers) reads the `answer` field
+  with a pattern when the JSON is broken. `rescore.py` applies both to the stored runs (marked `parsed_by`).
+- **Retries.** `run.py --retry` and `replicate.py --retry` move the records that still have no reply, no answer or an
+  error to `*_failed.jsonl` beside the data and run those trials again, so every trial keeps exactly one record and
+  every attempt is kept (`run_fill_gaps.sh`, `run_retry_answers.sh`).
+- **Ministral 3 14B, copying.** In free format about half of its replies were broken JSON (unterminated or Python-style
+  concatenated strings), mostly the longer writing trials, so retrying only those would have resampled a selected
+  subset. Its 820 trials were run again in full with the output constrained to a JSON object (`run.py --json-mode`,
+  vLLM `response_format`), with the same prompt; the free-format run is kept as `data/replies_ministral-3-14b_freeformat.jsonl`.
+- **GPT-6.1 Sol, copying.** The 53 empty-page trials left by the first run's budget were run ($0.41; $7.79 in all).
+
+State of the data: the copying experiment has 820 of 820 parsed replies for each of the six models. The answer
+experiments of `replicate.py` have every cell complete for every model; after two retries 9 agents of 22,650 have no
+readable answer (8 gpt-oss-20b, 1 Ministral) and are left out of the rates. `replicate_gpt-oss-20b.jsonl` also holds
+designs A and B, run again on the pages and seeds of Fig. 4 (an independent repeat of Fig. 4a and 4b; the paper's
+gpt-oss-20b curves are the original runs).
+
+**GPT-6.1 Sol** ran designs P, R and B through `replicate.py` (Responses API via `chain_replay.agent_responses`,
+reasoning effort low, 16 requests at a time; design A is its earlier run, `panel_a_gpt-6.1-sol.jsonl`): P and R in
+full, B at the fractions 0, 0.2, ..., 1 (750 agents), to stay within the budget. Cost $23.48 in all ($0.63 pilot,
+$15.92 for P and R, $6.93 for B), no errors and no unparsed replies.
+
+```bash
+CHAIN_MODEL=gpt-6.1-sol CHAIN_BUDGET=16 python replicate.py --model gpt-6.1-sol --designs PR --concurrency 16
+CHAIN_MODEL=gpt-6.1-sol CHAIN_BUDGET=8 python replicate.py --model gpt-6.1-sol --designs B --fracs-b 0,0.2,0.4,0.6,0.8,1 --concurrency 16
+```
+
+**GPT-6.1 Sol chains (Fig. 4c).** `CHAIN_MODEL=gpt-6.1-sol CHAIN_BUDGET=35 CHAIN_STARTS=1,3,7,32 python chain_replay.py
+recstart 5 30`: 80 chains of 30 agents (20 per starting page), the design of the gpt-oss-20b chains with the starting
+pages 1, 3, 7 and 32 (Sol's threshold lies between 3 and 7); `data/answers/chains_gpt-6.1-sol.jsonl`, 2,400 agents, no
+errors, $14.23.
+
+**gpt-oss-20b chains from 3 starting notes** (so that both models of Fig. 4c have 1, 3, 7 and 32): `CHAIN_STARTS=3
+python chain_replay.py recstart 5 30`, 600 agents added to `data/answers/chains_gpt-oss-20b.jsonl`, no errors.
+
+## 7. Controls of gpt-oss-20b and the figures of Extended Data and SI
+
+- **Design M** (`replicate.py --designs M`): pages of N = 2, 4, 8, 12, 20, 32 notes of the record, half of them turned
+  right. Checking falls with N in the same way as on all-wrong pages, so for gpt-oss-20b it depends on the length of
+  the page, not on agreement.
+- **Repeats** (`--tag repeat`) of design R, and of designs A and B (in `replicate_gpt-oss-20b.jsonl`), on the same
+  pages and seeds; **medium reasoning effort** on design R (`--tag effort-medium`).
+
+| Script | Figure |
+| --- | --- |
+| `fig4_checking.py` | Fig. 4 (pages of the record's notes; both models) |
+| `ed_checking_models.py` | Extended Data: checking before the correction, record and laboratory |
+| `si_models_checking.py ed` / `si` | Extended Data: checking in six models (designs A, R); SI: synthetic notes (P, B) |
+| `../src/fig2_wild_lab.py` | Fig. 2 and Extended Data: copying in six models (`ed_copying_models`) |
+| `si_oss_controls.py` | SI: what drives checking in gpt-oss-20b (designs M, R repeated, medium effort, A repeated) |
+| `si_chains.py` | SI: the chains of Fig. 4c chain by chain (uses `mock_fig4c_options.py` for the shared helpers) |
+| `fig4_checking_synthetic.py` | the synthetic-note version of Fig. 4 (not in the paper; kept for comparison) |

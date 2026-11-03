@@ -33,3 +33,9 @@ __pycache__/
 
 # API keys
 .env
+
+# logs of the local model servers and runs
+lab/logs/
+
+# notebook autosaves
+.ipynb_checkpoints/

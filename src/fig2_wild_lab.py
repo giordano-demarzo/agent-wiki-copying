@@ -25,13 +25,14 @@ from common import ROOT, URL, Report, fit, load_cache, wilson
 from conventions import CONV
 from fig3_rule import NAME_EDGES, PAGE_BINS, binned_forms
 from names import DATE, pieces
-from style import GREY, INK, OSS, SLATE, SOL, panel, plt, save, use
+from style import GREY, INK, LAB_MODELS, OSS, SLATE, SOL, panel, plt, save, use
 
 LAB = os.path.join(ROOT, 'lab', 'data')
 MODELS = (('gpt-oss-20b', OSS, 'gpt-oss-20b'), ('gpt-6.1-sol', SOL, 'GPT-6.1 Sol'))
 FEED_HANDLE = re.compile(r'\. \. \. \d\d:\d\d:\d\d \. \. \. (\S+)')
 SIGNATURE = re.compile(r'(--|\u2013|\u2014|Signed:?|Submitted by:?)\s*[A-Za-z0-9_]+\s*$')
-OFFSET = {'record': 0.0, 'gpt-oss-20b': -1.0, 'gpt-6.1-sol': 1.0}   # small horizontal offsets, in units of dx
+OFFSET = {'record': 0.0, 'gpt-oss-20b': -1.0, 'gpt-6.1-sol': 1.0,   # small horizontal offsets, in units of dx
+          'gemma-4-31b': -2.0, 'gemma-4-26b-a4b': 2.0, 'qwen3.8-27b': -3.0, 'ministral-3-14b': 3.0}
 
 
 def has_feature(handle, feature):
@@ -203,10 +204,17 @@ def main(MODELS=MODELS, name='fig2_wild_lab'):
     handles += [axes[0].errorbar([], [], yerr=[], fmt='o', color=c, ms=3.0, capsize=0,
                                  label=lab_) for _, c, lab_ in MODELS]
     handles += axes[0].plot([], [], color=GREY, lw=0.6, ls='--', label='proportional')
-    axes[0].legend(handles=handles, frameon=False, fontsize=5.4, loc='upper left', handlelength=1.6)
+    if len(MODELS) > 2:   # the Supplementary version: the legend below the panels
+        fig.legend(handles=handles, frameon=False, fontsize=6.0, loc='upper center', ncol=4, bbox_to_anchor=(0.5, -0.1),
+                   handlelength=1.6)
+    else:
+        axes[0].legend(handles=handles, frameon=False, fontsize=5.4, loc='upper left', handlelength=1.6)
     save(fig, name)
     say.write()
 
 
 if __name__ == '__main__':
     main()
+    # Supplementary Information: every laboratory model with stored replies
+    main(tuple((m, c, lab) for m, lab, c, _ in LAB_MODELS if os.path.exists(os.path.join(LAB, f'replies_{m}.jsonl'))),
+         'ed_copying_models')

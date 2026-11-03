@@ -32,6 +32,12 @@ NAME_DARK = '#4f3210'    # names: a darker shade for a third series
 NAME_LIGHT = '#c49a6c'   # names: the copy model
 OSS = '#c8573e'          # gpt-oss-20b (vermilion)
 SOL = AMBER              # GPT-6.1 Sol
+# the other laboratory models (Supplementary Information): blues for Gemma 4, purple for Qwen, green for Mistral
+GEMMA31, GEMMA26, QWEN, MINISTRAL = '#2f5d9b', '#86a9d6', '#7b5ea7', '#4f8f5b'
+LAB_MODELS = [   # file name, label, colour, marker
+    ('gpt-oss-20b', 'gpt-oss-20b', OSS, 'o'), ('gpt-6.1-sol', 'GPT-6.1 Sol', SOL, 'D'),
+    ('gemma-4-31b', 'Gemma 4 31B', GEMMA31, 's'), ('gemma-4-26b-a4b', 'Gemma 4 26B-A4B', GEMMA26, 's'),
+    ('qwen3.8-27b', 'Qwen3.8 27B', QWEN, '^'), ('ministral-3-14b', 'Ministral 3 14B', MINISTRAL, 'v')]
 
 RC = {'font.size': 7.5, 'axes.titlesize': 6.4, 'axes.labelsize': 7.4,
       'legend.fontsize': 6, 'xtick.labelsize': 6.6, 'ytick.labelsize': 6.6,

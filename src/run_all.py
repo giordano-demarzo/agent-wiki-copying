@@ -59,7 +59,10 @@ def step(module, what, **kw):
 # the figures built on the laboratory experiments (lab/; their data are in lab/data/)
 LAB_FIGURES = [
     ('fig4_checking.py', 'Figure 4'),
-    ('ed_checking_models.py', 'Extended Data Fig. 5: checking in GPT-6.1 Sol and in the record before the correction'),
+    ('ed_checking_models.py', 'Extended Data: checking before the correction, in the record and in the laboratory'),
+    ('si_models_checking.py', 'Extended Data and SI: checking in six models, with the notes of the record and synthetic notes'),
+    ('si_oss_controls.py', 'SI: what drives checking in gpt-oss-20b'),
+    ('si_chains.py', 'SI: the chains of Fig. 4c, chain by chain'),
 ]
 # model_beta.py and ed_model_beta.py (S-shaped copying) are kept in lab/ but no longer enter the paper
 

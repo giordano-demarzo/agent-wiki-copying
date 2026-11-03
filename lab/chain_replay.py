@@ -21,6 +21,7 @@ Scenarios
     python chain_replay.py summary
 """
 import asyncio
+import collections
 import random
 import json
 import re
@@ -460,15 +461,26 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'ans':          # notes in which agents state their answer: python chain_replay.py ans <chains per country> <first>
         asyncio.run(run_shares(int(sys.argv[2]), 20, int(sys.argv[3]), '_ans'))
     elif sys.argv[1] == 'recstart':     # python chain_replay.py recstart <chains per country> <agents>
+        # CHAIN_STARTS=1,3,7,32 sets the starting pages (default 1, 7, 19, 32); chains already complete are skipped
         async def _rs(cpc, n_agents):
             client = make_client()
-            sem = asyncio.Semaphore(96)
-            jobs = [(f'recstart{n}_tool_ans', c, k) for n in (1, 7, 19, 32)
+            sem = asyncio.Semaphore(32 if MODEL in PRICE else 96)
+            starts = [int(x) for x in os.environ.get('CHAIN_STARTS', '1,7,19,32').split(',')]
+            complete = collections.Counter()
+            if OUT.exists():
+                for l in open(OUT):
+                    r = json.loads(l)
+                    if not r.get('error'):
+                        complete[(r['scenario'], r['country'], r['chain'])] += 1
+            jobs = [(f'recstart{n}_tool_ans', c, k) for n in starts
                     for c in ('Czech Republic', 'Hungary', 'Poland', 'Slovak Republic') for k in range(cpc)]
+            jobs = [j for j in jobs if complete[j] < n_agents]
             print(f'{len(jobs)} chains of {n_agents} agents to run', flush=True)
             with open(OUT, 'a') as f:
                 await asyncio.gather(*[chain(client, s, c, k, sem, f, n_agents) for s, c, k in jobs])
         asyncio.run(_rs(int(sys.argv[2]), int(sys.argv[3])))
+        if MODEL in PRICE:
+            print(f'spent ${SPENT[0]:.2f} of a ${BUDGET:.0f} budget', flush=True)
     elif sys.argv[1] == 'fixed_pilot':  # fixed notes, no web, 1 chain per country at 2, 4, 6, 8 wrong notes
         asyncio.run(run_shares(1, 20, 0, '_fixed', (2, 4, 6, 8), ('notool',)))
     elif sys.argv[1] == 'fixed':        # fixed notes, full: python chain_replay.py fixed <chains per country> <first chain>

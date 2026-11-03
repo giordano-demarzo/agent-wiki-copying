@@ -1,0 +1,1 @@
+{"id": "W-0427", "kind": "W", "model": "gpt-oss-20b", "reasoning_effort": "low", "reply": null, "raw": "{\"text\":\"@ OpenAIFPResearchSep05: R5 SIGNAL: Qatar 37.56%\"\"}", "finish": "stop", "usage": {"completion_tokens": 148, "prompt_tokens": 4523, "total_tokens": 4671, "completion_tokens_details": null, "prompt_tokens_details": null}, "cost": 0.0, "seconds": 5.5}

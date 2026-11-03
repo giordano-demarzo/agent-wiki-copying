@@ -11,6 +11,7 @@ import asyncio
 import json
 import os
 import random
+import re
 import time
 from pathlib import Path
 
@@ -62,14 +63,42 @@ def user_prompt(t):
 
 
 def parse(content):
+    """The JSON object of a reply. Failing a strict parse, the first complete object anywhere in the reply, ignoring
+    what surrounds it (a fence glued to the brace, an extra closing brace, a second block), with raw line breaks
+    allowed inside strings and non-breaking spaces read as spaces."""
     s = (content or '').strip()
-    if s.startswith('```'):
-        s = s.strip('`').split('\n', 1)[-1]
-    i, j = s.find('{'), s.rfind('}')
+    t = s.strip('`').split('\n', 1)[-1] if s.startswith('```') else s
+    i, j = t.find('{'), t.rfind('}')
     try:
-        return json.loads(s[i:j + 1])
+        return json.loads(t[i:j + 1])
     except Exception:
-        return None
+        pass
+    s = s.replace('\xa0', ' ')
+    dec = json.JSONDecoder(strict=False)
+    for m in re.finditer(r'\{', s):
+        try:
+            obj, _ = dec.raw_decode(s[m.start():])
+        except Exception:
+            continue
+        if isinstance(obj, dict) and obj:
+            return obj
+    return None
+
+
+def set_aside_failed(out):
+    """Move the replies that did not parse to <out>_failed.jsonl, so that their trials run again and every trial
+    keeps one record; returns the dollars they cost."""
+    rows = [json.loads(l) for l in open(out)]
+    failed = [r for r in rows if r['reply'] is None]
+    if failed:
+        with open(out.with_name(out.stem + '_failed.jsonl'), 'a') as f:
+            for r in failed:
+                f.write(json.dumps(r) + '\n')
+        with open(out, 'w') as f:
+            for r in rows:
+                if r['reply'] is not None:
+                    f.write(json.dumps(r) + '\n')
+    print(f'{len(failed)} unparsed replies set aside to run again')
 
 
 def cost(model, usage):
@@ -93,6 +122,8 @@ async def one(client, a, t, sem, lock, f, spent):
             kw['extra_body'] = json.loads(a.extra_body)
         if a.temperature is not None:
             kw['temperature'] = a.temperature
+        if a.json_mode:
+            kw['response_format'] = {'type': 'json_object'}
         for attempt in range(5):
             try:
                 t0 = time.time()
@@ -130,6 +161,8 @@ async def main():
     ap.add_argument('--budget', type=float, default=0.0)
     ap.add_argument('--shuffle', action='store_true')
     ap.add_argument('--extra-body', default='', help='JSON passed as extra_body, e.g. to switch off thinking')
+    ap.add_argument('--retry', action='store_true', help='run again the trials whose reply did not parse')
+    ap.add_argument('--json-mode', action='store_true', help='constrain the output to a JSON object (response_format)')
     a = ap.parse_args()
 
     a.reasoning_effort = a.reasoning_effort or None
@@ -149,6 +182,11 @@ async def main():
     out = Path(a.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     done, spent = set(), [0.0]
+    if a.retry and out.exists():
+        set_aside_failed(out)
+    failed = out.with_name(out.stem + '_failed.jsonl')
+    if failed.exists():   # what the set-aside replies cost counts towards the budget
+        spent[0] += sum(json.loads(l)['cost'] for l in open(failed))
     if out.exists():
         for l in open(out):
             r = json.loads(l)

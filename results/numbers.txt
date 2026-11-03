@@ -383,32 +383,6 @@ bold ** / '''              uses   274 pages 109 same 0.884 [0.793, 0.986] differ
 observed same-page agreement above the 97.5th percentile of the null: time 15 of 16, task and time 12 of 16; above the median: time 16, task and time 15
 excess over the null, median over conventions: time 0.084, task and time 0.024; uses that can move between pages under the task-and-time null: median 0.83 (from 0.69 to 0.89)
 
-=== SI S7: the laboratory experiments ===
-copying: 820 stimuli, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}
-  gpt-oss-20b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 3
-  gpt-6.1-sol: 767 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 27}, reply not parsed 0
-4a N= 0: oss n 100 errors 0 checked 100 right 100 wrong 0 other 0 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 100 right 100 wrong 0 other 0 (right without checking 0, wrong after checking 0)
-4a N= 1: oss n 100 errors 0 checked 90 right 88 wrong 9 other 3 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 99 right 98 wrong 2 other 0 (right without checking 0, wrong after checking 1)
-4a N= 2: oss n 100 errors 0 checked 87 right 87 wrong 12 other 1 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 96 right 95 wrong 5 other 0 (right without checking 0, wrong after checking 1)
-4a N= 3: oss n 100 errors 0 checked 81 right 82 wrong 16 other 2 (right without checking 1, wrong after checking 0); Sol n 100 errors 0 checked 90 right 89 wrong 11 other 0 (right without checking 0, wrong after checking 1)
-4a N= 7: oss n 100 errors 0 checked 59 right 61 wrong 38 other 1 (right without checking 2, wrong after checking 0); Sol n 100 errors 0 checked 15 right 12 wrong 88 other 0 (right without checking 0, wrong after checking 3)
-4a N=11: oss n 100 errors 0 checked 55 right 57 wrong 41 other 2 (right without checking 3, wrong after checking 0); Sol n 100 errors 0 checked 7 right 6 wrong 94 other 0 (right without checking 0, wrong after checking 1)
-4a N=19: oss n 100 errors 0 checked 54 right 53 wrong 46 other 1 (right without checking 1, wrong after checking 1); Sol n 100 errors 0 checked 1 right 1 wrong 99 other 0 (right without checking 0, wrong after checking 0)
-4a N=32: oss n 100 errors 0 checked 41 right 42 wrong 57 other 1 (right without checking 1, wrong after checking 0); Sol n 100 errors 0 checked 0 right 0 wrong 100 other 0 (right without checking 0, wrong after checking 0)
-4a gpt-oss-20b: 567 agents checked, 1 of them answered the padded value; 8 answered right without checking. GPT-6.1 Sol: 408 checked, 7 wrong after checking, 0 right without checking
-4b N=5: 750 agents, 6 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.83 0.2:0.94 0.4:0.95 0.6:0.93 0.8:0.91 1.0:0.82
-  mixed (30-70% right) minus unanimous pages: +0.12 [+0.06, +0.17]; by country CZ +0.10, HU +0.08, PL +0.16, SK +0.04, SI +0.20
-4b N=10: 1375 agents, 11 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.67 0.1:0.70 0.2:0.80 0.3:0.90 0.4:0.90 0.5:0.86 0.6:0.88 0.7:0.84 0.8:0.85 0.9:0.70 1.0:0.63
-  mixed (30-70% right) minus unanimous pages: +0.22 [+0.16, +0.29]; by country CZ +0.23, HU +0.30, PL +0.31, SK +0.15, SI +0.14
-4b N=20: 1375 agents, 11 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.57 0.1:0.76 0.2:0.87 0.3:0.78 0.4:0.79 0.5:0.88 0.6:0.84 0.7:0.74 0.8:0.72 0.9:0.72 1.0:0.60
-  mixed (30-70% right) minus unanimous pages: +0.22 [+0.16, +0.29]; by country CZ +0.22, HU +0.26, PL +0.33, SK +0.07, SI +0.24
-4b N=40: 1375 agents, 11 fractions, countries Czech Republic, Hungary, Poland, Slovak Republic, Slovenia, agents per country and fraction 25-25; P(checks) 0.0:0.52 0.1:0.61 0.2:0.70 0.3:0.73 0.4:0.82 0.5:0.79 0.6:0.72 0.7:0.66 0.8:0.66 0.9:0.61 1.0:0.41
-  mixed (30-70% right) minus unanimous pages: +0.28 [+0.20, +0.35]; by country CZ +0.30, HU +0.41, PL +0.25, SK +0.11, SI +0.32
-4c start  1: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.07, 11-30 0.05 [0.00, 0.15] (bootstrap over chains); agent 30 wrong in 1 of 20 chains; never right 1; check rate 0.66; chains with 11-30 wrong share above one half 1
-4c start  7: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.20, 11-30 0.07 [0.01, 0.17] (bootstrap over chains); agent 30 wrong in 1 of 20 chains; never right 0; check rate 0.53; chains with 11-30 wrong share above one half 1
-4c start 19: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.36, 11-30 0.25 [0.10, 0.40] (bootstrap over chains); agent 30 wrong in 4 of 20 chains; never right 1; check rate 0.41; chains with 11-30 wrong share above one half 5
-4c start 32: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.60, 11-30 0.46 [0.28, 0.65] (bootstrap over chains); agent 30 wrong in 9 of 20 chains; never right 3; check rate 0.26; chains with 11-30 wrong share above one half 11
-
 === How to write, all handles ===
 52 candidate conventions, 44 with at least 100 uses, 17 kept
   dropped: fewer than 100 uses 8; with 100 uses, the rarer form never used 7; other failures 20
@@ -656,3 +630,44 @@ joint fit on first uses with all three (n=1798): page 0.73+-0.05, family 0.09+-0
 response to the page share: slope 0.87; within convention x family x day (434 strata) 0.51+-0.04 (n=2679)
 names: page authors minus same-task handles on other pages 0.12 [-0.04, 0.28], p 0.15
 names, joint fit (n=6352): page's authors 0.34+-0.05, same-task handles on other pages 0.22+-0.06, feed 0.49+-0.07; conflicts: follow the page 0.59 [0.54, 0.64] (n=347)
+
+=== SI S7: the laboratory experiments ===
+copying: 820 stimuli, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}
+  gpt-oss-20b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 0
+  gpt-6.1-sol: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 0
+  gemma-4-31b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 0
+  gemma-4-26b-a4b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 0
+  qwen3.8-27b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 0
+  ministral-3-14b: 820 replies, by kind {'P': 240, 'P0': 60, 'W': 440, 'W0': 80}, reply not parsed 0
+4a N= 0: oss n 100 errors 0 checked 100 right 100 wrong 0 other 0 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 100 right 100 wrong 0 other 0 (right without checking 0, wrong after checking 0)
+4a N= 1: oss n 100 errors 0 checked 90 right 88 wrong 9 other 3 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 99 right 98 wrong 2 other 0 (right without checking 0, wrong after checking 1)
+4a N= 2: oss n 100 errors 0 checked 87 right 87 wrong 12 other 1 (right without checking 0, wrong after checking 0); Sol n 100 errors 0 checked 96 right 95 wrong 5 other 0 (right without checking 0, wrong after checking 1)
+4a N= 3: oss n 100 errors 0 checked 81 right 82 wrong 16 other 2 (right without checking 1, wrong after checking 0); Sol n 100 errors 0 checked 90 right 89 wrong 11 other 0 (right without checking 0, wrong after checking 1)
+4a N= 7: oss n 100 errors 0 checked 59 right 61 wrong 38 other 1 (right without checking 2, wrong after checking 0); Sol n 100 errors 0 checked 15 right 12 wrong 88 other 0 (right without checking 0, wrong after checking 3)
+4a N=11: oss n 100 errors 0 checked 55 right 57 wrong 41 other 2 (right without checking 3, wrong after checking 0); Sol n 100 errors 0 checked 7 right 6 wrong 94 other 0 (right without checking 0, wrong after checking 1)
+4a N=19: oss n 100 errors 0 checked 54 right 53 wrong 46 other 1 (right without checking 1, wrong after checking 1); Sol n 100 errors 0 checked 1 right 1 wrong 99 other 0 (right without checking 0, wrong after checking 0)
+4a N=32: oss n 100 errors 0 checked 41 right 42 wrong 57 other 1 (right without checking 1, wrong after checking 0); Sol n 100 errors 0 checked 0 right 0 wrong 100 other 0 (right without checking 0, wrong after checking 0)
+4a gpt-oss-20b: 567 agents checked, 1 of them answered the padded value; 8 answered right without checking. GPT-6.1 Sol: 408 checked, 7 wrong after checking, 0 right without checking
+4b (notes of the record) gpt-oss-20b: 1100 agents, 0 without an answer; P(checks) 0.0:0.69 0.1:0.49 0.2:0.55 0.3:0.56 0.4:0.60 0.5:0.57 0.6:0.51 0.7:0.58 0.8:0.41 0.9:0.50 1.0:0.48; mixed minus unanimous -0.02 [-0.10, +0.06] (0.56 against 0.58)
+4b (notes of the record) gpt-6.1-sol: 1100 agents, 0 without an answer; P(checks) 0.0:0.00 0.1:0.41 0.2:0.67 0.3:0.84 0.4:0.92 0.5:0.96 0.6:0.95 0.7:0.91 0.8:0.72 0.9:0.45 1.0:0.04; mixed minus unanimous +0.90 [+0.86, +0.93] (0.92 against 0.02)
+synthetic notes, gpt-oss-20b, N=5: 750 agents; mixed minus unanimous +0.12 [+0.06, +0.17]
+synthetic notes, gpt-oss-20b, N=10: 1375 agents; mixed minus unanimous +0.22 [+0.16, +0.29]
+synthetic notes, gpt-oss-20b, N=20: 1375 agents; mixed minus unanimous +0.22 [+0.16, +0.29]
+synthetic notes, gpt-oss-20b, N=40: 1375 agents; mixed minus unanimous +0.28 [+0.20, +0.35]
+synthetic notes, GPT-6.1 Sol, N=20: 750 agents; P(checks) 0.99; mixed minus unanimous +0.02
+4c gpt-oss-20b start  1: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.07, 11-30 0.05 [0.00, 0.15]; agent 30 wrong in 1 of 20 chains; never right 1; check rate, agents 11-30 0.62
+4c gpt-oss-20b start  3: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.07, 11-30 0.05 [0.00, 0.12]; agent 30 wrong in 1 of 20 chains; never right 0; check rate, agents 11-30 0.68
+4c gpt-oss-20b start  7: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.20, 11-30 0.07 [0.01, 0.17]; agent 30 wrong in 1 of 20 chains; never right 0; check rate, agents 11-30 0.54
+4c gpt-oss-20b start 19: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.36, 11-30 0.25 [0.10, 0.42]; agent 30 wrong in 4 of 20 chains; never right 1; check rate, agents 11-30 0.41
+4c gpt-oss-20b start 32: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.60, 11-30 0.46 [0.29, 0.64]; agent 30 wrong in 9 of 20 chains; never right 3; check rate, agents 11-30 0.25
+4c gpt-6.1-sol start  1: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.00, 11-30 0.00 [0.00, 0.00]; agent 30 wrong in 0 of 20 chains; never right 0; check rate, agents 11-30 0.00
+4c gpt-6.1-sol start  3: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.12, 11-30 0.10 [0.00, 0.25]; agent 30 wrong in 2 of 20 chains; never right 2; check rate, agents 11-30 0.05
+4c gpt-6.1-sol start  7: 20 chains, 600 agents, errors 0; wrong at agents 1-10 0.90, 11-30 0.90 [0.75, 1.00]; agent 30 wrong in 18 of 20 chains; never right 18; check rate, agents 11-30 0.00
+4c gpt-6.1-sol start 32: 20 chains, 600 agents, errors 0; wrong at agents 1-10 1.00, 11-30 1.00 [1.00, 1.00]; agent 30 wrong in 20 of 20 chains; never right 20; check rate, agents 11-30 0.00
+models gpt-oss-20b: A 700 (3 without an answer), R 1100 (0 without an answer), P 600 (0 without an answer), B 1375 (5 without an answer), M 600 (3 without an answer)
+models GPT-6.1 Sol: R 1100 (0 without an answer), P 600 (0 without an answer), B 750 (0 without an answer)
+models Gemma 4 31B: A 700 (0 without an answer), R 1100 (0 without an answer), P 600 (0 without an answer), B 1375 (0 without an answer)
+models Gemma 4 26B-A4B: A 700 (0 without an answer), R 1100 (0 without an answer), P 600 (0 without an answer), B 1375 (0 without an answer)
+models Qwen3.8 27B: A 700 (0 without an answer), R 1100 (0 without an answer), P 600 (0 without an answer), B 1375 (0 without an answer)
+models Ministral 3 14B: A 700 (0 without an answer), R 1100 (1 without an answer), P 600 (0 without an answer), B 1375 (0 without an answer)
+gpt-oss-20b controls: design M (half right) P(checks) 2:0.90 4:0.81 8:0.66 12:0.60 20:0.53 32:0.43; design R repeated, P(checks) 0.54; medium effort 0.93

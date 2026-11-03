@@ -229,8 +229,9 @@ def expected_values():
     tot = lambda key, k: sum(ag[n_][key][k] for n_ in ag)
     v['lab_oss'] = (tot('oss', 'checked'), tot('oss', 'wrong_checked'), tot('oss', 'right_unchecked'))
     v['lab_sol'] = (tot('sol', 'wrong_checked'), tot('sol', 'checked'))
-    v['lab_mixed'] = lab['mixed']; v['lab_chains'] = lab['chains']; v['lab_copy'] = lab['copying']
-    c20 = [x[0] for x in lab['mixed'][20]['per_country'].values()]; v['lab_country20'] = (min(c20), max(c20))
+    v['lab_mixed'] = lab['mixed']; v['lab_copy'] = lab['copying']; v['lab_real_mix'] = lab['real_mix']
+    v['lab_chains'] = {n: c for (m, n), c in lab['chains'].items() if m == 'gpt-oss-20b'}
+    v['lab_chains_sol'] = {n: c for (m, n), c in lab['chains'].items() if m == 'gpt-6.1-sol'}
     v['lab_oss_curve'] = [ag[n_]['oss']['checked'] / ag[n_]['oss']['valid'] for n_ in (0, 32)]
     return v
 
@@ -276,10 +277,8 @@ def checks(v):
         (M, r'checking declined from nearly universal on an empty page to (\d+)\\% with 32 agreeing notes', [str(v['lab_oss_curve'][1])]),
         (M, r'The laboratory dataset contains (\d+) prepared trials: (\d+) trials manipulating page frequencies and name-feature frequencies in the feed, (\d+) related trials using anonymous handles, (\d+) trials manipulating convention frequencies on task pages, and (\d+) empty-page',
          [v['lab_copy']['trials'], *[v['lab_copy']['kinds'][k] for k in ('P', 'P0', 'W', 'W0')]]),
-        (M, r'GPT-6\.1 Sol completed (\d+) of (\d+) prepared trials, including (\d+) of (\d+) empty-page trials; (\w+) gpt-oss-20b responses could not be parsed',
-         [v['lab_copy']['models']['gpt-6.1-sol']['replies'], v['lab_copy']['trials'], v['lab_copy']['models']['gpt-6.1-sol']['by_kind']['W0'],
-          v['lab_copy']['kinds']['W0'], v['lab_copy']['models']['gpt-oss-20b']['errors']]),
-        (M, r'for a total of ([\d,]+) agent decisions', [sum(c['agents'] for c in v['lab_chains'].values())]),
+        (M, r'Every model has a readable reply to all (\d+) trials', [v['lab_copy']['trials']]),
+        (M, r'for a total of ([\d,]+) agent decisions per model', [sum(v['lab_chains'][n]['agents'] for n in (1, 3, 7, 32))]),
         # SI: S1
         (S, r'median of (\d\.\d+)~h among the (\d+) handles', [v['span_h'], v['n_span']]),
         (S, r'(\d+)\\% of these spans exceed 6~h and (\d\.\d)\\% a day', [v['span_6h'], v['span_1d']]),
@@ -387,15 +386,19 @@ def checks(v):
          [v['pc_gap'][1], v['pc_gap'][2], v['pc_gap'][0], v['inside_gap'][0], v['inside_gap'][1]]),
         (S, r'on first uses (\d\.\d) and (\d\.\d), with a correlation of (0\.\d+) and (\d+) of (\d+) observed values inside', [v['pc_vol'][2], v['pc_vol'][1], v['pc_vol'][0], v['inside_vol'][0], v['inside_vol'][1]]),
         # SI: S7
-        (S, r'gpt-oss-20b answered all (\d+) trials, and (\d+) replies could not be parsed; GPT-6\.1 Sol answered (\d+)',
-         [v['lab_copy']['trials'], v['lab_copy']['models']['gpt-oss-20b']['errors'], v['lab_copy']['models']['gpt-6.1-sol']['replies']]),
+        (S, r'Every model has a readable reply to all (\d+) trials', [v['lab_copy']['trials']]),
         (S, r'Of the (\d+) gpt-oss-20b agents that checked, (\w+) answered the padded value, and (\d+) answered right without checking; GPT-6\.1 Sol answered the padded value after checking (\d+) times out of (\d+)',
          [*v['lab_oss'], *v['lab_sol']]),
-        (S, r'higher than on unanimous pages by (0\.\d+) \(95\\% bootstrap interval (0\.\d+) to (0\.\d+)\) with 5 notes, (0\.\d+) \((0\.\d+) to (0\.\d+)\) with 10, (0\.\d+) \((0\.\d+) to (0\.\d+)\) with 20 and (0\.\d+) \((0\.\d+) to (0\.\d+)\) with 40',
+        (S, r'than on unanimous ones by (0\.\d+) \(\$\+(0\.\d+)\$ to \$\+(0\.\d+)\$\), (0\.\d+) \(\$\+(0\.\d+)\$ to \$\+(0\.\d+)\$\), (0\.\d+) \(\$\+(0\.\d+)\$ to \$\+(0\.\d+)\$\) and (0\.\d+) \(\$\+(0\.\d+)\$ to \$\+(0\.\d+)\$\)',
          [x for nn in (5, 10, 20, 40) for x in (v['lab_mixed'][nn]['diff'], v['lab_mixed'][nn]['lo'], v['lab_mixed'][nn]['hi'])]),
-        (S, r'with 20 notes it ranges from (0\.\d+) for the Slovak Republic to (0\.\d+) for Poland', list(v['lab_country20'])),
-        (S, r'agents 11 to 30 answer wrong (\d+)\\%, (\d+)\\%, (\d+)\\% and (\d+)\\% of the time for 1, 7, 19 and 32 starting notes, and the last agent answers wrong in (\d+), (\d+), (\d+) and (\d+) of the 20 chains',
-         [str(v['lab_chains'][k]['wrong_late']) for k in (1, 7, 19, 32)] + [round(v['lab_chains'][k]['final_wrong'] * v['lab_chains'][k]['chains']) for k in (1, 7, 19, 32)]),
+        (S, r'its probability of checking is (0\.\d+), against (0\.\d+) on unanimous pages \(difference \$\+(0\.\d+)\$, 95\\% bootstrap interval \$\+(0\.\d+)\$ to \$\+(0\.\d+)\$\)',
+         [v['lab_real_mix']['gpt-6.1-sol'][k] for k in ('mixed', 'unanimous', 'diff', 'lo', 'hi')]),
+        (S, r'checks about half the time whatever the composition \((0\.\d+) against (0\.\d+), difference \$-(0\.\d+)\$, \$-(0\.\d+)\$ to \$\+(0\.\d+)\$\)',
+         [v['lab_real_mix']['gpt-oss-20b']['mixed'], v['lab_real_mix']['gpt-oss-20b']['unanimous'], -v['lab_real_mix']['gpt-oss-20b']['diff'],
+          -v['lab_real_mix']['gpt-oss-20b']['lo'], v['lab_real_mix']['gpt-oss-20b']['hi']]),
+        (S, r'gpt-oss-20b agents 11 to 30 answer wrong (\d+)\\%, (\d+)\\%, (\d+)\\%, (\d+)\\% and (\d+)\\% of the time for 1, 3, 7, 19 and 32 starting notes, and GPT-6\.1 Sol agents (\d+)\\%, (\d+)\\%, (\d+)\\% and (\d+)\\% of the time',
+         [str(v['lab_chains'][k]['wrong_late']) for k in (1, 3, 7, 19, 32)] + [str(v['lab_chains_sol'][k]['wrong_late']) for k in (1, 3, 7, 32)]),
+        (S, r'of the 20 chains starting from 7 notes, (\d+) give the wrong value at every one of the 30 positions', [v['lab_chains_sol'][7]['never_right']]),
         # Extended Data
         (E, r'\((\d+) blocks, holding ([\d,]+) of the ([\d,]+) task edits of the period; (\d+) to ([\d,]+) edits and (\d+) to (\d+) pages',
          [v['ed1a']['n_blocks'], v['ed1a']['edits_in'], v['ed1a']['edits_period'], *v['ed1a']['edits'], *v['ed1a']['pages']]),

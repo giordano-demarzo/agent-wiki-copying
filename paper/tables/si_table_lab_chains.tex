@@ -1,11 +1,16 @@
-\begin{tabular}{r rrrrrr}
+\begin{tabular}{l r rrrrrr}
 \toprule
-Wrong notes & chains & agents & wrong, agents 1--10 & wrong, agents 11--30 & 95\% interval & agent 30 wrong \\
-at the start & & & (\%) & (\%) & over chains & (chains) \\
+Model & Wrong notes & chains & agents & wrong, agents 1--10 & wrong, agents 11--30 & 95\% interval & agent 30 wrong \\
+ & at the start & & & (\%) & (\%) & over chains & (chains) \\
 \midrule
-1 & 20 & 600 & 7 & 5 & 0--15 & 1 of 20 \\
-7 & 20 & 600 & 20 & 7 & 1--17 & 1 of 20 \\
-19 & 20 & 600 & 36 & 25 & 10--40 & 4 of 20 \\
-32 & 20 & 600 & 60 & 46 & 28--64 & 9 of 20 \\
+gpt-oss-20b & 1 & 20 & 600 & 7 & 5 & 0--15 & 1 of 20 \\
+gpt-oss-20b & 3 & 20 & 600 & 7 & 5 & 0--12 & 1 of 20 \\
+gpt-oss-20b & 7 & 20 & 600 & 20 & 7 & 1--17 & 1 of 20 \\
+gpt-oss-20b & 19 & 20 & 600 & 36 & 25 & 10--42 & 4 of 20 \\
+gpt-oss-20b & 32 & 20 & 600 & 60 & 46 & 29--64 & 9 of 20 \\
+GPT-6.1 Sol & 1 & 20 & 600 & 0 & 0 & 0--0 & 0 of 20 \\
+GPT-6.1 Sol & 3 & 20 & 600 & 12 & 10 & 0--25 & 2 of 20 \\
+GPT-6.1 Sol & 7 & 20 & 600 & 90 & 90 & 75--100 & 18 of 20 \\
+GPT-6.1 Sol & 32 & 20 & 600 & 100 & 100 & 100--100 & 20 of 20 \\
 \bottomrule
 \end{tabular}

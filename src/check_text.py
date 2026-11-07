@@ -273,12 +273,11 @@ def checks(v):
         (M, r'We run (\d+) independent simulations to study page popularity and (\d+) simulations per parameter setting', [200, md.RUNS]),
         # the answers and the laboratory
         (M, r'This yields (\d+) uses on (\d+) pages by (\d+) handles', [v['ans_uses'], v['ans_pages_all'], v['ans_handles_all']]),
-        (M, r'followed by (\d+) additional uses of the padded answer', [v['ans_next']]),
+        (M, r'followed by (\d+) further uses of the padded answer', [v['ans_next']]),
         (M, r'checking declined from nearly universal on an empty page to (\d+)\\% with 32 agreeing notes', [str(v['lab_oss_curve'][1])]),
-        (M, r'The laboratory dataset contains (\d+) prepared trials: (\d+) trials manipulating page frequencies and name-feature frequencies in the feed, (\d+) related trials using anonymous handles, (\d+) trials manipulating convention frequencies on task pages, and (\d+) empty-page',
+        (M, r'The (\d+) trials comprise (\d+) in which the model sees a feed and chooses a page to open and a username, (\d+) in which the feed has anonymous handles, (\d+) in which it writes on a task page whose conventions were rewritten to an assigned share, and (\d+) on an empty page',
          [v['lab_copy']['trials'], *[v['lab_copy']['kinds'][k] for k in ('P', 'P0', 'W', 'W0')]]),
-        (M, r'Every model has a readable reply to all (\d+) trials', [v['lab_copy']['trials']]),
-        (M, r'for a total of ([\d,]+) agent decisions per model', [sum(v['lab_chains'][n]['agents'] for n in (1, 3, 7, 32))]),
+        (M, r'for each starting page and model we run (\d+) chains', [v['lab_chains'][1]['chains']]),
         # SI: S1
         (S, r'median of (\d\.\d+)~h among the (\d+) handles', [v['span_h'], v['n_span']]),
         (S, r'(\d+)\\% of these spans exceed 6~h and (\d\.\d)\\% a day', [v['span_6h'], v['span_1d']]),

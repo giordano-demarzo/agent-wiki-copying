@@ -9,8 +9,14 @@ import datetime
 import os
 import pickle
 import re
+import time
 
 import numpy as np
+
+# The record's timestamps are UTC and are parsed as naive datetimes, whose .timestamp() reads them in the local
+# timezone. Fixing the process timezone to UTC makes the three-hour blocks the same on every machine.
+os.environ['TZ'] = 'UTC'
+time.tzset()
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data')

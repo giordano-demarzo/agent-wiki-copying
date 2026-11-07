@@ -244,10 +244,11 @@ def main():
                      f'{", ".join(SHORT[c] for c in mm["countries"])} & {mm["n"]:,} & 0 & {mm["n"]:,} \\\\')
     for m, lab in MODELS:
         for des, what in (('A', 'design A, as Fig.~4a' + (' (repeat)' if m == 'gpt-oss-20b' else '')), ('R', 'design R, as Fig.~4b'), ('P', 'design P, synthetic, all wrong'),
-                          ('B', 'design B, synthetic, mixed' + (' (repeat)' if m == 'gpt-oss-20b' else '')), ('M', 'design M, half right, 2 to 32 notes')):
+                          ('B', 'design B, synthetic, mixed' + (' (repeat, not shown)' if m == 'gpt-oss-20b' else '')), ('M', 'design M, half right, 2 to 32 notes')):
             if des in models[m] and not (des == 'R' and m in ('gpt-oss-20b', 'gpt-6.1-sol')):
                 v = models[m][des]
-                lines.append(f'ED/SI, {lab} & {what} & {"CZ, HU, PL, SK, SI" if des == "B" else "CZ, HU, PL, SK"} & '
+                where = 'ED' if des in 'AR' and m not in ('gpt-oss-20b', 'gpt-6.1-sol') else 'SI'   # gpt-oss-20b A: the repeat
+                lines.append(f'{where}, {lab} & {what} & {"CZ, HU, PL, SK, SI" if des == "B" else "CZ, HU, PL, SK"} & '
                              f'{v["n"]:,} & {v["missing"]} & {v["n"] - v["missing"]:,} \\\\')
     for tag, what in (('repeat', 'design R repeated'), ('effort-medium', 'design R, medium reasoning effort')):
         g = replicate('gpt-oss-20b', tag)

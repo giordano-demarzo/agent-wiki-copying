@@ -160,7 +160,7 @@ def main(version='ed'):
          for _, label, col, mk in MODELS]
     if with_record:
         h.append(axes[0, 0].plot([], [], 'o--', color=INK, ms=3.6, mfc='white', mew=0.9,
-                                 label='record after the first correction (a: note cites a source)')[0])
+                                 label='record after the first correction (a: note cites a source; b: right value)')[0])
     fig.legend(handles=h, frameon=False, fontsize=6.4, loc='upper center', ncol=4, bbox_to_anchor=(0.5, 0.0))
     fig.savefig(ROOT.parent / 'figures' / f'{fname}.png', dpi=220, bbox_inches='tight')
     fig.savefig(ROOT.parent / 'paper' / 'figs' / f'{fname}.pdf', bbox_inches='tight')

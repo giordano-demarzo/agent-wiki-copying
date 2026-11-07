@@ -354,7 +354,7 @@ def checks(v):
          [str(v['own_visible'][0]), v['own_visible'][1], str(v['own_visible'][2]), v['own_visible'][3]] if v['own_visible'] else [None] * 4),
         (S, r'to \$(-?0\.\d+) \\pm 0\.\d+\$ on the page, \$(0\.\d+) \\pm 0\.\d+\$ in the feed and \$(-0\.\d+) \\pm 0\.\d+\$ out of view', v['n2'][:3]),
         (S, r'The feed against the exposure out of view holds, \$?(0\.\d+)\$? against \$?(0\.\d+)\$? in the main specification', [v['c_page'][2], v['c_page'][3]]),
-        (S, r'survives feature by block intercepts as well, \$?(0\.\d+)\$? in the fourth column', [v['c3'][1]]),
+        (S, r'it keeps its sign but is no longer resolved, (0\.\d+) \(95', [v['c3'][1]]),
         (S, r'The share among other tasks is \$(0\.\d+) \\pm 0\.\d+\$ in the main specification and \$(0\.\d+) \\pm 0\.\d+\$ with feature by task intercepts', [v['n1'][3], v['n2'][3]]),
         (S, r'It gives \$(0\.\d+) \\pm 0\.\d+\$ for the page, \$(0\.\d+) \\pm 0\.\d+\$ for the same-task uses in the feed, \$(-?0\.\d+) \\pm 0\.\d+\$ for those out of view and \$(-?0\.\d+) \\pm', v['fx']),
         (S, r'the page minus out of view is (0\.\d+) \(95\\% interval (0\.\d+) to (0\.\d+)\), and the feed minus out of view (0\.\d+) \(\$(-?0\.\d+)\$ to (0\.\d+)',
@@ -414,9 +414,7 @@ def checks(v):
         (E, r'names 9,728 newcomer--feature records; forms ([\d,]+) first uses', [v['forms_n']]),
         (E, r'forms, ([\d,]+) first uses with all three shares; names, ([\d,]+) records', [v['fam_n'], v['names_fam_n']]),
         # main text: the revised sentences
-        (M, r'In (\d+) of the ([\d,]+) appends the chosen page belongs to another task', list(v['page_outside'])),
-        (M, r'leaving ([\d,]+)\.', [v['n_dec']]),
-        (M, r'The page regression uses ([\d,]+) candidate--decision observations from ([\d,]+) decisions', [v['n_cand'], v['n_dec']]),
+        (S, r'which leaves ([\d,]+) candidates of ([\d,]+) appends', [v['n_cand'], v['n_dec']]),
         (M, r'a handle.s first use of a convention follows its page (\d+)\\% of the time', [str(v['fam_conflict'][0])]),
         (M, r'the model stays between (0\.\d+) and (\d\.\d+) times the law', [v['rec_ratio'][0], v['rec_ratio'][1]]),
     ]

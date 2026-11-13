@@ -46,7 +46,7 @@ in `data/` and the cache built by `python src/run_all.py`.
 | `answers_oecd.py` | the OECD answers in the record, as a convention (padded against right) |
 | `plot_support.py` | loads the single-agent results by page size and note style |
 | `fig4_checking.py` | Figure 4 |
-| `ed_checking_models.py` | Extended Data: checking in GPT-6.1 Sol, and in the record before the correction |
+| `ed_checking_models.py` | SI S7: checking before the correction, in the record and in the laboratory |
 | `model_beta.py`, `ed_model_beta.py` | Extended Data: the copy model with S-shaped copying (no language model involved) |
 
 ## Models and serving
@@ -344,7 +344,7 @@ python chain_replay.py recstart 5 30`, 600 agents added to `data/answers/chains_
 | Script | Figure |
 | --- | --- |
 | `fig4_checking.py` | Fig. 4 (pages of the record's notes; both models) |
-| `ed_checking_models.py` | Extended Data: checking before the correction, record and laboratory |
+| `ed_checking_models.py` | SI S7: checking before the correction, record and laboratory |
 | `si_models_checking.py ed` / `si` | Extended Data: checking in six models (designs A, R); SI: synthetic notes (P, B) |
 | `../src/fig2_wild_lab.py` | Fig. 2 and Extended Data: copying in six models (`ed_copying_models`) |
 | `si_oss_controls.py` | SI: what drives checking in gpt-oss-20b (designs M, R repeated, medium effort, A repeated) |

@@ -59,7 +59,7 @@ def step(module, what, **kw):
 # the figures built on the laboratory experiments (lab/; their data are in lab/data/)
 LAB_FIGURES = [
     ('fig4_checking.py', 'Figure 4'),
-    ('ed_checking_models.py', 'Extended Data: checking before the correction, in the record and in the laboratory'),
+    ('ed_checking_models.py', 'SI S7: checking before the correction, in the record and in the laboratory'),
     ('si_models_checking.py', 'Extended Data and SI: checking in six models, with the notes of the record and synthetic notes'),
     ('si_oss_controls.py', 'SI: what drives checking in gpt-oss-20b'),
     ('si_chains.py', 'SI: the chains of Fig. 4c, chain by chain'),

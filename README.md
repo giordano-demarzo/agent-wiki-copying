@@ -99,7 +99,7 @@ Every step is a module with a `main()`; `run_all.py` runs them in this order. Ea
 | `fig1_setting.py` … `fig4_model.py` | Figures 1 to 4 | `paper/figs/` |
 | `ed_patchwork.py` | Supplementary figure (S4): the patchwork against two permutation nulls | `ed_patchwork.pkl` |
 | `si_lab.py` | SI S7: the laboratory experiments counted from the stored replies, and their tables | `si_lab.pkl`, `paper/tables/` |
-| `ed_figures.py` | Extended Data Figs. 1 to 3 (Fig. 4 is drawn by `fig4_model.py`, Fig. 5 by `lab/ed_checking_models.py`) | `paper/figs/` |
+| `ed_figures.py` | Extended Data and SI figures of the record (the SI figure of the 1/s law is drawn by `fig4_model.py`, the SI figure of checking before the correction by `lab/ed_checking_models.py`) | `paper/figs/` |
 | `si_figures.py` | the SI figures | `paper/figs/` |
 | `si_tables.py` | Table 1 and the SI tables | `paper/tables/` |
 | `check_text.py` | the numbers quoted in `paper/*.tex` against the cache | |

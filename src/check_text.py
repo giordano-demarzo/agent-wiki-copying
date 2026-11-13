@@ -288,7 +288,7 @@ def checks(v):
         (S, r'gathered (\d+) handles, and (\d+) of the ([\d,]+) handles worked on at least one of the seven largest', [v['largest_family'], v['top7_handles'], v['handles']]),
         (S, r'(\d+) handles wrote on one family, (\d+) on two and (\d+) on three or more', [v['one_family'], v['two_families'], v['three_families']]),
         (S, r'the response slopes stay between (0\.\d+) and (0\.\d+), and the regression', [None, None]),
-        (S, r'For names the feed carries (0\.\d+), the authors of the first page (0\.\d+), the task-mates out of view (0\.\d+) and other tasks (0\.\d+)\. The coefficient of the task-mates out of view is larger than in the population, where it is (0\.\d+)',
+        (S, r'For names the feed carries (0\.\d+), the authors of the first page (0\.\d+), the task-mates out of view (0\.\d+) and other tasks (0\.\d+)\. Here the coefficient of the task-mates out of view is larger than in the population, where it is (0\.\d+)',
          [v['full_names'][1], v['full_names'][0], v['full_names'][2], v['full_names'][3], v['out_pop']]),
         # SI: S2
         (S, r'rises from (\d+)\\% at 15 lines to (\d+)\\% at 30, (\d+)\\% at 100 and (\d+)\\% at 300, and the fitted slope is (0\.\d+), (0\.\d+), (0\.\d+) and (0\.\d+)',
@@ -340,10 +340,10 @@ def checks(v):
         (S, r'With all uses in place of first uses the slopes are (0\.\d+), (0\.\d+) and (0\.\d+)', [v['variants'][c]['all'] for c in ('coined', 'semantic', 'habit')]),
         (S, r'In the (\d+) first uses where the page majority and the family majority lie on opposite sides of one half, the handle follows the page (\d+)\\% of the time \(95\\% interval (\d+) to (\d+)\\%\): (\d+)\\% for the coined names, (\d+)\\% for the near-synonyms and (\d+)\\% for the habits',
          [v['fam_conflict_n'], str(v['fam_conflict'][0]), str(v['fam_conflict'][1]), str(v['fam_conflict'][2]), *[str(v_[0]) for v_ in (load_cache('si_forms.pkl')['family']['conflict'][c] for c in ('coined', 'semantic', 'habit'))]]),
-        (S, r'on the ([\d,]+) first uses that have all three, with standard errors clustered by handle, the page carries \$(0\.\d+) \\pm (0\.\d+)\$, the family.s other pages \$(0\.\d+) \\pm (0\.\d+)\$ and the feed \$(0\.\d+) \\pm (0\.\d+)\$, and the contrast page minus family is (0\.\d+) \(95\\% interval (0\.\d+) to (0\.\d+)',
+        (S, r'on the ([\d,]+) first uses that have all three, with standard errors clustered by handle, the page carries \$(0\.\d+) \\pm (0\.\d+)\$, the family.s other pages \$(0\.\d+) \\pm (0\.\d+)\$ and the feed \$(0\.\d+) \\pm (0\.\d+)\$; the contrast page minus family is (0\.\d+) \(95\\% interval (0\.\d+) to (0\.\d+)',
          [v['fam_n'], v['fam_joint'][0], v['fam_se'][0], v['fam_joint'][1], v['fam_se'][1], v['fam_joint'][2], v['fam_se'][2], v['fam_contrast']['est'], v['fam_contrast']['lo'], v['fam_contrast']['hi']]),
         (S, r'(\d+) strata, the slope of the response to the page share is \$(0\.\d+) \\pm (0\.\d+)\$ against (0\.\d+) without them', [None, v['fam_fe'][1], v['fam_fe'][2], v['fam_fe'][0]]),
-        (S, r'in a joint fit on ([\d,]+) records the earlier same-task authors of the page carry \$(0\.\d+) \\pm (0\.\d+)\$, the same-task handles of the previous six hours on other pages \$(0\.\d+) \\pm (0\.\d+)\$ and the feed \$(0\.\d+) \\pm (0\.\d+)\$; the contrast between the first two, (0\.\d+) \(95\\% interval \$(-?0\.\d+)\$ to (0\.\d+)\).*?follows the page (\d+)\\% of the time \(n = (\d+)\)',
+        (S, r'[Ii]n a joint fit on ([\d,]+) records the earlier same-task authors of the page carry \$(0\.\d+) \\pm (0\.\d+)\$, the same-task handles of the previous six hours on other pages \$(0\.\d+) \\pm (0\.\d+)\$ and the feed \$(0\.\d+) \\pm (0\.\d+)\$\. The contrast between the first two, (0\.\d+) \(95\\% interval \$(-?0\.\d+)\$ to (0\.\d+)\).*?follows the page (\d+)\\% of the time \(n = (\d+)\)',
          [v['names_fam_n'], v['names_fam'][0], None, v['names_fam'][1], None, v['names_fam'][2], None, v['names_contrast']['est'], v['names_contrast']['lo'], v['names_contrast']['hi'], str(v['names_conflict'][0]), v['names_conflict'][3]]),
         # SI: S5
         (S, r'In (\d+) of the ([\d,]+) appends the chosen page belongs to another task', list(v['page_outside'])),

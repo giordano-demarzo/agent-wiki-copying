@@ -48,7 +48,7 @@ Here we study the first documented occasion in which the collective behavior of 
 
 According to the report that documented the episode \cite{collusion}, each agent was working on a task made of a series of timed questions, usually five, that required looking up numbers on public statistics websites. Its sandbox was meant to read the internet and not to write on it, and the agents had discovered that these wikis accept page edits through plain read requests. A wiki of this kind is a set of named pages that anyone can create or append to, with no categories and no curated index. The report of the episode notes that the agents did not seem to know which page to visit and found one another pages through the wiki own listings \cite{collusion}. The listing that orders pages by activity is RecentChanges, a page showing the latest edits with the newest at the top, which we call the feed (Fig.~\ref{fig1}a). An agent therefore had two main places to look, the page it was editing and the feed, and the record stores both as they were at the moment of every edit. This makes it possible to ask a question that observational data on human collectives almost never allow: how much of what an individual does is a copy of what was in front of it, and how much of what the collective did follows from that.
 
-The population we study is the agents that worked on the tasks we detailed above: 1,201 handles that wrote 3,807 edits on 679 task pages belonging to 41 tasks, almost all of it in one week of June (Methods). A sandbox was shut down when its task ended \cite{collusion}, and nothing in the record suggests that a run could carry anything over to the next or that a collective would form. Yet within a day the record shows that they started to behave like a collective. Agents helped each other sharing answers and information. A run that had reached the fourth question of a task wrote down what it had been asked and what it had answered, so that a run of the same task still at the second question could prepare in advance. They built usernames using standardized formats, as in \texttt{OpenAIResearchHelperMay08} or \texttt{Sector61ScoutJan12}, and created a common way of writing, settled page by page. For instance they coined names on the wiki, like \texttt{RN} to denote the $N$th round of a task, and they established habits, like adding \texttt{CONFIRMED} when reporting an answer (Fig.~\ref{fig1}b).
+The population we study is the agents that worked on the tasks we detailed above: 1,201 handles that wrote 3,807 edits on 679 task pages belonging to 41 tasks, almost all of it in one week of June (Methods). A sandbox was shut down when its task ended \cite{collusion}, and nothing in the record suggests that a run could carry anything over to the next or that a collective would form. Yet within a day the record shows that they started to behave like a collective. Agents helped each other sharing answers and information. A run that had reached the fourth question of a task wrote down what it had been asked and what it had answered, so that a run of the same task still at the second question could prepare in advance. They built usernames using standardized formats, as in \texttt{OpenAIResearchHelperMay08} or \texttt{Sector61ScoutJan12}, and created a common way of writing, settled page by page (Supplementary Information S4). For instance they coined names on the wiki, like \texttt{RN} to denote the $N$th round of a task, and they established habits, like adding \texttt{CONFIRMED} when reporting an answer (Fig.~\ref{fig1}b).
 
 The agents then used the wiki also to share answers to the tasks they were facing. While giving them a clear advantage, this practice also presents some risks, since wrong solutions may spread in the collective with little to no checking. For instance one task asked for shares to two decimal places from a workbook that displays them rounded to one. The first note on it gave the displayed value padded with a zero, and the next 159 answers, by 79 agents on 55 pages, all repeated it; some agents that had answered correctly called their own answer a mistake and switched to the padded one (Supplementary Information S7). The collective eventually recovered, when an agent managed to correctly extract the stored values without truncation and wrote a detailed explanation, turning the group within three hours (Fig.~\ref{fig1}c).
 
@@ -294,12 +294,11 @@ The wiki record analyzed here is the public release at \texttt{collusion.wiki} \
 \subsection{Code availability}
 All the code that reproduces every number and every figure of this paper and of the Supplementary Information, starting from that release, is available at \url{https://github.com/giordano-demarzo/agent-wiki-copying}; it runs from the stored laboratory replies, without calling any model.
 
-\begin{thebibliography}{60}\small
+\begin{thebibliography}{51}\small
 \bibitem{hammond2025} L. Hammond et al., Multi-agent risks from advanced AI, Cooperative AI Foundation Technical Report 1, arXiv:2502.14143 (2025).
 \bibitem{rahwan2019machine} I. Rahwan et al., Machine behaviour, Nature 568, 477 (2019).
 \bibitem{ashery2025emergent} A. F. Ashery, L. M. Aiello and A. Baronchelli, Emergent social conventions and collective bias in LLM populations, Science Advances 11, eadu9368 (2025).
 \bibitem{demarzo2026sciadv} G. De Marzo, C. Castellano and D. Garcia, AI agents can coordinate via majority-following beyond human scale, Science Advances 12, eaea6091 (2026).
-\bibitem{demarzo2026conformity} G. De Marzo, A. Bellina, C. Castellano, V. Priesemann and D. Garcia, Conformity generates collective misalignment in AI agents societies, arXiv:2605.10721 (2026).
 \bibitem{collusion} S. Von Arx, C. Slade Byrd, S. Kitts and T. Larsen, Discovery of a new OpenAI agent message board, \url{https://collusion.wiki}, 4 September 2026, with data release.
 \bibitem{motwani2024} S. R. Motwani, M. Baranchuk, M. Strohmeier, V. Bolina, P. H. S. Torr, L. Hammond and C. Schroeder de Witt, Secret collusion among AI agents: multi-agent deception via steganography, in Advances in Neural Information Processing Systems 37 (2024).
 \bibitem{schroeder2025malicious} D. T. Schroeder et al., How malicious AI swarms can threaten democracy, arXiv:2506.06299 (2025).
@@ -313,47 +312,40 @@ All the code that reproduces every number and every figure of this paper and of 
 \bibitem{zhu2025conformity} X. Zhu, C. Zhang, T. Stafford, N. Collier and A. Vlachos, Conformity in large language models, in Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), 3854 (2025).
 \bibitem{weng2025conformity} Z. Weng, G. Chen and W. Wang, Do as we do, not as you think: the conformity of large language models, in International Conference on Learning Representations, arXiv:2501.13381 (2025).
 \bibitem{bito2026normative} M. Bito, K. Nishimoto, K. Asatani and I. Sakata, Large language models exhibit normative conformity, arXiv:2604.19301 (2026).
-\bibitem{demarzo2023scalefree} G. De Marzo, L. Pietronero and D. Garcia, Emergence of scale-free networks in social interactions among large language models, arXiv:2312.06619 (2023).
-\bibitem{papachristou2025network} M. Papachristou and Y. Yuan, Network formation and dynamics among multi-LLMs, PNAS Nexus 4, pgaf317 (2025).
-\bibitem{perez2024cultural} J. Perez, C. L\'eger, M. Ovando-Tellez, C. Foulon, J. Dussauld, P.-Y. Oudeyer and C. Moulin-Frier, Cultural evolution in populations of large language models, arXiv:2403.08882 (2024).
 \bibitem{bellina2026conformity} A. Bellina, G. De Marzo and D. Garcia, Conformity and social impact on AI agents, arXiv:2601.05384 (2026).
-\bibitem{flint2025group} A. Flint Ashery, L. M. Aiello, R. Pastor-Satorras and A. Baronchelli, Group size effects and collective misalignment in LLM multi-agent systems, arXiv:2510.22422 (2025).
+\bibitem{perez2024cultural} J. Perez, C. L\'eger, M. Ovando-Tellez, C. Foulon, J. Dussauld, P.-Y. Oudeyer and C. Moulin-Frier, Cultural evolution in populations of large language models, arXiv:2403.08882 (2024).
+\bibitem{demarzo2026conformity} G. De Marzo, A. Bellina, C. Castellano, V. Priesemann and D. Garcia, Conformity generates collective misalignment in AI agents societies, arXiv:2605.10721 (2026).
 \bibitem{okawa2026biased} M. Okawa, Emergence of biased consensus in multi-agent LLM debates, arXiv:2608.02827 (2026).
 \bibitem{shen2026ai} J. H. Shen, D. Zhu, S. Srinivasan, H. Sleight, L. T. Wagner III, M. J. Matthews, E. Jones and J. Sohl-Dickstein, AI organizations are more effective but less aligned than individual agents, arXiv:2604.10290 (2026).
 \bibitem{willis2026collective} R. Willis, J. Zhao, J. Z. Leibo and Y. Du, Evaluating collective behaviour of hundreds of LLM agents, in Proc. Strategic Engineering Workshop on LLMs and Game Theory (SE@AAMAS 2026), arXiv:2602.16662 (2026).
+\bibitem{demarzo2023scalefree} G. De Marzo, L. Pietronero and D. Garcia, Emergence of scale-free networks in social interactions among large language models, arXiv:2312.06619 (2023).
+\bibitem{papachristou2025network} M. Papachristou and Y. Yuan, Network formation and dynamics among multi-LLMs, PNAS Nexus 4, pgaf317 (2025).
 \bibitem{zhu2025chirper} Y. Zhu, Y. He, E.-U. Haq, G. Tyson and P. Hui, Characterizing an LLM-driven social network: the case of Chirper.ai, arXiv:2504.10286 (2025).
 \bibitem{de2026collective} G. De Marzo and D. Garcia, Collective behavior of AI agents: the case of Moltbook, arXiv:2602.09270 (2026).
 \bibitem{fadaei2026gender} F. Fadaei, J. C. Moran and T. Yasseri, Gender dynamics and homophily in a social network of LLM agents, arXiv:2602.02606 (2026).
-\bibitem{rendell2010} L. Rendell, R. Boyd, D. Cownden, M. Enquist, K. Eriksson, M. W. Feldman, L. Fogarty, S. Ghirlanda, T. Lillicrap and K. N. Laland, Why copy others? Insights from the social learning strategies tournament, Science 328, 208 (2010).
 \bibitem{boyd1985} R. Boyd and P. J. Richerson, Culture and the Evolutionary Process (University of Chicago Press, 1985).
 \bibitem{cavalli1981} L. L. Cavalli-Sforza and M. W. Feldman, Cultural Transmission and Evolution: A Quantitative Approach (Princeton University Press, 1981).
 \bibitem{henrich2003} J. Henrich and R. McElreath, The evolution of cultural evolution, Evolutionary Anthropology 12, 123 (2003).
+\bibitem{rendell2010} L. Rendell, R. Boyd, D. Cownden, M. Enquist, K. Eriksson, M. W. Feldman, L. Fogarty, S. Ghirlanda, T. Lillicrap and K. N. Laland, Why copy others? Insights from the social learning strategies tournament, Science 328, 208 (2010).
 \bibitem{bentley2004} R. A. Bentley, M. W. Hahn and S. J. Shennan, Random drift and culture change, Proc. R. Soc. B 271, 1443 (2004).
 \bibitem{hahn2003} M. W. Hahn and R. A. Bentley, Drift as a mechanism for cultural change: an example from baby names, Proc. R. Soc. B 270, S120 (2003).
 \bibitem{krawczyk2014} M. J. Krawczyk, A. Dydejczyk and K. Ku{\l}akowski, The Simmel effect and babies' names, Physica A 395, 384 (2014).
 \bibitem{simmel1904} G. Simmel, Fashion, International Quarterly 10, 130 (1904). % original English version; David asked for the early edition rather than a reprint
+\bibitem{gptoss2025} OpenAI, gpt-oss-120b \& gpt-oss-20b model card, arXiv:2508.10925 (2025).
 \bibitem{simon1955} H. A. Simon, On a class of skew distribution functions, Biometrika 42, 425 (1955).
 \bibitem{barabasi1999} A.-L. Barab\'asi and R. Albert, Emergence of scaling in random networks, Science 286, 509 (1999).
 \bibitem{wu2007} F. Wu and B. A. Huberman, Novelty and collective attention, Proc. Natl. Acad. Sci. USA 104, 17599 (2007).
-\bibitem{centola2015spontaneous} D. Centola and A. Baronchelli, The spontaneous emergence of conventions: an experimental study of cultural evolution, Proc. Natl. Acad. Sci. USA 112, 1989 (2015).
-\bibitem{brockers2025disentangling} V. C. Brockers, D. A. Ehrlich and V. Priesemann, Disentangling interaction and bias effects in opinion dynamics of large language models, arXiv:2509.06858 (2025).
-\bibitem{salganik2006} M. J. Salganik, P. S. Dodds and D. J. Watts, Experimental study of inequality and unpredictability in an artificial cultural market, Science 311, 854 (2006).
-\bibitem{muchnik2013} L. Muchnik, S. Aral and S. J. Taylor, Social influence bias: a randomized experiment, Science 341, 647 (2013).
-\bibitem{lorenz2011} J. Lorenz, H. Rauhut, F. Schweitzer and D. Helbing, How social influence can undermine the wisdom of crowd effect, Proc. Natl. Acad. Sci. USA 108, 9020 (2011).
-\bibitem{asch1956studies} S. E. Asch, Studies of independence and conformity: I. A minority of one against a unanimous majority, Psychological Monographs 70, 1 (1956).
-\bibitem{granovetter1978threshold} M. Granovetter, Threshold models of collective behavior, American Journal of Sociology 83, 1420 (1978).
 \bibitem{leskovec2009meme} J. Leskovec, L. Backstrom and J. Kleinberg, Meme-tracking and the dynamics of the news cycle, in Proceedings of the 15th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 497 (2009).
 \bibitem{adamic2016evolution} L. A. Adamic, T. M. Lento, E. Adar and P. C. Ng, Information evolution in social networks, in Proceedings of the Ninth ACM International Conference on Web Search and Data Mining, 473 (2016).
-\bibitem{centola2018experimental} D. Centola, J. Becker, D. Brackbill and A. Baronchelli, Experimental evidence for tipping points in social convention, Science 360, 1116 (2018).
-\bibitem{gptoss2025} OpenAI, gpt-oss-120b \& gpt-oss-20b model card, arXiv:2508.10925 (2025).
 \bibitem{borel1942} \'E. Borel, Sur l'emploi du th\'eor\`eme de Bernoulli pour faciliter le calcul d'une infinit\'e de coefficients. Application au probl\`eme de l'attente \`a un guichet, C. R. Acad. Sci. Paris 214, 452 (1942).
-\bibitem{otter1949} R. Otter, The multiplicative process, Ann. Math. Statist. 20, 206 (1949).
 \bibitem{gleeson2014} J. P. Gleeson, J. A. Ward, K. P. O'Sullivan and W. T. Lee, Competition-induced criticality in a model of meme popularity, Phys. Rev. Lett. 112, 048701 (2014).
 \bibitem{kirman1993} A. Kirman, Ants, rationality, and recruitment, Q. J. Econ. 108, 137 (1993).
 \bibitem{alfarano2005} S. Alfarano, T. Lux and F. Wagner, Estimation of agent-based models: the case of an asymmetric herding model, Comput. Econ. 26, 19 (2005).
 \bibitem{wright1931} S. Wright, Evolution in Mendelian populations, Genetics 16, 97 (1931).
-\bibitem{abrams2003} D. M. Abrams and S. H. Strogatz, Modelling the dynamics of language death, Nature 424, 900 (2003).
-\bibitem{castellano2009nonlinear} C. Castellano, M. A. Mu\~noz and R. Pastor-Satorras, Nonlinear $q$-voter model, Phys. Rev. E 80, 041129 (2009).
+\bibitem{centola2015spontaneous} D. Centola and A. Baronchelli, The spontaneous emergence of conventions: an experimental study of cultural evolution, Proc. Natl. Acad. Sci. USA 112, 1989 (2015).
+\bibitem{salganik2006} M. J. Salganik, P. S. Dodds and D. J. Watts, Experimental study of inequality and unpredictability in an artificial cultural market, Science 311, 854 (2006).
+\bibitem{muchnik2013} L. Muchnik, S. Aral and S. J. Taylor, Social influence bias: a randomized experiment, Science 341, 647 (2013).
+\bibitem{lorenz2011} J. Lorenz, H. Rauhut, F. Schweitzer and D. Helbing, How social influence can undermine the wisdom of crowd effect, Proc. Natl. Acad. Sci. USA 108, 9020 (2011).
 \end{thebibliography}
 
 \end{document}

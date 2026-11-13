@@ -355,7 +355,7 @@ def checks(v):
          [str(v['own_visible'][0]), v['own_visible'][1], str(v['own_visible'][2]), v['own_visible'][3]] if v['own_visible'] else [None] * 4),
         (S, r'to \$(-?0\.\d+) \\pm 0\.\d+\$ on the page, \$(0\.\d+) \\pm 0\.\d+\$ in the feed and \$(-0\.\d+) \\pm 0\.\d+\$ out of view', v['n2'][:3]),
         (S, r'The feed against the exposure out of view holds, \$?(0\.\d+)\$? against \$?(0\.\d+)\$? in the main specification', [v['c_page'][2], v['c_page'][3]]),
-        (S, r'it keeps its sign but is no longer resolved, (0\.\d+) \(95', [v['c3'][1]]),
+        (S, r'the contrast keeps its sign but is estimated imprecisely, (0\.\d+) \(95', [v['c3'][1]]),
         (S, r'The share among other tasks is \$(0\.\d+) \\pm 0\.\d+\$ in the main specification and \$(0\.\d+) \\pm 0\.\d+\$ with feature by task intercepts', [v['n1'][3], v['n2'][3]]),
         (S, r'It gives \$(0\.\d+) \\pm 0\.\d+\$ for the page, \$(0\.\d+) \\pm 0\.\d+\$ for the same-task uses in the feed, \$(-?0\.\d+) \\pm 0\.\d+\$ for those out of view and \$(-?0\.\d+) \\pm', v['fx']),
         (S, r'the page minus out of view is (0\.\d+) \(95\\% interval (0\.\d+) to (0\.\d+)\), and the feed minus out of view (0\.\d+) \(\$(-?0\.\d+)\$ to (0\.\d+)',

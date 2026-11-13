@@ -41,7 +41,7 @@ FIGURES = [
     ('fig1_episode', 'Figure 1'),
     ('fig3_rule', 'the response curves of the record (numbers for the text)'),
     ('fig2_wild_lab', 'Figure 2, record and laboratory'),
-    ('fig4_model', 'Figure 3 and Extended Data Fig. 5'),
+    ('fig4_model', 'Figure 3 and the SI figure of the 1/s law'),
     ('ed_figures', 'Extended Data Figs. 1-3'),
     ('si_figures', 'the SI figures'),
     ('si_tables', 'Table 1 and the SI tables'),

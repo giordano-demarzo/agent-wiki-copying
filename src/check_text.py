@@ -270,7 +270,7 @@ def checks(v):
         (M, r'Agents arrive uniformly over (\d\.\d) days', [v['days']]),
         (M, r'probability \$u=(0\.\d+)\$ of using a given convention', [v['usage']]),
         (M, r'percentile of (\d+) simulated runs', [200]),
-        (M, r'We run (\d+) independent simulations to study page popularity and (\d+) simulations per parameter setting', [200, md.RUNS]),
+        (M, r'with the results of (\d+) independent simulations', [200]),
         # the answers and the laboratory
         (M, r'This yields (\d+) uses on (\d+) pages by (\d+) handles', [v['ans_uses'], v['ans_pages_all'], v['ans_handles_all']]),
         (M, r'followed by (\d+) further uses of the padded answer', [v['ans_next']]),
@@ -406,16 +406,16 @@ def checks(v):
         (E, r'The median excess over the null is (0\.\d+) for the time null and (0\.\d+) for the task and time null', list(v['pw_excess'])),
         (E, r'(\d+) of 16, (\d+) of 15 and (\d+) of 16 conventions, with correlations between observed values and model medians of (0\.\d+) \(of the logarithms\), (0\.\d+) and (0\.\d+)',
          [v['inside_gap'][0], v['inside_vol'][0], v['inside_final'][0], v['inside_gap'][2], v['inside_vol'][2], v['inside_final'][2]]),
-        (E, r'the bins lie above the law, at (\d\.\d) at \$s=(0\.\d+)\$ and (\d\.\d) at \$s=(0\.\d+)\$ against (\d\.\d) and (\d\.\d)', v['first_bins']),
-        (E, r'The refitted model lies between (0\.\d+) and (\d\.\d+) times \$1/s\$', [v['rec_ratio'][0], v['rec_ratio'][1]]),
-        (E, r'\((\d+) of 100 conventions at \$s=(0\.\d+)\$, none from \$s=(0\.\d+)\$\) and overestimates \$s\$ \(median factor (\d\.\d) at \$s=(0\.\d+)\$\)',
+        (S, r'the bins lie above the law, at (\d\.\d) at \$s=(0\.\d+)\$ and (\d\.\d) at \$s=(0\.\d+)\$ against (\d\.\d) and (\d\.\d)', v['first_bins']),
+        (S, r'The refitted model lies between (0\.\d+) and (\d\.\d+) times \$1/s\$', [v['rec_ratio'][0], v['rec_ratio'][1]]),
+        (S, r'\((\d+) of 100 conventions at \$s=(0\.\d+)\$, none from \$s=(0\.\d+)\$\) and overestimates \$s\$ \(median factor (\d\.\d) at \$s=(0\.\d+)\$\)',
          [v['rec_floored'][0], ('rel', v['rec_floored'][2], 0.05), ('rel', v['rec_none_from'], 0.05), v['rec_factor'][0], ('rel', v['rec_factor'][1], 0.05)]),
         (E, r'names 9,728 newcomer--feature records; forms ([\d,]+) first uses', [v['forms_n']]),
         (E, r'forms, ([\d,]+) first uses with all three shares; names, ([\d,]+) records', [v['fam_n'], v['names_fam_n']]),
         # main text: the revised sentences
         (S, r'which leaves ([\d,]+) candidates of ([\d,]+) appends', [v['n_cand'], v['n_dec']]),
         (M, r'a handle.s first use of a convention follows its page (\d+)\\% of the time', [str(v['fam_conflict'][0])]),
-        (M, r'the model stays between (0\.\d+) and (\d\.\d+) times the law', [v['rec_ratio'][0], v['rec_ratio'][1]]),
+        (M, r'the model stays between (0\.\d+) and (\d\.\d+) times the \$1/s\$ law', [v['rec_ratio'][0], v['rec_ratio'][1]]),
     ]
 
 

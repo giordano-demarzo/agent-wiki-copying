@@ -188,7 +188,7 @@ def distance_panel(ax, letter, sw, n_model, pts, say):
 
 
 def prior_checks(say):
-    """Extended Data Fig. 5: the record of Fig. 3b (a) with the priors fitted on first uses only
+    """Supplementary Fig. (S6): the record of Fig. 3b (a) with the priors fitted on first uses only
     and the distance normalized by the effective number of independent writers,
     (b) under the other convention selection rules of Table S(thresholds), and
     (c) the model's own conventions put through the record pipeline

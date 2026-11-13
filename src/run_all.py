@@ -33,7 +33,7 @@ ANALYSIS = [
     ('si_names', 'SI: how to sign'),
     ('si_forms', 'SI: how to write'),
     ('si_thresholds', 'SI: the convention selection rule'),
-    ('ed_patchwork', 'Extended Data Fig. 1b: the patchwork against two permutation nulls'),
+    ('ed_patchwork', 'Supplementary figure (S4): the patchwork against two permutation nulls'),
     ('si_lab', 'SI S7: the laboratory experiments, counted from the stored replies'),
 ]
 FULL = [('analysis_forms', 'how to write, all handles'), ('identification', 'the regressions, all handles')]

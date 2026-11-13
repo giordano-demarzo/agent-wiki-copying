@@ -97,7 +97,7 @@ Every step is a module with a `main()`; `run_all.py` runs them in this order. Ea
 | `si_population.py`, `si_names.py`, `si_forms.py` | Sections S1, S4 and S5 | `si_*.pkl` |
 | `analysis_forms.py --full`, `identification.py --full` | the robustness check on all 3,099 handles (S2) | `*_full.pkl` |
 | `fig1_setting.py` … `fig4_model.py` | Figures 1 to 4 | `paper/figs/` |
-| `ed_patchwork.py` | Extended Data Fig. 1b: the patchwork against two permutation nulls | `ed_patchwork.pkl` |
+| `ed_patchwork.py` | Supplementary figure (S4): the patchwork against two permutation nulls | `ed_patchwork.pkl` |
 | `si_lab.py` | SI S7: the laboratory experiments counted from the stored replies, and their tables | `si_lab.pkl`, `paper/tables/` |
 | `ed_figures.py` | Extended Data Figs. 1 to 3 (Fig. 4 is drawn by `fig4_model.py`, Fig. 5 by `lab/ed_checking_models.py`) | `paper/figs/` |
 | `si_figures.py` | the SI figures | `paper/figs/` |

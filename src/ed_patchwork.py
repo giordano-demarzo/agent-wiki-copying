@@ -1,4 +1,4 @@
-"""Extended Data Fig. 1b: the patchwork of conventions, with two permutation nulls.
+"""Supplementary figure (S4): the patchwork of conventions, with two permutation nulls.
 
 For each kept convention, the probability that two uses take the same form when
 they are on the same page and when they are on different pages (as in
@@ -60,7 +60,7 @@ def summary(null, observed):
 
 
 def main():
-    say = Report('Extended Data Fig. 1b: the patchwork with two nulls')
+    say = Report('Supplementary figure (S4): the patchwork with two nulls')
     ds = Dataset()
     keep = load_cache('forms.pkl')['keep']
     ts = np.array([T(r['time']).timestamp() for r in ds.revs])
